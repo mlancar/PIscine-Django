@@ -2,40 +2,51 @@
     <body>
         <div id="page-container">
             <div id="form-container">
-                <form>
-                    <label id="firstname" for=""> Firstname:</label><br>
-                    <input type="text firstname" id="firstname" name="firstname-input" required><br><br>
+                <form class="text">
+                    <h1 class="text">THIS IS A TITLE</h1>
+                    <label for="firstname"> Firstname:</label>
+                    <input placeholder="write here" type="text" id="firstname" name="firstname" size = "20" required autofocus><br><br>
 
-                    <label id="name" for="name">Name:</label>
-                    <input type="name" id="name" name="name" required><br><br>
-
-                    <label id="phone" for="phone-number">Phone:</label>
-                    <input type="phone" id="phone" name="phone-input" required><br><br>
-
-                    <label id="age" for="age-label">Age:</label>
-                    <input type="age" id="age" name="age-input" required><br><br>
-
-                    <label id="email" for="email-label">Email:</label>
-                    <input type="email-input" id="email" name="email" required><br><br>
+                    <label style="padding-right: 9%;" for="name">Name:</label>
+                    <input placeholder="write here" type="text" id="name" name="name" required autofocus><br><br>
                     
-                    <label id="gender" for="gender-female">Female</label>
-                    <input type="checkbox" id="gender_female" name="gender-female" value="Female" required>
+                    <label style="padding-right: 11%;" for="age">Age:</label>
+                    <input placeholder="write here"  type="text" id="age" name="age" required autofocus><br><br>
 
-                    <label id="gender" for="gender-male">Male</label>
-                    <input type="checkbox" id="gender_male" name="gender-male" value="Male" required>
+                    <label for="gender_female">Female</label>
+                    <input type="radio" id="gender_female" name="gender" value="Female" required>
 
-                    <label id="gender" for="gender_other">Other</label>
-                    <input type="checkbox" id="gender_other" name="gender-other" value="Other" required><br><br>
+                    <label for="gender_male">Male</label>
+                    <input type="radio" id="gender_male" name="gender" value="Male" required>
 
-                    <label id="student" for="student">I am a studuent at 42:</label>
-                    <input type="checkbox" id="student" name="student" value="Yes" required>
+                    <label for="gender_other">Other</label>
+                    <input type="radio" id="gender_other" name="gender" value="Other" required><br><br>
 
-                    <label id="student" for="not-student">I am not a studuent at 42:</label>
-                    <input type="checkbox" id="not-student" name="not-student" value="No" required><br><br>
+                    <label style="padding-right: 7%;" for="phone">Phone:</label>
+                    <input placeholder="write here"  type="text" id="phone" name="phone" required autofocus><br><br>
 
-                    <input class="button" type="submit" value="SUBMIT">
+                    <label style="padding-right: 7%;" for="email">Email:</label>
+                    <input placeholder="write here" type="text" id="email" name="email" required autofocus><br><br>
+                    
+                    <label for="student">I am a studuent at 42:</label>
+                    <input type="checkbox" id="student" name="student" value="Yes" required><br><br>
+
+                    <input class="button" type="submit" value="SUBMIT" onclick="displayFormContents()" ">
+                    <!-- center submit button -->
                 </form>
             </div>
         </div>
+        <style>
+            #page-container {display: flex; justify-content: center;}
+            #form-container {background-color: rgb(0, 0, 0); width: 40%; display: flex; justify-content: center; border-radius: 5%; font-size: 20px;}
+            form {padding: 5%; color: rgb(34, 168, 7);}
+            h1 {color: rgb(34, 168, 7); text-align: center;}
+            .text {font-family: 'Courier New', Courier, monospace;}
+            input {font-size: 1rem; color: rgb(34, 168, 7); background: transparent; border: none; outline:none; caret-color: rgb(34, 168, 7);}
+
+        </style>
     </body>
+    <script src="popup.js"> </script>
 </html>
+
+<!-- text-align: center; -->
