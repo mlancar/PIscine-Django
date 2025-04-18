@@ -32,7 +32,15 @@ h2 {
 	padding: 0 0 .25em;
 }
 
+h1 {
+	margin: 0 0 1.5em;
+	border-bottom: 1px solid #ccc;
+
+	padding: 0 0 .25em;
+}
+
 /* Styling an indeterminate progress bar */
+
 
 progress:not(value) {
 	/* Add your styles here. As part of this walkthrough we will focus only on determinate progress bars. */
@@ -149,7 +157,9 @@ p[data-value] {
 
 p[data-value]:after {
 	content: attr(data-value) '%';
-	position: absolute; right:0;
+	position: absolute;
+	right:0;
+	
 }
 
 
