@@ -23,68 +23,69 @@ def create_html_file():
     sorted_data = sorted(list_element, key=get_first_key_value)
                 
     # print(sorted_data)
-    
-    name = ""
-    position = ""
-    number = ""
-    small = ""
-    molar = ""
-    electron = ""
 
-    html_content = """
-        <html lang="en">
-            <head>
-                <title>Periodic Table</title>
-                <meta charset="UTF-8">
-            </head>
-            <body>
-                <link rel="stylesheet" href="periodic_table.css">
-                <div id="page-content">
-                    <h1>Periodic Table</h1>
-                    <div id="table-content">
-                        <table>
-                                <tr>
-                                    {items}
-                                </tr>
-                        </table>
-                    </div>
-                </div>
-            </body>
-        </html>
+
+    # Génération HTML
+    html_content = f"""
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Tableau Périodique</title>
+       
+    </head>
+    <body>
+        <link rel="stylesheet" href="periodic_table.css">
+        <h1 style="text-align:center;">Tableau Périodique des Éléments</h1>
+        <table>
+        
     """
-    items_html = ""
-    row_html = ""
-    row = []
-    last_position = 0
+    # data = [f"Case {i}" for i in range(126)]
+    rows = 7
+    columns = 18
+    
+    index = 0
+    for row in range(rows):
+        html_content += "  <tr>\n"
+        for col in range(columns):
+            if index < len(sorted_data):
+                element = sorted_data[index]
+                name = element.get('name')
+                number = element.get('number')
+                small = element.get('small')
+                molar = element.get('molar')
+                
+                if (row == 0 and col == 2) or ((row == 1 or row == 2) and col == 8):
+                    break
+                if row == 0 and col == 1:
+                    print(row, col)
+                    html_content += f"""    <td colspan="16"</td>\n"""
+                elif (row == 1 or row == 2) and col == 2:
+                    print("ici", row, col)
+                    html_content += f"""    <td colspan="10"></td>\n"""
+                else:
+                    index += 1
 
-    for element in sorted_data:
-        name = element.get("name", "")
-        small = element.get("small", "")
-        molar = element.get("molar", "")
-        electron = element.get("electron", "")
+                html_content += f"""    <td>
+                                            
+                                                <h4 id="name">{name}</h4>
+                                                <ul>
+                                                    <li id="number">{number}</li>
+                                                    <li id="small">{small}</li>
+                                                    <li id="molar">{molar}</li>
+                                                </ul>
+                                            
+                                    </td>\n"""
 
-        position = element.get("position", "")
+        html_content += "  </tr>\n"
 
-        if (position > last_position)
-            row.append([])
-
-        cell += """           <th>
-                                        <ul>
-                                            <li><strong>name</strong></li>
-                                            <li>small</li>
-                                            <li>molar</li>
-                                            <li>electron</li>
-                                        </ul>
-                                    </th>
-                        """
-        last_position = position
-        current_row.append(cell)
+    html_content += "</table>\n</body>\n</html>"
 
 
-    final_html = html_content.format(rows=rows_html)
+
 
     with open("periodic_table.html", "w") as file:
-        file.write(final_html)
+        file.write(html_content)
 
 if __name__ == "__main__":
     create_html_file()
