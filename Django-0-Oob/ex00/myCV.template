@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <title> Ceci n'est pas un CV</title>
+        <meta charset="UTF-8">
+        <style>
+            th {border: 1px solid; border-collapse:collapse;}
+            hr {width: 80%; height:1px; background: black;}
+            table tbody tr:last-child th:last-child {border-color: #424242;}
+        </style>
+    </head>
+    <body>
+        <div id="page-container" style="border:solid; background-color: #8fa77f; width: 35rem; height: 80%;">  
+           
+            <h1 style="text-align: center;"> TOUT SAUF SAUVER ZELDA</h1>
+            <div id="information" style="display:flex; justify-content: space-between; ">
+                <ul>
+                    <li>Link Link</li>
+                    <li>89 rue de la Prairie, Hyrule</li>
+                    <li>0600000000</li>
+                </ul>
+                <div id="profile-picture">
+                    <img src="images.jpeg" alt="profile-pic" style="width: 60%" >
+                </div>
+            </div>
+            <hr>
+            <div id="cv-content" style="display:flex; flex-direction: column;  align-items: center;">
+                <h2>  EXPERIENCE</h2>
+                <div id="formation-field" style="width: 80%; display: flex;" >
+                    <div id="table-content" style="display: flex; justify-content: center;">
+                        <table id="table" style="border-collapse:collapse;">
+                            <thead>
+                                <tr>
+                                    <th >Date</th>
+                                    <th >Travail</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>00/00/00</th>
+                                    <th>Phantom Hourglass</th>
+                                    <th>Sauver Zelda de Ganon</th>
+                                </tr>
+                                <tr>
+                                    <th>00/00/00</th>
+                                    <th>Spirit tracks</th>
+                                    <th>Sauver Zelda de Ganon</th>
+                                </tr>
+                                <tr>
+                                    <th scope="row">00/00/00</th>
+                                    <th>Breath of the wild</th>
+                                    <th>Sauver Zelda de Ganon</th>
+                                </tr>
+                                <tr>
+                                    <th>00/00/00</th>
+                                    <th>Tears of the kingdom</th>
+                                    <th>Sauver Zelda de Ganon</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <hr>
+                <h3> FORMATION </h3>
+                <div id="experience-field" style="width: 80%; display: flex;">
+                    <ol>
+                        <li>Ecole de Chevaleries, Celesbourg</li>
+                        <li>Ecole 2</li>
+                    </ol>
+                </div>
+                <hr>
+                <h4> CENTRE D'INTERET</h4>
+                <div id="interest-field" style="width: 80%; display: flex;">
+                    <ul>
+                        <li>Casser des pots</li>
+                        <li>Attraper des poules</li>
+                        <li>Maltraiter les korogus</li>
+                        <li>Sautiller dans les Prairies d'Hyrule</li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </body>
+   
+</html>

@@ -1,6 +1,32 @@
-                    
+import itertools                    
+
 def get_first_key_value(d):
-    return int(d["position"])
+    return int(d["number"])
+
+def get_type(element):
+
+    number = element.get('number')
+    number = int(number)
+    # print(number)
+    if number in {1, 6, 7, 8, 15, 16, 34}:
+        return "non-metal"
+    if number in {2, 10, 18, 36, 54, 86}:
+        return "noble-gas"
+    if number in {3, 11, 19, 37, 55, 87}:
+        return "alkaline-metal"
+    if number in {4, 12, 20, 38, 56, 88}:
+        return "alkali-earth-metal"
+    if number in {5, 14, 32, 33, 51, 52, 85}:
+        return "metalloid"
+    if number in {9, 17, 35, 53, 85}:
+        return "halogen"
+    if number in {13, 30, 31, 48, 49, 50, 80, 81, 82, 83, 84}:
+        return "post-transition-metal"
+    if number in itertools.chain(range(21, 30), range(39, 48), range(71, 80), range(103, 109)) or number == 112:
+        return "transition-metal"
+    else:
+        return "non-classified"
+
 
 def create_html_file():
 
@@ -36,8 +62,9 @@ def create_html_file():
     </head>
     <body>
         <link rel="stylesheet" href="periodic_table.css">
-        <h1 style="text-align:center;">Tableau Périodique des Éléments</h1>
-        <table>
+        <div id="page-content">
+            <h1 id="title">Tableau Périodique des Éléments</h1>
+            <table>
         
     """
     # data = [f"Case {i}" for i in range(126)]
@@ -54,32 +81,35 @@ def create_html_file():
                 number = element.get('number')
                 small = element.get('small')
                 molar = element.get('molar')
+                electron = element.get('electron')
                 
-                if (row == 0 and col == 2) or ((row == 1 or row == 2) and col == 8):
+                # print("ICI", name)
+                if (row == 0 and col == 2) or ((row == 1 or row == 2) and col == 8) or (row == 5 and col == 17):
                     break
                 if row == 0 and col == 1:
-                    print(row, col)
-                    html_content += f"""    <td colspan="16"</td>\n"""
+                    # print(name)
+                    html_content += f"""    <td class="no-border" colspan="16"</td>\n"""
                 elif (row == 1 or row == 2) and col == 2:
-                    print("ici", row, col)
-                    html_content += f"""    <td colspan="10"></td>\n"""
-                else:
-                    index += 1
-
-                html_content += f"""    <td>
+                    html_content += f"""    <td class="no-border" colspan="10"></td>\n"""
+                elif (row == 5 or row == 6) and col == 2:
+                    html_content += f"""    <td class="no-border"></td>\n"""
+                index += 1
+                element_type = get_type(element)
+                # print(element_type)
+                html_content += f"""    <td class="{element_type}">
                                             
-                                                <h4 id="name">{name}</h4>
+                                                <h4 class="name">{name}</h4>
                                                 <ul>
-                                                    <li id="number">{number}</li>
-                                                    <li id="small">{small}</li>
-                                                    <li id="molar">{molar}</li>
+                                                    <li class="number">{number}</li>
+                                                    <li class="small">{small}</li>
+                                                    <li class="molar">{molar}</li>
                                                 </ul>
                                             
                                     </td>\n"""
 
         html_content += "  </tr>\n"
 
-    html_content += "</table>\n</body>\n</html>"
+    html_content += "</table>\n</div>\n</body>\n</html>"
 
 
 
