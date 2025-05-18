@@ -20,6 +20,9 @@ class Elem:
     Elem will permit us to represent our HTML elements.
     """
     [...]
+    class ValidationError(Exception):
+        def __init__(self):
+            super().__init__("Error")
 
     def __init__(self, tag='div', attr={}, content=None, tag_type='double'):
         """
@@ -27,7 +30,22 @@ class Elem:
 
         Obviously.
         """
-        [...]
+        #[...]
+        #attr = dictionnaire
+        #content = list
+        self.tag = tag
+        self.attr = attr
+        self.tag_type = tag_type
+
+        if content is None: 
+            self.content = [] #si on fait pas ca ca fait que content = [none] donc on fait une list vide []
+        elif self.check_type(content): #check si content est un contenu valide, instance html ou text ou list d'elenetb Elem ou Text
+            if isinstance(content, list): #check si c'est une list
+                self.content = content
+            else: #sinon on cree une list
+                self.content = [content]
+        else:
+            raise Elem.ValidationError
 
     def __str__(self):
         """
@@ -36,10 +54,13 @@ class Elem:
         Make sure it renders everything (tag, attributes, embedded
         elements...).
         """
+        result = ''
         if self.tag_type == 'double':
-            [...]
+            #[...]
+            result += '<' + self.tag + self.__make_attr() + '>' + self.__make_content() + '</' + self.tag + '>'
         elif self.tag_type == 'simple':
-            [...]
+            #[...]
+            result += '<' + self.tag + self.__make_attr() + '/>'
         return result
 
     def __make_attr(self):
@@ -49,6 +70,7 @@ class Elem:
         result = ''
         for pair in sorted(self.attr.items()):
             result += ' ' + str(pair[0]) + '="' + str(pair[1]) + '"'
+        print(result)
         return result
 
     def __make_content(self):
