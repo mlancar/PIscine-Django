@@ -77,12 +77,12 @@ class Elem:
         """
         Here is a method to render the content, including embedded elements.
         """
-
+        indentation = 2
         if len(self.content) == 0:
             return ''
         result = '\n'
         for elem in self.content:
-            result += [...]
+            result += '  ' + str(elem).replace('\n', '\n  ') + '\n'
         return result
 
     def add_content(self, content):

@@ -31,7 +31,7 @@ try:
 except Exception as e:
     print(e)
 try:
-    print("Hey", intern2.__str__(), ", can you make me a coffee ?\n...Waiting...\n...Waiting...\n...Waiting...\n", intern.make_coffee())
+    print("Hey", intern2.__str__(), ", can you make me a coffee ?\n...Waiting...\n...Waiting...\n...Waiting...\n", intern2.make_coffee())
 except Exception as e:
     print(e)
     
