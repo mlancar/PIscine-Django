@@ -17,9 +17,9 @@ def test_text():
     assert str(Text('\n')) == '\n<br />\n'
     assert str(Text('foo\nbar')) == 'foo\n<br />\nbar'
     # Escaping <, >, "...
-    # assert str(Text('<')) == '&lt;'
-    # assert str(Text('>')) == '&gt;'
-    # assert str(Text('"')) == '&quot;'
+    assert str(Text('<')) == '&lt;'
+    assert str(Text('>')) == '&gt;'
+    assert str(Text('"')) == '&quot;'
     print('Text behaviour : OK.')
 
     
@@ -98,6 +98,7 @@ def test_errors():
 
 
 def test_embedding():
+    # print(str(Elem(content=Elem(content=Elem(content=Elem())))))
     assert (str(Elem(content=Elem(content=Elem(content=Elem()))))
             == """<div>
   <div>

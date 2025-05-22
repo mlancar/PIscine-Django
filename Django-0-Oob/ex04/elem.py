@@ -12,7 +12,13 @@ class Text(str):
         """
         Do you really need a comment to understand this method?..
         """
-        return super().__str__().replace('\n', '\n<br />\n')
+        text = super().__str__()
+        text = text.replace('&', '&amp;')
+        text = text.replace('<', '&lt;')
+        text = text.replace('>', '&gt;')
+        text = text.replace('"', '&quot;')
+        text = text.replace('\n', '\n<br />\n')
+        return text
 
 
 class Elem:
@@ -77,12 +83,17 @@ class Elem:
         """
         Here is a method to render the content, including embedded elements.
         """
-        indentation = 2
         if len(self.content) == 0:
             return ''
-        result = '\n'
-        for elem in self.content:
-            result += '  ' + str(elem).replace('\n', '\n  ') + '\n'
+        result = ""
+        for i, elem in enumerate(self.content):
+            text = "  " + str(elem).replace('\n', '\n  ')
+            if text.strip() == "":
+                continue
+            # print(str(elem))
+            if i == len(self.content) - 1:
+                text += '\n'
+            result += "\n" + text
         return result
 
     def add_content(self, content):
