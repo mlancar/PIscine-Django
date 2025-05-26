@@ -20,8 +20,9 @@ class Text(str):
         text = text.replace('\n', '\n<br />\n')
         return text
 
+# class Elem(ABC):
 
-class Elem(ABC):
+class Elem():
     """
     Elem will permit us to represent our HTML elements.
     """
@@ -87,6 +88,7 @@ class Elem(ABC):
             return ''
         result = ""
         for i, elem in enumerate(self.content):
+            
             text = "  " + str(elem).replace('\n', '\n  ')
             if text.strip() == "":
                 continue
