@@ -12,65 +12,58 @@ class Page():
     def __str__(self):
         return str(self.root)
 
-    def is_valid(self, element):
+    def is_valid(self, element, last_elem, index):
 
         list_elem = ["html", "head", "body", "title", "meta", "img", "table", "th", "tr", "td" , "ul", "ol", "li", "h1", "h2", "p", "div", "span", "hr", "br", "Text"]
-        # print(self.root)
-        previous_elem = []
-        index = 0
-        # html_rendered = str(self.root)
-        # for line in html_rendered.splitlines():
+
+
         current_elem = element
         print(element.tag)
-        # for elem in current_elem.content:
-            
-        #     print("elem is:",  elem.tag)
-        #     current_elem = elem.content
-        #     print("apres elem is:",  current_elem.)
-        for i in range(len(current_elem.content)):
-            # print("coucou")
-            # print(len(current_elem.content))
-            # print('1 mais pas la size!',current_elem.content[0])
-            # print('2 mais pas la size!',current_elem.content[1])
+        print(f"index = {index}")
 
-            self.is_valid(current_elem.content[i])
-            print("apres")
-            # for children in current_elem:
-            #     print(f"children: {children}")
+        print(f"current elem = {current_elem.tag}")
+        print(f"last elem = {last_elem.tag}")
+        
 
-            # for elem2 in current_elem:
+        if current_elem.tag not in list_elem:
+            return False
+        if index == 0 and not isinstance(current_elem, elements.Html):
+            print("par la")
+            return False
+        elif index == 1 and (isinstance(last_elem, elements.Html)) and (not isinstance(current_elem, elements.Head)):
+            print("la")
+            return False
+        elif (isinstance(last_elem, elements.Head)) and (not isinstance(current_elem, elements.Title)):
+            print("ici")
+            return False
+        elif index == 2 and (isinstance(current_elem, elements.Body) and (not isinstance(last_elem, elements.Html))):
+            print("cc")
+            return False
+        
+        if current_elem.tag in list_elem:
+            if isinstance(current_elem, elements.Html):
+                list_elem.remove("html")
+            elif isinstance(current_elem, elements.Head):
+                list_elem.remove("head")
+            elif isinstance(current_elem, elements.Body):
+                list_elem.remove("body")
+            elif isinstance(current_elem, elements.Title):
+                list_elem.remove("title")
 
-            # print("ici:", len(current_elem))
-            # if index == 0 and not isinstance(self.root, elements.Html):
-            #     raise TypeError("Wrong type:", self.root.tag)
-            # elif index == 0 and isinstance(self.root, elements.Html):
-            #     print("isok")
-            #     index += 1
-            #     previous_elem.append(self.root.tag)
-            # print("index:", index)
-            # print("previous elem = ", previous_elem[-1])
-            # print("tag = ", elem.tag)
-            # if elem.tag == "head" and index == 1 and previous_elem[-1] == "html":
-            #     print("isok2")
+        print("\n")
 
-            # elif elem.tag == "title" and previous_elem[-1] == "head":
-            #     print("isok3")
-            # index += 1
-            # previous_elem.append(elem.tag)
-            # print("\n")
-
+        for i, elem in enumerate(current_elem.content):
+            if not self.is_valid(elem, current_elem, index + 1):
+                return False
+ 
         return True
 
-        
-# if __name__ == '__main__':
-# print(str(Elem(tag='body', attr={}, content=Elem(), tag_type='double')))
 
-# print(str(Elem(content=(content=Elem(content=Elem())))))
-
-page = Page(elements.Html([elements.Head([elements.Title([elements.Div()])]), elements.Body([elements.Div(), elements.Div()])]))
-# print(page, "\n")
+page = Page(elements.Html([elements.Head([elements.Title()]), elements.Body([elements.Div(), elements.Div()])]))
+print(page, "\n")
 try:
-    result = page.is_valid(page.root)
+    index = 0
+    result = page.is_valid(page.root, page.root, index)
 except Exception as e:
     print(e)
 
