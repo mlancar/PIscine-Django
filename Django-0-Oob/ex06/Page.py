@@ -24,8 +24,8 @@ class Page():
         # print(f"current elem = {current_elem.tag}")
         # print(f"last elem = {last_elem.tag}")
         
-        # for elem in current_path:
-        #     print(f"current path = {elem}")
+        for elem in current_path:
+            print(f"current path = {elem}")
 
         if current_elem.tag not in list_elem:
             return False
@@ -36,7 +36,7 @@ class Page():
         # HEAD
         elif isinstance(current_elem, elements.Head):
             if "head" in current_path:
-                return False   
+                return False
         # TITLE
         elif isinstance(current_elem, elements.Title):
             if ((current_path[-1] == "head") and (elements.Title in current_path)):
@@ -47,13 +47,14 @@ class Page():
         elif isinstance(current_elem, elements.Body):
             if ("head" not in current_path) or ("title" not in current_path):
                 return False
-            # elif (current_path[-1] != "")
+            elif "body" in current_path:
+                return False
         #DIV
         elif isinstance(current_elem, elements.Div):
-            if ("body" not in current_path):
+            if "body" not in current_path:
                 return False
         #TEXT
-        elif isinstance(current_elem, elements.Text)
+        elif isinstance(current_elem, elements.Text):
             if ((current_path[-1] == "title") or (current_path[-1] == "h1") or (current_path[-1] == "h2") or (current_path[-1] == "li") (current_path[-1] == "th") or (current_path[-1] == "td")):
                 if "text" in current_path:
                     return False
@@ -61,10 +62,16 @@ class Page():
             #     return False
         
         #Ul/Ol/Li
-        elif (current_path[-1] == ("ul" or "ol")) and not isinstance(current_elem, elements.Li)
+        elif (current_path[-1] == ("ul" or "ol")) and not isinstance(current_elem, elements.Li):
             return False
-
-        elif 
+        #TABLE
+        elif current_path[-1] == "table" and not isinstance(current_elem, elements.Tr):
+            return False
+        #TR
+        elif current_path[-1] == "tr" and (not isinstance(current_elem, elements.Th) and not isinstance(current_elem, elements.Td)):
+                return False
+        
+        # elif 
         #ADD ELEMENT
         current_path.append(current_elem.tag)
         # print("\n")
@@ -74,7 +81,7 @@ class Page():
                 return False
         return True
 
-page = Page(elements.Html([elements.Head([elements.Title()]), elements.Body([elements.Div()])]))
+page = Page(elements.Html([elements.Head([elements.Title()]), elements.Body(elements.Div([elements.P([elements.Text()])]))]))
 
 print(page, "\n")
 try:
