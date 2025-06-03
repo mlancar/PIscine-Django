@@ -44,7 +44,7 @@ class Elem():
         self.attr = attr
         self.tag_type = tag_type
 
-        if content is None: 
+        if content is None:
             self.content = [] #si on fait pas ca ca fait que content = [none] donc on fait une list vide []
         elif self.check_type(content): #check si content est un contenu valide, instance html ou text ou list d'elenetb Elem ou Text
             if isinstance(content, list): #check si c'est une list

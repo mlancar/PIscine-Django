@@ -81,6 +81,6 @@ class Br(elem.Elem):
     def __init__(self, content=None):
         super().__init__(tag="br", attr={}, content=content, tag_type='simple')
 
-class Text(elem.Elem):
-    def __init__(self, content=None):
-        super().__init__(tag="text", attr={}, content=content, tag_type='double')
+# class Text(elem.Elem):
+#     def __init__(self, content=None):
+#         super().__init__(tag="text", attr={}, content=content, tag_type='double')

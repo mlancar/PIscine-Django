@@ -49,13 +49,7 @@ class Page():
             
             # case P():
                 # print("P")
-            
-            # case Text():
-            #     if (current_path[-1] == "p") and (not isinstance(current_elem, Text)):
-            #         return False
-            #     if ((current_path[-1] == "title") or (current_path[-1] == "h1") or (current_path[-1] == "h2") or (current_path[-1] == "li") or (current_path[-1] == "th") or (current_path[-1] == "td")):
-            #         if "text" in current_path:
-            #             return False
+              
             case Li():
                 if current_path[-1] != ("ul" or "ol"):
                     return False
@@ -66,14 +60,25 @@ class Page():
                 if current_path[-1] != "tr":
                     return False
             # case Table():
+            case Text():
+                if (current_path[-1] == "p") and (not isinstance(current_elem, Text)):
+                    return False
+                if ((current_path[-1] == "title") or (current_path[-1] == "h1") or (current_path[-1] == "h2") or (current_path[-1] == "li") or (current_path[-1] == "th") or (current_path[-1] == "td")):
+                    if "text" in current_path:
+                        return False
+                    else:
+                        current_path.append("text")
+                        return True
+                else:
+                    current_path.append("text")
+                    return True
 
 
         if current_path:
             match current_path[-1]:
                 case "span":
                     if not isinstance(current_elem, str) and not isinstance(current_elem, P):
-                        return False
-                    
+                        return False    
                 case "ul" | "ol":
                     if not isinstance(current_elem, Li):
                         return False
@@ -86,7 +91,6 @@ class Page():
                 case "p":
                     if not isinstance(current_elem, str):
                         return False
-                # case 
 
 
         else:
@@ -94,8 +98,11 @@ class Page():
                 return False
 
         # print(f"DEBUG: current_elem = {current_elem}, type = {type(current_elem)}")
-
-        current_path.append(current_elem.tag)
+        if isinstance(current_elem, Text):
+            current_path.append("text")
+            return True
+        else:
+            current_path.append(current_elem.tag)
 
         for i, elem in enumerate(current_elem.content):
             if not self.is_valid(elem, current_path):
