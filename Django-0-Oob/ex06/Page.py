@@ -13,7 +13,7 @@ class Page():
     
     def __str__(self):
         if isinstance(self.root, Html):
-            return "<!DOCTYPE html>\n" + str(self.root)
+            return "<!DOCTYPE html>\n" + str(self.root) + "\n"
         else:
             return str(self.root)
 
@@ -48,7 +48,7 @@ class Page():
             case Div():
                 if "body" not in current_path:
                     return False
-                elif current_path[-1] not in ("body", "div"): #bizarre un peu
+                elif current_path[-1] not in ("body", "div"):
                     return False
             
             case Ul():
@@ -140,16 +140,21 @@ class Page():
                 return False
         return True
 
-page = Page(Html([Head(Title()), Body([Ul(Li(Text("hello")))])]))
 
+def write_to_file(page):
+    with open("page.html", "w") as file:
+        file.write(page)
 # page = Page(Html([Head(Title()), Body(Text())]))
 
 # print(page, "\n")
+page = Page(Html([Head(Title()), Body([Ul(Li(Text("hello")))])]))
+
 try:
-    index = 0
     current_path = []
     result = page.is_valid(page.root, current_path)
-    print(f"result: {result}")
+    write_to_file(str(page))
+
+    # print(f"result: {result}")
 except Exception as e:
     traceback.print_exc()
     print(e)
