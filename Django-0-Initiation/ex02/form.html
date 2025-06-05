@@ -12,6 +12,7 @@
             h1 {color: rgb(34, 168, 7); text-align: center;}
             .text {font-family: 'Courier New', Courier, monospace;}
             input {font-size: 1rem; color: rgb(34, 168, 7); background: transparent; border: none; outline:none; caret-color: rgb(34, 168, 7);}
+            button {}
         </style>
     </head>
     <body>
@@ -26,7 +27,7 @@
                     <input placeholder="write here" type="text" id="name" name="name" required><br><br>
                     
                     <label style="padding-right: 11%;" for="age">Age:</label>
-                    <input placeholder="write here"  type="number" id="age" name="age"  min="0" max="200" required ><br><br>
+                    <input placeholder="write here"  type="number" id="age" name="age"  min="0" required ><br><br>
 
                     <label for="gender_female">Female</label>
                     <input type="radio" id="gender_female" name="gender" value="Female" required>
@@ -38,7 +39,7 @@
                     <input type="radio" id="gender_other" name="gender" value="Other" required><br><br>
 
                     <label style="padding-right: 7%;" for="phone">Phone:</label>
-                    <input placeholder="write here"  type="text" id="phone" name="phone" required><br><br>
+                    <input type="tel" id="phone" name="phone" placeholder="0123456789" required><br><br>
 
                     <label style="padding-right: 7%;" for="email">Email:</label>
                     <input placeholder="write here" type="text" id="email" name="email" required><br><br>
