@@ -2,19 +2,28 @@
 
 <html lang="fr">
     <head>
-        <title> Ceci n'est pas un CV</title>
+        <title> <h1>Ceci n'est pas un CV</h1></title>
         <meta charset="UTF-8">
         <style>
-            th {border: 1px solid; border-collapse:collapse;}
+            #page-container {border:solid; background-color: #8fa77f; width: 35rem; height: 80%;}
+            h2 {text-align: center;}
+            #information {display:flex; justify-content: space-between;}
+            #cv-content {display:flex; flex-direction: column;  align-items: center;}
+            #formation-field {width: 80%; display: flex;}
+            #table-content {display: flex; justify-content: center;}
+            #table {border-collapse:collapse;}
+            #experience-field {width: 80%; display: flex;}
+            #interest-field {width: 80%; display: flex;}
+            th  {border: 1px solid; border-collapse:collapse;}
+            td  {border: 1px solid; border-collapse:collapse;}
             hr {width: 80%; height:1px; background: black;}
-            table tbody tr:last-child th:last-child {border-color: #424242;}
         </style>
     </head>
     <body>
-        <div id="page-container" style="border:solid; background-color: #8fa77f; width: 35rem; height: 80%;">  
+        <div id="page-container">  
            
-            <h1 style="text-align: center;"> TOUT SAUF SAUVER ZELDA</h1>
-            <div id="information" style="display:flex; justify-content: space-between; ">
+            <h2> TOUT SAUF SAUVER ZELDA</h2>
+            <div id="information">
                 <ul>
                     <li>Link Link</li>
                     <li>89 rue de la Prairie, Hyrule</li>
@@ -25,11 +34,11 @@
                 </div>
             </div>
             <hr>
-            <div id="cv-content" style="display:flex; flex-direction: column;  align-items: center;">
-                <h2>  EXPERIENCE</h2>
-                <div id="formation-field" style="width: 80%; display: flex;" >
-                    <div id="table-content" style="display: flex; justify-content: center;">
-                        <table id="table" style="border-collapse:collapse;">
+            <div id="cv-content">
+                <h3>  EXPERIENCE</h3>
+                <div id="formation-field">
+                    <div id="table-content">
+                        <table id="table">
                             <thead>
                                 <tr>
                                     <th >Date</th>
@@ -39,24 +48,24 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th>00/00/00</th>
-                                    <th>Phantom Hourglass</th>
-                                    <th>Sauver Zelda de Ganon</th>
+                                    <td>00/00/00</td>
+                                    <td>Phantom Hourglass</td>
+                                    <td>Sauver Zelda de Ganon</td>
                                 </tr>
                                 <tr>
-                                    <th>00/00/00</th>
-                                    <th>Spirit tracks</th>
-                                    <th>Sauver Zelda de Ganon</th>
+                                    <td>00/00/00</td>
+                                    <td>Spirit tracks</td>
+                                    <td>Sauver Zelda de Ganon</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">00/00/00</th>
-                                    <th>Breath of the wild</th>
-                                    <th>Sauver Zelda de Ganon</th>
+                                    <td scope="row">00/00/00</td>
+                                    <td>Breatd of the wild</td>
+                                    <td>Sauver Zelda de Ganon</td>
                                 </tr>
                                 <tr>
-                                    <th>00/00/00</th>
-                                    <th>Tears of the kingdom</th>
-                                    <th>Sauver Zelda de Ganon</th>
+                                    <td>00/00/00</td>
+                                    <td>Tears of the kingdom</td>
+                                    <td style="border-color: #424242;">Sauver Zelda de Ganon</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -64,15 +73,15 @@
                 </div>
                 <hr>
                 <h3> FORMATION </h3>
-                <div id="experience-field" style="width: 80%; display: flex;">
+                <div id="experience-field">
                     <ol>
                         <li>Ecole de Chevaleries, Celesbourg</li>
                         <li>Ecole 2</li>
                     </ol>
                 </div>
                 <hr>
-                <h4> CENTRE D'INTERET</h4>
-                <div id="interest-field" style="width: 80%; display: flex;">
+                <h3> CENTRE D'INTERET</h3>
+                <div id="interest-field">
                     <ul>
                         <li>Casser des pots</li>
                         <li>Attraper des poules</li>
@@ -81,7 +90,6 @@
                         
                     </ul>
                 </div>
-                
             </div>
         </div>
     </body>
