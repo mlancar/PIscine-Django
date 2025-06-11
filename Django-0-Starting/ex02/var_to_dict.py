@@ -28,7 +28,7 @@ def display_dictionary():
     for i in d:
         my_dictionary[i[0]] = i[1]
     for key, value in my_dictionary.items():
-        print(f"{value}: {key}")
+        print(f"{value} : {key}")
 
 if __name__ == '__main__':
     display_dictionary()

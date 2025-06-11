@@ -26,8 +26,8 @@ def sort_list():
     # print(sorted_dic)
 
     for key, value in sorted_dic.items():
+        # print(value)
         print(key)
-
 
 if __name__ == "__main__":
     sort_list()

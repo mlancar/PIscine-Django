@@ -49,4 +49,7 @@ def where_is_it(arg):
 if __name__ == "__main__":
     if len(sys.argv) == 2:
         arg = sys.argv[1]
-        where_is_it(arg)
+        if not ",," in sys.argv[1]:
+            where_is_it(arg)
+
+

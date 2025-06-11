@@ -1,25 +1,27 @@
 import sys
-# import antigravity
-
-def main(latitude, longitude):
-    int_latitude = int(latitude)
-    int_longitude = int(longitude)
-
-    
-        
+import antigravity 
     
 if __name__=='__main__':
-    if len(sys.argv) == 3:
-        print("hello")
+    if len(sys.argv) == 4:
         latitude = sys.argv[1]
-        # longitude = sys.argv[2]
-        latitude = 48.85341
-        longitude = 2.3488
-        if not isinstance(latitude, float) 
-            print('Expected Float number')
-        else if not isinstance(longitude, float) 
-            print('Expected Float number')
+        longitude = sys.argv[2]
+        datedow = sys.argv[3]
+
+        # latitude = 48.85341
+        # longitude = 2.3488
+        # datedow = "25-06-11-35000"
+
+        if not isinstance(latitude, float):
+            print('Error latitude: expected Float number')
+        elif not isinstance(longitude, float) :
+            print('Error longitude: expected Float number')
+        elif not isinstance(datedow, string):
+            print("Error datedow: expected string")
         else:
-            main(latitude, longitude)
+            try:
+                datedow_encode = datedow.encode("utf-8")
+                antigravity.geohash(latitude, longitude, datedow_encode)
+            except:
+                print("Error")
     else:
-        print("Expected two arguments")
+        print("Expected three arguments")

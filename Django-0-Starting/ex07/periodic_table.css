@@ -1,54 +1,49 @@
 html, body {
-    margin: 0%;
     background-color: #000000;
     font-family: 'Courier New', Courier, monospace;
-    height: 100%;
     position: relative;
 }
 
 table {
     border-spacing: 5px;
-    height: 60vh;
-    table-layout: fixed;
+    padding-left: 4%
 }
 
-tr {
-    width: 50%;
-}
 td {
-    min-width: 165px;
-    min-height: 150px;
+    min-width: 94px;
     border: 1px solid #000000;
     text-align: center;
-    vertical-align: top;
-    box-sizing: border-box;
+    /* vertical-align: top; */
+    /* box-sizing: border-box; */
     border-radius: 10%;
-    overflow: hidden;
-    white-space: nowrap; /* Évite que le texte passe à la ligne */
-    text-overflow: ellipsis; /* Ajoute "..." si le texte est trop long */
-    max-width: 165px; /* S'assure que la largeur maximale est respectée */
-    max-height: 150px;
+    /* overflow: hidden; */
+    /* white-space: nowrap;  */
+    /* text-overflow: ellipsis; */
+    max-width: 97px; /* S'assure que la largeur maximale est respectée */
 }
 
 ul {
-    font-size: 17px;
+    font-size: 0.7rem;
     padding-left: 0;
     list-style-type: none;
 }
 
 .name{
-    font-size: 16px;
+    font-size: 0.7rem;
 }
 
 #title {
     text-align: center;
     color: white;
-    font-size: 80px;
+    font-size: 3rem;
 }
 
 #page-content {
     background-color: #000000;
-    position: absolute
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #table-content {
@@ -58,7 +53,7 @@ ul {
 
 .small {
     font-weight: bold;
-    font-size: 40px;
+    font-size: 1rem;
 }
 
 /* .electron {
