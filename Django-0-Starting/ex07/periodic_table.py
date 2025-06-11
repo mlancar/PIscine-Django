@@ -1,5 +1,3 @@
-import itertools                    
-
 def get_first_key_value(d):
     return int(d["number"])
 
@@ -22,8 +20,7 @@ def get_type(element):
         return "halogen"
     elif number in {13, 30, 31, 48, 49, 50, 80, 81, 82, 83, 84}:
         return "post-transition-metal"
-    #pas faire avec itertools
-    elif number in itertools.chain(range(21, 30), range(39, 48), range(71, 80), range(103, 109)) or number == 112:
+    elif number in {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 71, 72, 73, 74, 75, 76, 76, 77, 78, 79, 80, 103, 104, 105, 106, 107, 108, 112}:
         return "transition-metal"
     else:
         return "non-classified"
