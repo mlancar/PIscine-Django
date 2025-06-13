@@ -1,0 +1,1 @@
+pip -V -t local_lib  install git+https://github.com/jaraco/path.git > install.log
