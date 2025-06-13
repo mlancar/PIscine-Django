@@ -1,1 +1,8 @@
-pip -V -t local_lib  install git+https://github.com/jaraco/path.git > install.log
+pip -V
+pip install git+https://github.com/jaraco/path.git --upgrade -t ./local_lib  > install.log 2>&1
+
+if grep -q "Successfully installed" install.log && ! grep -q "ERROR" install.log; then
+    PYTHONPATH=./local_lib python3 my_program.py
+else
+    echo "Error"
+fi
