@@ -1,4 +1,5 @@
 import path
+
 if __name__ == "__main__":
     content = f'''   Outstanding\n        
         .
@@ -9,7 +10,7 @@ if __name__ == "__main__":
     `OOOOOOO`
     OOOO'OOOO
    OOO'   'OOO
-  O'         'O'''
+  O'         'O\n'''
 
 
     directory  = path.Path("outstanding")
