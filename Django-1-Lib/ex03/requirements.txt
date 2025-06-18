@@ -7,3 +7,5 @@ pip install lxml
 pip install requests
 
 pip install dewiki
+
+pip install beautifulsoup4
