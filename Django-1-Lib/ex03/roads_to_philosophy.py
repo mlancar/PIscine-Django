@@ -50,7 +50,7 @@ def find_philosophy(title, road_to_philosophy):
     if title != "Philosophy":
         find_philosophy(title, road_to_philosophy)
     
-
+    #mettre ca ailleur
     print(f"{len(road_to_philosophy)} roads from {road_to_philosophy[0]} to philosophy !")
 
 
