@@ -98,7 +98,6 @@ def test_errors():
 
 
 def test_embedding():
-    # print(str(Elem(content=Elem(content=Elem(content=Elem())))))
     assert (str(Elem(content=Elem(content=Elem(content=Elem()))))
             == """<div>
   <div>

@@ -12,7 +12,6 @@
     </head>
     <body>
         <div id="page-container" style="border:solid; background-color: #8fa77f; width: 35rem; height: 80%;">  
-           
             <h1 style="text-align: center;"> {desired_position}</h1>
             <div id="information" style="display:flex; justify-content: space-between; ">
                 <ul>
@@ -79,7 +78,6 @@
                         <li>{hobby2}</li>
                         <li>{hobby3}</li>
                         <li>{hobby3}</li>
-                        
                     </ul>
                 </div>
             </div>

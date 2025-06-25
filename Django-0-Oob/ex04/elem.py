@@ -76,7 +76,6 @@ class Elem:
         result = ''
         for pair in sorted(self.attr.items()):
             result += ' ' + str(pair[0]) + '="' + str(pair[1]) + '"'
-        print(result)
         return result
 
     def __make_content(self):

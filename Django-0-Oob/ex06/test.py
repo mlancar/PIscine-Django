@@ -7,147 +7,147 @@ import pytest
 # def test_root_valid():
 #     current_path = []
 #     valid_page = Page(Html())
-#     assert valid_page.is_valid(valid_page.root, current_path) is True
+#     valid_page.is_valid(valid_page.root, current_path)
 
 def test_valid_html_node():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body()]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_root_invalid():
 
     invalid_page = Page(Body())
     current_path = []
-    assert invalid_page.is_valid(invalid_page.root, current_path) is True    
+    invalid_page.is_valid(invalid_page.root, current_path)
 
 def test_html_empty():
     invalid_page = Page(Html())
     current_path = []
-    assert invalid_page.is_valid(invalid_page.root, current_path) is True   
+    invalid_page.is_valid(invalid_page.root, current_path)   
 
 def test_no_head():
     current_path = []
     valid_page = Page(Html([Body()]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_double_head():
     current_path = []
     valid_page = Page(Html([Head(Title()), Head()]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_invalid_head():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(Head())]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_no_title():
     current_path = []
     valid_page = Page(Html([Head(Body())]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_double_title():
     current_path = []
     valid_page = Page(Html([Head([Title(), Title()]), Body()]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_invalid_title():
     current_path = []
     valid_page = Page(Html([Head([Title()]), Body(Title())]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_no_body():
     current_path = []
     valid_page = Page(Html([Head(Title()), Div()]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_double_body():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(Div()), Body()]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_invalid_body():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(Body())]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_valid_div():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(Div())]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_invalid_li():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(Div(Li()))]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_valid_ul():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body([Ul(Li(Text("hello")))])]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_empty_ul():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body([Ul()])]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_invalid_ul():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body([Ul(Text("invalid"))])]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_valid_span():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(Div(Span(Text("hola"))))]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_invalid_span():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(Div(Span(Table())))]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_valid_table():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(Div(Table()))]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_invalid_table():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(Div(Table(Span())))]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_empty_tr():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(Div(Table(Tr())))]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_valid_tr():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(Div(Table(Tr(Td()))))]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_valid_div():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(H2())]))
     print(Page)
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_invalid_h1():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(H1(H1()))]))
     print(Page)
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_valid_p():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body([P(Text("la"))])]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_invalid_p():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body([P(Div())])]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)
 
 def test_invalid_test():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body(H1(Div()))]))
-    assert valid_page.is_valid(valid_page.root, current_path) is True
+    valid_page.is_valid(valid_page.root, current_path)

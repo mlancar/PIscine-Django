@@ -115,6 +115,3 @@ class Elem:
                                                 isinstance(elem, Elem)
                                                 for elem in content])))
 
-
-if __name__ == '__main__':
-    [...]

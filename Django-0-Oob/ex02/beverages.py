@@ -8,9 +8,9 @@ class HotBeverage:
     
     def __str__(self):
         return (
-            f"name: {self.name}\n"
-            f"price: {self.price:.2f}\n"
-            f"description: {self.description()}"
+            f"name : {self.name}\n"
+            f"price : {self.price:.2f}\n"
+            f"description : {self.description()}"
         )
 
 class Coffee(HotBeverage):
@@ -50,13 +50,13 @@ hot_beverage = HotBeverage()
 print(hot_beverage.__str__())
 
 coffee = Coffee()
-print("\n" + coffee.__str__())
+print(f"\n{coffee.__str__()}")
 
 tea = Tea()
-print("\n" + tea.__str__())
+print(f"\n{tea.__str__()}")
 
 chocolate = Chocolate()
-print("\n" + chocolate.__str__())
+print(f"\n{chocolate.__str__()}")
 
 cappuccino = Cappuccino()
-print("\n" + cappuccino.__str__())
+print(f"\n{cappuccino.__str__()}")
