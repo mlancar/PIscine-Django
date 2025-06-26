@@ -45,20 +45,21 @@ coffeeMachine = CoffeeMachine()
 coffee = Coffee()
 
 # cappuccino = Cappuccino()
+if __name__ == '__main__':
 
-for i in range(25):
-    try:
-        print(f"{YELLOW}*puts {coffee.price:.2f} into the machine*{RESET}")
-        served = coffeeMachine.serve(coffee)
+    for i in range(25):
+        try:
+            print(f"{YELLOW}*puts {coffee.price:.2f} into the machine*{RESET}")
+            served = coffeeMachine.serve(coffee)
 
-        # print(f"{YELLOW}*puts {cappuccino.price:.2f} into the machine*{RESET}")
-        # served = coffeeMachine.serve(cappuccino)
-        print(f"{BLUE}-{served.description()}\n{RESET}")
+            # print(f"{YELLOW}*puts {cappuccino.price:.2f} into the machine*{RESET}")
+            # served = coffeeMachine.serve(cappuccino)
+            print(f"{BLUE}-{served.description()}\n{RESET}")
 
-    except CoffeeMachine.BrokenMachineException as e:
-        print(e)
-        coffeeMachine.repair()
-        print(f"\n{YELLOW}*** repairing ***")
-        print(f"*** repairing ***")
-        print(f"*** repairing ***\n{RESET}")
-        print(f"{GREEN}Coffee machine is repaired{RESET}\n")
+        except CoffeeMachine.BrokenMachineException as e:
+            print(e)
+            coffeeMachine.repair()
+            print(f"\n{YELLOW}*** repairing ***")
+            print(f"*** repairing ***")
+            print(f"*** repairing ***\n{RESET}")
+            print(f"{GREEN}Coffee machine is repaired{RESET}\n")

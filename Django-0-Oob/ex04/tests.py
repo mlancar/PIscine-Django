@@ -4,7 +4,6 @@
 import traceback
 from elem import Elem, Text
 
-
 def test_text():
     # What is Text?
     assert isinstance(Text(), str)

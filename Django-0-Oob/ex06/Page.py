@@ -21,9 +21,6 @@ class Page():
 
         current_elem = element
 
-        # for elem in current_path:
-        #     print(f"current path = {elem}")
-        
         match current_elem:
             case Html():
                 if len(current_elem.content) != 2:
@@ -144,17 +141,16 @@ class Page():
 def write_to_file(page):
     with open("page.html", "w") as file:
         file.write(page)
-# page = Page(Html([Head(Title()), Body(Text())]))
 
-# print(page, "\n")
-page = Page(Html([Head(Title()), Body([Ul(Li(Text("hello")))])]))
+if __name__ == '__main__':
 
-try:
-    current_path = []
-    result = page.is_valid(page.root, current_path)
-    write_to_file(str(page))
+    page = Page(Html([Head(Title()), Body(Img())]))
 
-    # print(f"result: {result}")
-except Exception as e:
-    traceback.print_exc()
-    print(e)
+    try:
+        current_path = []
+        result = page.is_valid(page.root, current_path)
+        write_to_file(str(page))
+
+    except Exception as e:
+        traceback.print_exc()
+        print(e)

@@ -4,11 +4,6 @@ import traceback
 from elem import Elem, Text
 import pytest
 
-# def test_root_valid():
-#     current_path = []
-#     valid_page = Page(Html())
-#     valid_page.is_valid(valid_page.root, current_path)
-
 def test_valid_html_node():
     current_path = []
     valid_page = Page(Html([Head(Title()), Body()]))
