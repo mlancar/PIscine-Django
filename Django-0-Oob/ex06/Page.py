@@ -17,6 +17,10 @@ class Page():
         else:
             return str(self.root)
 
+    def write_to_file(self):
+        with open("page.html", "w") as file:
+            file.write(self.__str__())
+
     def is_valid(self, element, current_path):
 
         current_elem = element
@@ -47,7 +51,7 @@ class Page():
                     return False
                 elif current_path[-1] not in ("body", "div"):
                     return False
-            
+
             case Ul():
                 if current_path[-1] not in ("body", "div"):
                     return False
@@ -82,7 +86,10 @@ class Page():
             case Td():
                 if current_path[-1] != "tr":
                     return False
-
+        
+            case P():
+                if current_path[-1] != "span":
+                    return False
             case Span():
                 if current_path[-1] not in ("body", "div"):
                     return False
@@ -135,12 +142,9 @@ class Page():
         for i, elem in enumerate(current_elem.content):
             if not self.is_valid(elem, current_path):
                 return False
+        
+        self.write_to_file()
         return True
-
-
-def write_to_file(page):
-    with open("page.html", "w") as file:
-        file.write(page)
 
 if __name__ == '__main__':
 
@@ -148,8 +152,8 @@ if __name__ == '__main__':
 
     try:
         current_path = []
-        result = page.is_valid(page.root, current_path)
-        write_to_file(str(page))
+        is_page_valid = page.is_valid(page.root, current_path)
+        print(is_page_valid)
 
     except Exception as e:
         traceback.print_exc()
