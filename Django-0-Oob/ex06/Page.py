@@ -96,7 +96,6 @@ class Page():
             
             case Text():
                 if (current_path[-1] != "p") and (current_path[-1] != "body") and (current_path[-1] != "title") and (current_path[-1] != "h1") and (current_path[-1] != "h2") and (current_path[-1] != "li") and (current_path[-1] != "th") and (current_path[-1] != "td") and (current_path[-1] != "span") and (current_path[-1] != "div"):
-                    print("ici")
                     return False
                 elif ():
                     if "text" in current_path:
