@@ -42,3 +42,4 @@ def test_subject():
     
     assert str(Html([Head(Title(Text("Hello ground!"))), Body([H1(Text("Oh no, not again!")), Img(attr={"src": "http://i.imgur.com/pfp3T.jpg"})])])) ==\
         '<html>\n  <head>\n    <title>\n      Hello ground!\n    </title>\n  </head>\n  <body>\n    <h1>\n      Oh no, not again!\n    </h1>\n    <img src="http://i.imgur.com/pfp3T.jpg" />\n  </body>\n</html>'
+    # print(str(Html([Head(Title(Text("Hello ground!"))), Body([H1(Text("Oh no, not again!")), Img(attr={"src": "http://i.imgur.com/pfp3T.jpg"})])])))

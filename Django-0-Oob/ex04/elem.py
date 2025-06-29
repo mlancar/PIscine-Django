@@ -29,7 +29,6 @@ class Elem:
             self.attr = attr
         else:
             self.attr = {}
-
         if content is None: 
             self.content = []
         elif self.check_type(content):

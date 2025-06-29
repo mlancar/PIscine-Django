@@ -196,4 +196,8 @@ def test_invalid_p():
     # print(is_page_valid)
     assert is_page_valid.is_valid(is_page_valid.root, current_path) == False
 
-#TEST TEXT
+def test_valid_assert():
+    current_path = []
+    is_page_valid = Page(Html(attr={"id": "page-content"}, content=[Head(Title(Text('"Hello ground!"'))), Body([Div(attr={"id": "main-content"}, content=[H1(Text('"Oh no, not again!"')), Img({"src": "image/open_me.jpg", "id": "image"})])])]))
+    # print(is_page_valid)
+    assert is_page_valid.is_valid(is_page_valid.root, current_path) == True

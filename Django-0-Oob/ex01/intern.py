@@ -29,13 +29,13 @@ if __name__ == '__main__':
         print(e)
     try:
         print(f"""Fine... and you, {intern2.__str__()}, can you make me a coffee ?\n\n..Waiting..\n..Waiting..\n..Waiting..\n\n
-    `°´ \033[32m( (
-        ) )   `°´\033[0m
-        ........
-        |      |]
-        \      /
-        `----'
-        ( coffee )\n
+   \033[32m`°´ ( (
+       ) )   `°´\033[0m
+    ........
+    |      |]
+    \      /
+     `----'
+   ( coffee )\n
     *{intern2.make_coffee()}*""")
     except Exception as e:
         print(e)

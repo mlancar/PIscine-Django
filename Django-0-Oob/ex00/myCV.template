@@ -6,7 +6,6 @@
         <meta charset="UTF-8">
         <style>
             th {{border: 1px solid; border-collapse:collapse;}}
-            hr {{width: 80%; height:1px; background: black;}}
             table tbody tr:last-child th:last-child {{border-color: #424242;}}
         </style>
     </head>
@@ -24,7 +23,6 @@
                     <img src="{image}" alt="profile-pic" style="width: 60%" >
                 </div>
             </div>
-            <hr>
             <div id="cv-content" style="display:flex; flex-direction: column;  align-items: center;">
                 <h2>  EXPERIENCE</h2>
                 <div id="formation-field" style="width: 80%; display: flex;" >
@@ -62,7 +60,6 @@
                         </table>
                     </div>
                 </div>
-                <hr>
                 <h3> FORMATION </h3>
                 <div id="experience-field" style="width: 80%; display: flex;">
                     <ol>
@@ -70,7 +67,6 @@
                         <li>{school_name2}</li>
                     </ol>
                 </div>
-                <hr>
                 <h4> CENTRE D'INTERET</h4>
                 <div id="interest-field" style="width: 80%; display: flex;">
                     <ul>

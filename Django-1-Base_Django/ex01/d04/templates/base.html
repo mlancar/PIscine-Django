@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 
 <html lang="fr">
@@ -11,17 +12,17 @@
         {% endblock %}
     </head>
     <body>
-       
-        <header>
-            {% include "nav.html" %}
-        </header>
-        <main>
-            {% block content %}{% endblock %}
-        </main>
-        <footer>
-            <p>© 2025 – Mon super projet Django</p>
-        </footer>
-        <div></div>
+        <div class="page-container">
+            <header>
+                {% include "nav.html" %}
+            </header>
+            <main>
+                {% block content %}{% endblock %}
+            </main>
+            <footer>
+                <p>© 2025 – Mon super projet Django</p>
+            </footer>
+        </div>
     </body>
 </html>
 

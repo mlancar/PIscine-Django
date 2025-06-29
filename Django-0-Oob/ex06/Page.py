@@ -2,8 +2,6 @@ from elements import *
 import traceback
 from elem import Elem, Text
 
-#check Text
-
 class Page():
 
     def __init__(self, root_elem):
