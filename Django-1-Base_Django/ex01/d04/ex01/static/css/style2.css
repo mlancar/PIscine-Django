@@ -31,12 +31,12 @@ html, body {
 }
 
 .nav-bar a:hover {
-    background-color: rgb(135, 166, 207);
+    background-color: rgb(211, 176, 176);
     color: black;
 }
 
 .nav-bar a {
-    background-color: rgb(2, 66, 150);
+    background-color: rgb(126, 9, 9);
     color: white;
 }
 
@@ -46,13 +46,17 @@ html, body {
     min-height: 100vh;
 }
 
+.section {
+    background-color: rgb(211, 176, 176);
+}
+
 main {
     flex: 1;
     padding: 2%;
 }
 
 main p {
-    background-color: rgb(176, 191, 211);
+    background-color: rgb(211, 176, 176);
 }
 
 footer {
