@@ -1,5 +1,5 @@
 html, body {
-    background-color: #e7e5e5;
+    background-color: #ebe5e5;
     color: rgb(126, 9, 9);
     margin: 0;
     padding: 0;
@@ -8,9 +8,11 @@ html, body {
     line-height: 1.5;
     height: 100%;
 }
+
 .nav-bar {
     background-color: #333;
     overflow: hidden;
+    
 }
 
 .nav-bar ul {
@@ -26,28 +28,35 @@ html, body {
     text-align: center;
     padding: 1rem;
     text-decoration: none;
-    font-size: 3rem;
+    font-size: 2rem;
 
 }
 
 .nav-bar a:hover {
-    background-color: rgb(211, 176, 176);
+    background-color:rgb(204, 162, 162);
     color: black;
 }
 
 .nav-bar a {
     background-color: rgb(126, 9, 9);
-    color: white;
+    color: rgb(255, 255, 255);
+    
 }
 
-.page-container {
+.page-content {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    align-items: flex-start;
+    min-height: 75vh;
+    padding-left: 20%;
+    padding-bottom: 1%;
+    max-width: 55%;
 }
 
-.section {
-    background-color: rgb(211, 176, 176);
+h1 {
+    text-align: center;
+    border: solid;
+    width: 100%;
 }
 
 main {
@@ -55,8 +64,21 @@ main {
     padding: 2%;
 }
 
-main p {
-    background-color: rgb(211, 176, 176);
+/* .section {
+    background-color: rgb(167, 184, 206);
+} */
+
+.exemple {
+    background-color: #333335;
+    color: rgb(202, 202, 202);
+    /* padding: 2%; */
+    width: 100%;
+    font-size: 1rem;
+}
+
+pre code {
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 footer {

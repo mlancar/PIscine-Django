@@ -8,9 +8,11 @@ html, body {
     line-height: 1.5;
     height: 100%;
 }
+
 .nav-bar {
     background-color: #333;
     overflow: hidden;
+    
 }
 
 .nav-bar ul {
@@ -38,16 +40,23 @@ html, body {
 .nav-bar a {
     background-color: rgb(2, 66, 150);
     color: rgb(255, 255, 255);
+    
 }
 
-.page-container {
+.page-content {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    align-items: flex-start;
+    min-height: 75vh;
+    padding-left: 20%;
+    padding-bottom: 1%;
+    max-width: 55%;
 }
 
 h1 {
     text-align: center;
+    border: solid;
+    width: 100%;
 }
 
 main {
@@ -62,6 +71,9 @@ main {
 .exemple {
     background-color: #333335;
     color: rgb(202, 202, 202);
+    padding: 2%;
+    width: 100%;
+    /* border-radius: 2%; */
 }
 
 footer {

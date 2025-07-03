@@ -1,14 +1,111 @@
 {% extends "base.html" %}
 
-{% block title %}Page Django{% endblock %}
+{% block title %}Ex01 : Processus d’affichage d’une page statique{% endblock %}
+
 
 {% block extra_link %}
 <link rel="stylesheet" href="{% static 'css/style2.css' %}">
 {% endblock %}
 
 {% block content %}
-<h1>Bienvenue sur la page Django de ex01</h1>
-<p>Décrivez dans cette page le processus entraînant l’affichage d’une
-page web statique à partir d’un simple template en passant par une vue, de la
-requête à la réponse.</p>
+<div class="page-content">
+    <h1>Bienvenue sur la page Django</h1>
+    <h2>1. Fonctionnement général du moteur de templates Django</h2>
+    <div class="definition section">        
+        <p>Le moteur de templates de Django sert à générer dynamiquement des pages HTML en insérant des variables Python et en utilisant une syntaxe spéciale dans des fichiers .html.
+            Le moteur fonctionne ainsi :</p>     
+        <ol>
+            <li>Une vue (views.py) envoie un contexte (des variables) à un template HTML.</li>
+            <li>Le template contient des balises &#123;% ... %&#125; (logique) et &#123;&#123; ... &#125;&#125; (affichage de variables).</li>
+            <li>Django interprète le template et génère une page HTML finale.</li>
+        </ol>
+    </div>
+    <h2>2. Les blocs &#123;% block ... %&#125;</h2>
+    <div class="section">
+        <p>Les blocs servent à définir des zones modifiables dans un template parent. C'est la base du système d'héritage de templates.</p>
+        <span>Exemple</span>
+        <div class="exemple">
+            <pre><code>
+    &lt;html&gt;
+        &lt;head&gt;
+            &lt;title&gt;&#123;% block title %&#125;Titre par défaut&#123;% endblock %&#125;&lt;/title>
+        &lt;/head&gt;
+        &lt;body&gt;
+            &#123;% block content %&#125;Contenu par défaut&#123;% endblock %&#125;
+        &lt;/body&gt;
+    &lt;/html&gt;
+            </code></pre>
+        </div>
+        <div class="exemple">
+            <pre><code>
+    &#123;% extends "base.html" %&#125;
+
+    &#123;% block title %&#125;Page d'accueil&#123;% endblock %&#125;
+
+    &#123;% block content %&#125;
+        &lt;p&gt;Bienvenue sur le site !&lt;/p&gt;
+    &#123;% endblock %&#125;
+            </code></pre>
+        </div>
+        <span>Résultat : page.html hérite de base.html et remplace les blocs title et content.</span>
+    </div>
+
+    <h2>3. Les boucles &#123;% for ... in ... %&#125;</h2>
+    <span>Permettent de parcourir une liste envoyée dans le contexte et de générer du HTML dynamiquement.</span>
+    <div class="exemple">
+        <pre><code>
+    &lt;ul&gt;
+        &#123;% for fruit in fruits %&#125;
+        &lt;li&gt;&#123;&#123; fruit &#125;&#125;&lt;/li&gt;
+        &#123;% endfor %&#125;
+    &lt;/ul&gt;
+        </code></pre>
+    </div>
+    <div class="exemple">
+        <pre><code>
+    def ma_vue(request):
+        return render(request, "fruits.html", &#123;"fruits": ["Pommes", "Bananes", "Cerises"]&#125;)
+        </code></pre>        
+    </div>
+    <span>Affichera une liste &lt;li> avec chaque fruit.</span>
+
+    <h2>4. &#123;Les structures % if ... %&#125;</h2>
+    <div class="section">
+        <span>Permettent de faire des conditions dans le template.</span>
+        <div class="exemple">
+            <pre><code>
+    &#123;% if user.is_authenticated %&#125;
+        &lt;p&gt;Bonjour &#123;&#123; user.username &#125;&#125; !&lt;/p&gt;
+    &#123;% else %&#125;
+        &lt;p&gt;Bienvenue, visiteur.&lt;/p&gt;
+    &#123;% endif %&#125;
+            </code></pre>
+        </div>
+        <span>Tu peux aussi utiliser &#123;% elif %&#125; pour plusieurs cas.</span>
+    </div>
+
+    <h2>5. Affichage des variables : &#123;&#123; variable &#125;&#125;</h2>
+    <div class="section">
+        <span>Toutes les données du contexte envoyées par la vue peuvent être affichées avec :</span>
+        <div class="exemple">
+            <pre><code>
+        &lt;p&gt;Bonjour&#123;&#123;nom &#125;&#125; !&lt;/p&gt;
+            </code></pre>
+        </div>
+        <span>Si dans la vue tu as :</span>
+        <div class="exemple">
+            <pre><code>
+    def ma_vue(request):
+        return render(request, "index.html", &#123;"nom": "Marine"&#125;)
+            </code></pre>
+        </div>
+            <p>Le template affichera : Bonjour Marine !<br>Tu peux aussi accéder aux attributs et méthodes :</p>
+        <div class="exemple">
+            <pre><code>
+    &lt;p&gt;&#123;&#123; utilisateur.nom &#125;&#125;&lt;/p&gt;
+        &lt;p&gt;&#123;&#123; objet.prix|floatformat:2 &#125;&#125;&lt;/p&gt;
+            </code></pre>
+        </div>
+    </div> 
+</div>
 {% endblock %}

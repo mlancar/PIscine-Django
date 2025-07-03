@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}“Ex01 : Processus d’affichage d’une page statique{% endblock %}
+{% block title %}Ex01 : Processus d’affichage d’une page statique{% endblock %}
 
 {% block extra_link %}
 <link rel="stylesheet" href="{% static 'css/style1.css' %}">
 {% endblock %}
 
 {% block content %}
-<h1>Bienvenue sur la page Django de ex01</h1>
-<div>
+<div class="page-content">
+    <h1>Bienvenue sur la page Django</h1>
     <h2>Processus d'affichage d'une page statique</h2>
     <div class="definition section">        
-        <p>L'utilisateur entre une URL dans son navigateur (ex. http://localhost:8000/apropos)
+        <p>L'utilisateur entre une URL dans son navigateur (ex. http://localhost:8000/apropos)<br>
             → Le navigateur envoie une requête HTTP GET au serveur Django.</p>     
         </li>
         <li>l'authentification utilisateur,</li>
@@ -30,11 +30,11 @@
         </ol>
     </div>
     <span>Exemple</span>
-    <p class="exemple" ># urls.py<br>from django.urls import path<br>from . import views<br>
+    <p class="exemple" ># urls.py<br>from django.urls import path<br>from . import views<br><br>
         urlpatterns = [<br>path("apropos/", views.apropos, name="apropos"),<br>]</p>
     <h2>Appel de la vue (views.py)</h2>
     <span>La vue est une fonction Python qui prépare la réponse à envoyer.</span>
-    <p class="exemple"># views.py<br>from django.shortcuts import render<br>def apropos(request):<br>return render(request, "apropos.html")</p>
+    <p class="exemple"># views.py<br>from django.shortcuts import render<br><br>def apropos(request):<br>return render(request, "apropos.html")</p>
     <div class="section">
         <span>Ici, la vue dit à Django :</span>
         <ul>
@@ -60,13 +60,13 @@
             <li>L'envoie au navigateur du client</li>
         </ul>
     </div>
-    <h2>. Le navigateur affiche la page</h2>
+    <h2>Le navigateur affiche la page</h2>
     <div class="section">
         <p>Le navigateur reçoit la réponse HTTP contenant le code HTML généré.
             Il interprète ce code et affiche la page à l’utilisateu.</p>
     </div>
     <h2> Résumé schématique</h2>
-    <p>[ Navigateur ] --GET--> [ urls.py ] --> [ views.py ] --> [ Template HTML ]
+    <p class="exemple">[ Navigateur ] --GET--> [ urls.py ] --> [ views.py ] --> [ Template HTML ]<br>
        ^                                                          |
        |<---------------------- HttpResponse (HTML) --------------|</p>
 
