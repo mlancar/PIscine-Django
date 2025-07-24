@@ -18,13 +18,11 @@ source "$VENV"/bin/activate
 
 if [ ! -f "$FILE" ]; then
     echo -e "${RED}ERROR: file '$FILE' not found${NC}"
-    exit 1
 fi
 
 echo -e "Installation packages from ${BLUE}'$FILE'${NC}"
 if pip install -r "$FILE"; then
     echo "✅ ${GREEN}Installation Successfull${NC}"
 else
-    echo "❌ ${RED}Installation Failed${NC}"
-    exit 1
+    echo "❌ ${RED}Installation Failed${NC}"  
 fi

@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# Applicaftion definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ex00',
     'ex01',
+    'ex02',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +123,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'ex01', 'static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'ex01', 'static'),
+    os.path.join(BASE_DIR, 'ex02', 'static'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
