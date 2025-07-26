@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV='/home/malancar/42/Github/Post Common Core/PIscine-Django/Django-1-Base_Django/ex01/django_venv'
+VIRTUAL_ENV='/home/malancar/42/Github/Post Common Core/PIscine-Django/Django-1-Base_Django/ex02/django_venv'
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

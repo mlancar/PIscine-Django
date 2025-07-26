@@ -13,7 +13,7 @@
 {% block content %}
 <div class="page-content">
     <h1>Bienvenue sur la page Django</h1>
-    <div>
+    <div id="form-container">
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
