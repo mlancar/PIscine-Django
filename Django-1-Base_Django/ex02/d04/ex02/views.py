@@ -15,6 +15,7 @@ logger.setLevel(logging.INFO)
 
 def form_page(request):
     # if request.method == 'POST':
+    print("TEST")
     form = MyForm(request.POST)
     if form.is_valid():
         name = form.cleaned_data['name']
@@ -30,8 +31,38 @@ def form_page(request):
             'age': age,
             'email': email
         }
-        return render(request, 'ex02/index.html', context)
+        return form
     else:
         form = MyForm()
+    return form 
 
-    return render(request, 'ex02/index.html', {'form': form})
+def display_historic():
+    try:
+        with open("data.log", "r") as f:
+            print("teST LA")
+            return f.readlines()[::-1] #[::-1] inverse l'ordre d'affichage, du plus recenet au plus ancien
+    except FileNotFoundError:
+        return []
+
+def init_component(request):
+    form = form_page(request)
+    historic = display_historic()
+
+    return render(request, 'ex02/index.html', {
+        'form': form,
+        'historic': historic
+        })
+
+# TEMPLATE DJANGO
+# {% for item in liste %}
+#     {{ item }}
+# {% empty %}
+#     Aucune donnée
+# {% endfor %}
+
+# EQUIVALENT PYTHON 
+# if liste:
+#     for item in liste:
+#         print(item)
+# else:
+#     print("Aucune donnée")
