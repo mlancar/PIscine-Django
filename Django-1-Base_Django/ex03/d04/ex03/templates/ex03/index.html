@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block title %}Ex02 : Django, framework web{% endblock %}
+
+{% block extra_link %}
+<link rel="stylesheet" href="{% static 'css/style4.css' %}">
+{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    {% comment %} <h1>Bienvenue sur la page Django</h1> {% endcomment %}
+    <div id="tables">
+        <div id="tables">
+            <table>
+                <th>NAME</th>
+                {% for row in rows %}
+                    <tr></tr>
+                {% for column in columns %}
+                    <td></td>
+                {% endfor %}
+                {% endfor %}
+                
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
