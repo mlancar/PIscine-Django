@@ -16,12 +16,16 @@
     <div id="tables">
         <div id="tables">
             <table>
-                <th>NAME</th>
+                <th>NOIR</th>
+                <th>ROUGE</th>
+                <th>BLEU</th>
+                <th>VERT</th>
                 {% for row in rows %}
-                    <tr></tr>
-                {% for column in columns %}
-                    <td></td>
-                {% endfor %}
+                    <tr>    
+                        {% for column in columns %}
+                            <td></td>
+                        {% endfor %}
+                    </tr>
                 {% endfor %}
                 
             </table>

@@ -8,4 +8,4 @@ def init_component(request):
         'rows': range(rows),
         'columns': range(columns),
     }
-    return render(request, 'ex03/index.html')
+    return render(request, 'ex03/index.html', context)

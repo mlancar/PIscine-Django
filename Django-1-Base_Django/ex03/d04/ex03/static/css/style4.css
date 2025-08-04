@@ -48,7 +48,7 @@ html, body {
 main {
     flex: 1;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
 }
 
 .page-container {
@@ -67,6 +67,25 @@ main {
 
 table {
   border: solid;
+  border-collapse: collapse;
+
+}
+
+th {
+    border: solid;
+    border-collapse: collapse;
+    height: 30px;
+}
+
+tr {
+    border: solid;
+    border-collapse: collapse;
+}
+
+td {
+    border: solid;
+    border-collapse: collapse;
+    height: 60px;
 }
 
 /* Tablette */
@@ -75,6 +94,11 @@ table {
     /* height: 250px; */
     width: 900px;
   }
+  table {
+    width: 900px;
+    /* height: 3000px; */
+  }
+
 }
 
 /* Grand écran */
@@ -82,6 +106,13 @@ table {
   .page-content {
     /* height: 400px; */
     width: 1200px;
+  }
+    table {
+    width: 1800px;
+    height: 1400px;
+  }
+  th {
+
   }
 }
 
