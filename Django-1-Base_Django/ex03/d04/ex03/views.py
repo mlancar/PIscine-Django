@@ -20,14 +20,14 @@ def init_component(request):
     columns = 4
     black_gradient = make_gradient((0,0,0), (255,255,255), rows)
     red_gradient = make_gradient((200,0,0), (255,255,255), rows)
-    blue_gradient = make_gradient((0,200,0), (255,255,255), rows)
-    green_gradient = make_gradient((0,0,200), (255,255,255), rows)
+    blue_gradient = make_gradient((0,0,200), (255,255,255), rows)
+    green_gradient = make_gradient((0,200,0), (255,255,255), rows)
     
-    gradient_colors = [black_gradient, red_gradient, blue_gradient, green_gradient]
+    gradient_colors = [black_gradient, red_gradient, green_gradient, blue_gradient]
     colored_rows = []
 
     for i in range(rows):
-        colors = [black_gradient[i], red_gradient[i], blue_gradient[i], green_gradient[i]]
+        colors = [black_gradient[i], red_gradient[i], green_gradient[i], blue_gradient[i]]
         colored_rows.append(colors)
 
     context = {

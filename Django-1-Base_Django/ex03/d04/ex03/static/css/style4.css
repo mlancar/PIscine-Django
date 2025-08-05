@@ -9,8 +9,6 @@ html, body {
     height: 100%;
 }
 
-/* TEST */
-
 .nav-bar {
     background-color: #333;
     overflow: hidden;
@@ -31,7 +29,6 @@ html, body {
     padding: 1rem;
     text-decoration: none;
     font-size: 2rem;
-
 }
 
 .nav-bar a:hover {
@@ -42,13 +39,11 @@ html, body {
 .nav-bar a {
     background-color: rgb(2, 66, 150);
     color: rgb(255, 255, 255);
-    
 }
 
 main {
     flex: 1;
     display: flex;
-    /* justify-content: center; */
 }
 
 .page-container {
@@ -62,7 +57,6 @@ main {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    /* padding-bottom: 1%; */
 }
 
 table {
@@ -86,33 +80,27 @@ td {
     border: solid;
     border-collapse: collapse;
     height: 60px;
+    width: 25%;
 }
 
 /* Tablette */
 @media (min-width: 601px) and (max-width: 1100px) {
   .page-content {
-    /* height: 250px; */
     width: 900px;
   }
   table {
     width: 900px;
-    /* height: 3000px; */
   }
-
 }
 
 /* Grand écran */
 @media (min-width: 1201px) {
   .page-content {
-    /* height: 400px; */
     width: 1200px;
   }
     table {
     width: 1800px;
     height: 1400px;
-  }
-  th {
-
   }
 }
 
@@ -129,7 +117,7 @@ h2 {
 
 main {
     flex: 1;
-    padding: 2%;
+    padding: 3%;
 }
 
 .exemple {
@@ -137,11 +125,9 @@ main {
     color: rgb(202, 202, 202);
     padding: 2%;
     width: 100%;
-    /* border-radius: 2%; */
 }
 
 footer {
     text-align: center;
     padding: 10px;
 }
-/* si pas de changement verif le cache du navigateur */
