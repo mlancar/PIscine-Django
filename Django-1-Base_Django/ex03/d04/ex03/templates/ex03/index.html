@@ -22,8 +22,8 @@
                 <th>VERT</th>
                 {% for row in rows %}
                     <tr>    
-                        {% for column in columns %}
-                            <td></td>
+                        {% for color in row %}
+                            <td style="background-color:{{ color }}" title={{color}}></td>
                         {% endfor %}
                     </tr>
                 {% endfor %}

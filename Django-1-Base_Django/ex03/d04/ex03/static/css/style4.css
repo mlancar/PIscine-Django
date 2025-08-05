@@ -68,7 +68,7 @@ main {
 table {
   border: solid;
   border-collapse: collapse;
-
+  color: black;
 }
 
 th {
