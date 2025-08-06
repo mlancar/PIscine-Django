@@ -16,7 +16,7 @@ def make_gradient(start, end, steps):
 
 def init_component(request):
 
-    rows = 51
+    rows = 50
     columns = 4
     black_gradient = make_gradient((0,0,0), (255,255,255), rows)
     red_gradient = make_gradient((200,0,0), (255,255,255), rows)

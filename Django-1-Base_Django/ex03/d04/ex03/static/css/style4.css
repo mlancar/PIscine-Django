@@ -56,31 +56,35 @@ main {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 table {
   border: solid;
   border-collapse: collapse;
   color: black;
+  font-size: 1rem
 }
 
 th {
     border: solid;
     border-collapse: collapse;
-    height: 30px;
+    height: 40px;
+    width: 80px;
 }
 
 tr {
     border: solid;
     border-collapse: collapse;
+    height: 40px;
+    width: 80px;
 }
 
 td {
     border: solid;
     border-collapse: collapse;
-    height: 60px;
-    width: 25%;
+    height: 40px;
+    width: 80px;
 }
 
 /* Tablette */
@@ -89,7 +93,6 @@ td {
     width: 900px;
   }
   table {
-    width: 900px;
   }
 }
 
@@ -99,7 +102,6 @@ td {
     width: 1200px;
   }
     table {
-    width: 1800px;
     height: 1400px;
   }
 }
