@@ -23,8 +23,8 @@ def get_link(title):
     
     # print(first_paragraphe)
     #FAIRE UNE FONCTION PEUTETRE POUR TROUVER LE LIEN
+    print("link = ", link)
     link = first_paragraphe.find('a',  href=lambda href: href and '/wiki/' in href and '/wiki/Help' not in href and "/wiki/File:" not in href)
-    # print("link = ", link)
     if link == None:
         return None
     new_title = link["title"].split(":")[-1]

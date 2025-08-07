@@ -1,7 +1,7 @@
 Collecting git+https://github.com/jaraco/path.git
-  Cloning https://github.com/jaraco/path.git to /tmp/pip-req-build-r4hi2ftg
-  Running command git clone --filter=blob:none --quiet https://github.com/jaraco/path.git /tmp/pip-req-build-r4hi2ftg
-  Resolved https://github.com/jaraco/path.git to commit 2b4025f970a462a82cec58ff8f9adb287a90d419
+  Cloning https://github.com/jaraco/path.git to /tmp/pip-req-build-4tyxk_52
+  Running command git clone --filter=blob:none --quiet https://github.com/jaraco/path.git /tmp/pip-req-build-4tyxk_52
+  Resolved https://github.com/jaraco/path.git to commit 0f86209f11199ceaff788c73f96ea5b5ec2318ee
   Installing build dependencies: started
   Installing build dependencies: finished with status 'done'
   Getting requirements to build wheel: started
@@ -11,8 +11,12 @@ Collecting git+https://github.com/jaraco/path.git
 Building wheels for collected packages: path
   Building wheel for path (pyproject.toml): started
   Building wheel for path (pyproject.toml): finished with status 'done'
-  Created wheel for path: filename=path-17.1.1.dev22+g2b4025f-py3-none-any.whl size=24080 sha256=4c1ed054772589a69691d93caf57d8e6db9cffdb6eab4681149cb6e8269a8887
-  Stored in directory: /tmp/pip-ephem-wheel-cache-0bt6nt2u/wheels/68/fb/9f/3b9db6f787730cf62eaed27cfb4d736877a5a6a5aca7dc802e
+  Created wheel for path: filename=path-17.1.1-py3-none-any.whl size=23936 sha256=1219bde0cbfa954e2476275ead9e62019d9119382b5665544b55cff47986b926
+  Stored in directory: /tmp/pip-ephem-wheel-cache-1n1_p3w2/wheels/05/97/77/84a6ccf4f5f41dfcbbeb29075fa06cf285990f754500f88e62
 Successfully built path
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
 Installing collected packages: path
-Successfully installed path-17.1.1.dev22+g2b4025f
+Successfully installed path-17.1.1
+
+[notice] A new release of pip is available: 25.1.1 -> 25.2
+[notice] To update, run: python3 -m pip install --upgrade pip
