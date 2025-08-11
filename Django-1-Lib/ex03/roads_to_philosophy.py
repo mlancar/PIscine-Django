@@ -2,6 +2,11 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 
+RED = "\033[91m"
+GREEN = "\033[92m"
+BLUE = "\033[94m"
+RESET = "\033[0m"
+
 def find_first_p(content_div):
     #check pas help dans le lien/IPA
     #test avec urine
@@ -28,10 +33,13 @@ def get_link(title):
     
     url = f"https://en.wikipedia.org/wiki/{title.replace(' ', '_')}" #wikipedia met des espaces mais le liens c'est avec des underscores
     res = requests.get(url)
+
     soup = BeautifulSoup(res.text, 'html.parser')
 
     content_div = soup.find('div', {'class': 'mw-content-ltr mw-parser-output'}) #toutes les div de wiki contenant le premier paraggraphe s'appelle comme ca
-    # print(content_div)
+    if content_div == None:
+        return None
+
     first_paragraphe = find_first_p(content_div)
     # print(first_paragraphe)
     if first_paragraphe == None:
@@ -47,19 +55,19 @@ def get_link(title):
 
 def find_philosophy(title, road_to_philosophy):
 
-    # for title in road_to_philosophy:
-    #     print("title = ", title)
+    print(blue + title + reset)
 
-    print(title)
+    # print(title)
+
     road_to_philosophy.append(title)
     title = get_link(title)
 
     if title == None:
-        print("It leads to a dead end !", file=sys.stderr)
+        print(red + "It leads to a dead end !" + reset, file=sys.stderr)
         sys.exit(1)
 
     if title in road_to_philosophy:
-        print("It leads to an infinite loop !", file=sys.stderr)
+        print(red + "It leads to an infinite loop !" + reset, file=sys.stderr)
         sys.exit(1)
 
     if title != "Philosophy":
@@ -70,6 +78,7 @@ if __name__ == "__main__":
         print("Error: one argument required", file=sys.stderr)
         sys.exit(1)
     road_to_philosophy = []
+    i = 0
     find_philosophy(sys.argv[1], road_to_philosophy)
-    print(f"{len(road_to_philosophy)} roads from {road_to_philosophy[0]} to philosophy !")
 
+    print(f"{green}{len(road_to_philosophy)} roads from {green}{road_to_philosophy[0]} to philosophy !" + reset)
