@@ -35,7 +35,6 @@ def get_link(title):
 
     if link == None:
         return None
-
     new_title = link["title"].split(":")[-1]
 
     return new_title

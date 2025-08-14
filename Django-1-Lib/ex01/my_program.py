@@ -17,5 +17,11 @@ if __name__ == "__main__":
     if not directory.exists():
         directory.makedirs()
 
-    file = directory / "outstanding.txt"
-    file.write_text(content)
+    file_path = directory / "outstanding.txt"
+    file_path.write_text(content)
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as file:
+            print(file.read())
+    except Exception as e:
+        print(e)
