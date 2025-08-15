@@ -125,6 +125,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'ex00', 'static'),
     os.path.join(BASE_DIR, 'ex01', 'static'),
     os.path.join(BASE_DIR, 'ex02', 'static'),
     os.path.join(BASE_DIR, 'ex03', 'static'),

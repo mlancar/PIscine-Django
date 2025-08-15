@@ -5,11 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}{% endblock %}</title>
-        {% block extra_link %}
-        {% endblock %}
-
-        {% block extra_css %}
-        {% endblock %}
+        {% block style %}<link rel="stylesheet" href="{% static 'css/style3.css' %}">{% endblock %}
     </head>
     <body>
         <div class="page-container">

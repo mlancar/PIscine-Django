@@ -1,14 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Ex01 : Processus d’affichage d’une page statique{% endblock %}
-
-{% block extra_link %}
-<link rel="stylesheet" href="{% static 'css/style1.css' %}">
-{% endblock %}
+{% block title %}Ex01 : Processus d’affichage d’une page statique.{% endblock %}
 
 {% block content %}
 <div class="page-content">
-    {% comment %} <h1>Bienvenue sur la page Django</h1> {% endcomment %}
     <h2>Processus d'affichage d'une page statique</h2>
     <div class="definition section">        
         <p>L'utilisateur entre une URL dans son navigateur (ex. http://localhost:8000/apropos)<br>

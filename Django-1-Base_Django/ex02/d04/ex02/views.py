@@ -14,12 +14,10 @@ logger.addHandler(handler)
 logger.setLevel(logging.INFO)
 
 def form_page(request):
-    # if request.method == 'POST':
-    print("TEST")
+
     form = MyForm(request.POST)
     if form.is_valid():
         login = form.cleaned_data['login']
-        # note = form.cleaned_data['note']
         commentaire = form.cleaned_data['commentaire']
 
         logger.info(f"login: {login} | commentaire: {commentaire}")
@@ -28,7 +26,6 @@ def form_page(request):
             'form': form,
             'success': True,
             'login': login,
-            # 'note': note,
             'commentaire': commentaire
         }
         return form
@@ -39,7 +36,6 @@ def form_page(request):
 def display_historic():
     try:
         with open("data.log", "r") as f:
-            print("teST LA")
             return f.readlines()[::-1] #[::-1] inverse l'ordre d'affichage, du plus recenet au plus ancien
     except FileNotFoundError:
         return []
