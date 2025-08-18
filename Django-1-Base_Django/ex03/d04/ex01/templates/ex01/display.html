@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Ex01 : Processus d’affichage d’une page statique.{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/style1.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-content">
+    <h2>Display process of a static page</h2>
+    <div class="definition section">        
+        <p>The user enter a URL in his browser (ex. http://localhost:8000/apropos)<br>
+            → The browser send a HTTP request GET to the Django server.</p>     
+        </li>
+        <li>User authentuification,</li>
+        <li>l'administration du site,</li>
+        <li>Security (CSRF, XSS, etc.),</li>
+        <li>and way more, without having to code it yourself.</li>
+    </ul>
+    </div>
+    <h2>Django analyse URL (routing)</h2>
+    <div class="section">
+        <p>The request is received by Django, who will::</p>
+        <ol>
+            <li> Consult urls.py file of the project (or an app),</li>
+            <li> Research a match with the requested URL,</li>
+            <li> If a match is found, it execute the associated view function (or class) associeted view.Si une correspondance est trouvée, il exécute la fonction (ou classe).</li>
+        </ol>
+    </div>
+    <span>Exemple</span>
+    <p class="exemple" ># urls.py<br>from django.urls import path<br>from . import views<br><br>
+        urlpatterns = [<br>path("apropos/", views.apropos, name="apropos"),<br>]</p>
+    <h2>Call the view (views.py)</h2>
+    <span>The view is a Python function that prepares the response to be sent.the La vue est une fonction Python qui prépare la réponse à envoyer.</span>
+    <p class="exemple"># views.py<br>from django.shortcuts import render<br><br>def apropos(request):<br>return render(request, "apropos.html")</p>
+    <div class="section">
+        <span>Here, the view say to Django :</span>
+        <ul>
+            <li>to load the template apropos.html,</li>
+            <li>and to render it in HTML from the context (empty here).</li>
+        </ul>
+    </div>
+    <h2>Django load the HTML template</h2>
+    <div class="section">
+        <p>Django search the apropos.html file in the directory define in TEMPLATES (settings.py).
+            It reads the HTML content of the template and interprets it</p>
+        <ul>
+            {% comment %} <li>'"If the file contains Django tags ({{ }}, {% %}), they're evaluated."'</li> {% endcomment %}
+            <li>Here, since it is a static page, so they are usually no dynamic logic.</li>
+        </ul>
+    </div>
+    <h2>Django build the HTTP response</h2>
+    <div class="section">
+        <span>Once the final HTML generated Django: </span>
+        <ul>
+            <li>Put it in a HttpResponse object</li>
+            <li>add headers to it (ex: Content-Type: text/html)</li>
+            <li>Send it to the client's browser</li>
+        </ul>
+    </div>
+    <h2>The browser display the page</h2>HTTP
+    <div class="section">
+        <p>the browser receives the HTTP response containing the HTML generated code.
+            IT interpretes the code and display the page to the user.</p>
+    </div>
+    <h2> Schematic summary</h2>
+    <p class="exemple">[ Browser ] --GET--> [ urls.py ] --> [ views.py ] --> [ Template HTML ]<br>
+       ^                                                          |
+       |<---------------------- HttpResponse (HTML) --------------|</p>
+
+</div>
+{% endblock %}

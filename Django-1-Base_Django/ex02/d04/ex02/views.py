@@ -40,12 +40,12 @@ def display_historic():
     except FileNotFoundError:
         return []
 
-def init_component(request):
+def home_page(request): 
     form = form_page(request)
     historic = display_historic()
     form = MyForm()
 
-    return render(request, 'ex02/index.html', {
+    return render(request, 'ex02/home.html', {
         'form': form,
         'historic': historic
         })

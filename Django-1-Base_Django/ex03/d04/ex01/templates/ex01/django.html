@@ -1,51 +1,47 @@
 {% extends "base.html" %}
 
 
-{% block title %}Ex01 : Django, framework web{% endblock %}
+{% block title %}Ex01 : Django, framework web.{% endblock %}
 
-{% block extra_link %}
+{% block style %}
 <link rel="stylesheet" href="{% static 'css/style1.css' %}">
-{% endblock %}
-
-{% block extra_css %}
 {% endblock %}
 
 {% block content %}
 <div class="page-content">
-    {% comment %} <h1>Bienvenue sur la page Django</h1> {% endcomment %}
-    <h2>Qu'est-ce que Django ?</h2>
+    <h2>What is Django ?</h2>
     <div class="definition section">
-        <p>Django est un framework web open source écrit en Python.
-            Il permet de créer des sites web robustes, rapides et sécurisés en suivant le principe "Don't Repeat Yourself" (DRY).
-            Il est basé sur le modèle MTV (Model-Template-View), très proche du MVC. Django fournit tout ce qu’il faut pour gérer :
+        <p>Django is a framework web open source written en Python.
+            It allows to create strong website, fast and secure by follwing the "Don't Repeat Yourself" (DRY) principles.
+            It is based on the MTV model (Model-Template-View), very close to the MVC, Django provides everythin gyou need to:
         </p>
         <ul>
-            <li>les bases de données (ORM),</li>
-            <li>les templates HTML,</li>
-            <li>l’authentification utilisateur,</li>
-            <li>l’administration du site,</li>
-            <li>la sécurité (CSRF, XSS, etc.),</li>
+            <li>Databasess (ORM),</li>
+            <li>HTML templates,</li>
+            <li>User authentuification,</li>
+            <li>administration of the website,</li>
+            <li>Security (CSRF, XSS, etc.),</li>
             <li>et bien plus encore, sans avoir à tout coder soi-même.</li>
         </ul>
     </div>
-    <h2>Historique de Django</h2>
+    <h2>Django's historic</h2>
     <div class="historic section">
         <ul>
-            <li>2003 : Début du développement par Adrian Holovaty et Simon Willison, deux développeurs de journalisme web du Lawrence Journal-World (un journal américain).</li>
-            <li>2005 : Le framework est publié en open source sous licence BSD.</li>
-            <li>Il est nommé "Django" en hommage à Django Reinhardt, un célèbre guitariste de jazz manouche.</li>
-            <li>2008 : Sortie de la version 1.0 stable.</li>
-            <li>Depuis, Django a évolué avec des versions régulières (tous les 8 mois environ) et une communauté très active.</li>
-            <li>Dernières versions : Django 4.x et 5.x (selon le moment où tu lis cela).</li>
+            <li>2003 : beginning of the devlopment by Adrian Holovaty and Simon Willison, two devlopper from journalisme web of Lawrence Journal-World.</li>
+            <li>2005 : The framework is published in under licence BSD.</li>
+            <li>It is named "Django" in tribute to Django Reinhardt, a famous jazz manouche guitarist.</li>
+            <li>2008 : Release of the stable version 1.0 .</li>
+            <li>Since, Django has evolve with regular releases (every 8 months) and a very active community.</li>
+            <li>Last releases : Django 4.x et 5.x </li>
         </ul>
     </div>
-    <h2>Pourquoi Django est si populaire ?</h2>
+    <h2>Why is Django so popular ?</h2>
     <div class="advantages section">
         <ul>
-            <li>Très bien documenté</li>
-            <li>Sécurisé par défaut</li>
-            <li>Admin intégré très puissant</li>
-            <li>Utilisé par des sites majeurs : Instagram, Pinterest, Mozilla, Disqus, The Washington Post…</li>
+            <li>Well documented</li>
+            <li>Secured by default</li>
+            <li>Admin integrated very powerful</li>
+            <li>Use by major websites : Instagram, Pinterest, Mozilla, Disqus, The Washington Post...</li>
         </ul>
     </div>
 </div>

@@ -9,28 +9,28 @@
 
 {% block content %}
 <div class="page-content">
-    <h2>1. Fonctionnement général du moteur de templates Django</h2>
+    <h2>1. General functionning of Django's template engine.</h2>
     <div class="definition section">        
-        <p>Le moteur de templates de Django sert à générer dynamiquement des pages HTML en insérant des variables Python et en utilisant une syntaxe spéciale dans des fichiers .html.
-            Le moteur fonctionne ainsi :</p>     
+        <p>the Django's template engine is used to dynamically generate HTML pages by inserting Pythom variables and by using specific syntax in .html files
+            The engine works as follow :</p>     
         <ol>
-            <li>Une vue (views.py) envoie un contexte (des variables) à un template HTML.</li>
-            <li>Le template contient des balises &#123;% ... %&#125; (logique) et &#123;&#123; ... &#125;&#125; (affichage de variables).</li>
-            <li>Django interprète le template et génère une page HTML finale.</li>
+            <li>A view (views.py) send a context (variables) to a HTML template</li>
+            <li>The template contains tags &#123;% ... %&#125; (logic) and &#123;&#123; ... &#125;&#125; (display of variables).</li>
+            <li>Django interprete the template and generate a final HTML page.</li>
         </ol>
     </div>
-    <h2>2. Les blocs &#123;% block ... %&#125;</h2>
+    <h2>2. Blocks &#123;% block ... %&#125;</h2>
     <div class="section">
-        <p>Les blocs servent à définir des zones modifiables dans un template parent. C'est la base du système d'héritage de templates.</p>
+        <p>Blocks are used to define modifiables zone in a parent's template. It is the base of the C'est la basis of the inheritance system of templates.</p>
         <span>Exemple</span>
         <div class="exemple">
             <pre><code>
     &lt;html&gt;
         &lt;head&gt;
-            &lt;title&gt;&#123;% block title %&#125;Titre par défaut&#123;% endblock %&#125;&lt;/title>
+            &lt;title&gt;&#123;% block title %&#125;Default title&#123;% endblock %&#125;&lt;/title>
         &lt;/head&gt;
         &lt;body&gt;
-            &#123;% block content %&#125;Contenu par défaut&#123;% endblock %&#125;
+            &#123;% block content %&#125;Default content&#123;% endblock %&#125;
         &lt;/body&gt;
     &lt;/html&gt;
             </code></pre>
@@ -39,18 +39,17 @@
             <pre><code>
     &#123;% extends "base.html" %&#125;
 
-    &#123;% block title %&#125;Page d'accueil&#123;% endblock %&#125;
+    &#123;% block title %&#125;Home page&#123;% endblock %&#125;
 
     &#123;% block content %&#125;
-        &lt;p&gt;Bienvenue sur le site !&lt;/p&gt;
+        &lt;p&gt;welcome on the website&lt;/p&gt;
     &#123;% endblock %&#125;
             </code></pre>
         </div>
-        <span>Résultat : page.html hérite de base.html et remplace les blocs title et content.</span>
+        <span>Results : page.html inherite base.html and replace the title blocks and content.</span>
     </div>
-
-    <h2>3. Les boucles &#123;% for ... in ... %&#125;</h2>
-    <span>Permettent de parcourir une liste envoyée dans le contexte et de générer du HTML dynamiquement.</span>
+    <h2>3. Loops &#123;% for ... in ... %&#125;</h2>
+    <span>Allow to browse a list snet in the context and generate dynamically HTML.</span>
     <div class="exemple">
         <pre><code>
     &lt;ul&gt;
@@ -62,47 +61,47 @@
     </div>
     <div class="exemple">
         <pre><code>
-    def ma_vue(request):
-        return render(request, "fruits.html", &#123;"fruits": ["Pommes", "Bananes", "Cerises"]&#125;)
-        </code></pre>        
+    def my_vue(request):
+        return render(request, "fruits.html", &#123;"fruits": ["Apples", "Bananas", "Cherries"]&#125;)
+        </code></pre>
     </div>
-    <span>Affichera une liste &lt;li> avec chaque fruit.</span>
+    <span>Will display a list &lt;li> with every fruits.</span>
 
-    <h2>4. &#123;Les structures % if ... %&#125;</h2>
+    <h2>4. &#123;Structures % if ... %&#125;</h2>
     <div class="section">
         <span>Permettent de faire des conditions dans le template.</span>
         <div class="exemple">
             <pre><code>
     &#123;% if user.is_authenticated %&#125;
-        &lt;p&gt;Bonjour &#123;&#123; user.username &#125;&#125; !&lt;/p&gt;
+        &lt;p&gt;Hello &#123;&#123; user.username &#125;&#125; !&lt;/p&gt;
     &#123;% else %&#125;
-        &lt;p&gt;Bienvenue, visiteur.&lt;/p&gt;
+        &lt;p&gt;Welcome, visitor.&lt;/p&gt;
     &#123;% endif %&#125;
             </code></pre>
         </div>
-        <span>Tu peux aussi utiliser &#123;% elif %&#125; pour plusieurs cas.</span>
+        <span> You can also use &#123;% elif %&#125; for several cases.</span>
     </div>
 
-    <h2>5. Affichage des variables : &#123;&#123; variable &#125;&#125;</h2>
+    <h2>5. Display of variables : &#123;&#123; variable &#125;&#125;</h2>
     <div class="section">
-        <span>Toutes les données du contexte envoyées par la vue peuvent être affichées avec :</span>
+        <span>All the data of the context send by the view  can be displayed with :</span>
         <div class="exemple">
             <pre><code>
-        &lt;p&gt;Bonjour&#123;&#123;nom &#125;&#125; !&lt;/p&gt;
+        &lt;p&gt;Hello&#123;&#123;name &#125;&#125; !&lt;/p&gt;
             </code></pre>
         </div>
-        <span>Si dans la vue tu as :</span>
+        <span>If in the view you have :</span>
         <div class="exemple">
             <pre><code>
-    def ma_vue(request):
-        return render(request, "index.html", &#123;"nom": "Marine"&#125;)
+    def my_vue(request):
+        return render(request, "index.html", &#123;"name": "Marine"&#125;)
             </code></pre>
         </div>
-            <p>Le template affichera : Bonjour Marine !<br>Tu peux aussi accéder aux attributs et méthodes :</p>
+            <p>The template will display : Hello Marine !<br>You can also access assets and methods :</p>
         <div class="exemple">
             <pre><code>
-    &lt;p&gt;&#123;&#123; utilisateur.nom &#125;&#125;&lt;/p&gt;
-        &lt;p&gt;&#123;&#123; objet.prix|floatformat:2 &#125;&#125;&lt;/p&gt;
+    &lt;p&gt;&#123;&#123; user.name &#125;&#125;&lt;/p&gt;
+        &lt;p&gt;&#123;&#123; object.price|floatformat:2 &#125;&#125;&lt;/p&gt;
             </code></pre>
         </div>
     </div> 

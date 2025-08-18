@@ -1,12 +1,21 @@
 {% extends "base.html" %}
 
+{% block title %}Ex01 : Processus d’affichage d’une page statique{% endblock %}
 
-{% block title %}Ex02 : Django, framework web{% endblock %}
 
 {% block content %}
 <div class="page-content">
-    {% comment %} <h1>Bienvenue sur la page Django</h1> {% endcomment %}
-    <div id="form-container">
+    <h1>Welcome to the Django page</h1>
+        <div class="link-container">
+        <ul>
+            <li></li><a href="/ex01/">Home</a></li>
+            <li><a href="/ex00/">MarkSheet</a></li>
+            <li><a href="/ex01/django/">Django</a></li>
+            <li><a href="/ex01/affichage/">Display</a></li>
+            <li><a href="/ex01/templates/">Templates</a></li>
+        </ul>
+    </div>
+     <div id="form-container">
         <h2></h2>
         <form method="post">
             {% csrf_token %}
@@ -27,6 +36,6 @@
             {% endfor %}
         </div>
     </div>
-</div>
 
+</div>
 {% endblock %}
