@@ -3,7 +3,8 @@ from . import views
 
 urlpatterns = [
     path("django/", views.django_page),
-    path("affichage/", views.affichage_page),
+    path("display/", views.display_page),
     path("templates/", views.templates_page),
+    path("home/", views.home_page),
 
 ]

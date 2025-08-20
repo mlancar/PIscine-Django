@@ -5,16 +5,6 @@
 
 {% block content %}
 <div class="page-content">
-    <h1>Welcome to the Django page</h1>
-        <div class="link-container">
-        <ul>
-            <li></li><a href="/ex01/">Home</a></li>
-            <li><a href="/ex00/">MarkSheet</a></li>
-            <li><a href="/ex01/django/">Django</a></li>
-            <li><a href="/ex01/affichage/">Display</a></li>
-            <li><a href="/ex01/templates/">Templates</a></li>
-        </ul>
-    </div>
      <div id="form-container">
         <h2></h2>
         <form method="post">
@@ -23,11 +13,11 @@
             <button type="submit">Submit</button>
         </form>
         {% if success %}
-            <h2>✅ Formulaire reçu !</h2>
+            <h2>✅ Comment received !</h2>
         {% endif %}
     </div>
     <div id="historic-container">
-        <h2>COMMENTAIRES</h2>
+        <h2>COMMENTS</h2>
         <div id="historic-content">
             {% for ligne in historic %}
                 <p>{{ ligne }}</p>

@@ -20,6 +20,8 @@ if [ ! -f "$FILE" ]; then
     echo -e "${RED}ERROR: file '$FILE' not found${NC}"
 fi
 
+pip install --upgrade pip
+
 echo -e "Installation packages from ${BLUE}'$FILE'${NC}"
 if pip install -r "$FILE"; then
     echo "✅ ${GREEN}Installation Successfull${NC}"

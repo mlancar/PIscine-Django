@@ -84,7 +84,7 @@ main {
     margin: 10px;
 }
 
-#id_commentaire {
+#id_comment {
   height: 100px;
   width: 252px;
 }
@@ -133,7 +133,6 @@ main {
 
 h1 {
     text-align: center;
-    border: solid;
     width: 100%;
 }
 
@@ -146,10 +145,6 @@ main {
     flex: 1;
     padding: 2%;
 }
-
-/* .section {
-    background-color: rgb(167, 184, 206);
-} */
 
 .exemple {
     background-color: #333335;
@@ -165,12 +160,14 @@ form {
     align-items: flex-start;
 }
 
-/* button {
-    width: 30%;
-} */
+button {
+  background-color: rgb(2, 66, 150);
+  color: rgb(202, 202, 202);
+  border-radius: 25px;
+  cursor: pointer;
+}
 
 footer {
     text-align: center;
     padding: 10px;
 }
-/* si pas de changement verif le cache du navigateur */

@@ -18,15 +18,15 @@ def form_page(request):
     form = MyForm(request.POST)
     if form.is_valid():
         login = form.cleaned_data['login']
-        commentaire = form.cleaned_data['commentaire']
+        comment = form.cleaned_data['comment']
 
-        logger.info(f"login: {login} | commentaire: {commentaire}")
+        logger.info(f"login: {login} | comment: {comment}")
 
         context = {
             'form': form,
             'success': True,
             'login': login,
-            'commentaire': commentaire
+            'comment': comment
         }
         return form
     else:
@@ -40,12 +40,12 @@ def display_historic():
     except FileNotFoundError:
         return []
 
-def home_page(request): 
+def feedback_page(request): 
     form = form_page(request)
     historic = display_historic()
     form = MyForm()
 
-    return render(request, 'ex02/home.html', {
+    return render(request, 'ex02/index.html', {
         'form': form,
         'historic': historic
         })

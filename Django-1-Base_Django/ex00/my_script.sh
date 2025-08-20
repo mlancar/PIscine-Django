@@ -21,6 +21,8 @@ if [ ! -f "$FILE" ]; then
     exit 1
 fi
 
+pip install --upgrade pip
+
 echo -e "Installation packages from ${BLUE}'$FILE'${NC}"
 if pip install -r "$FILE"; then
     echo "✅ ${GREEN}Installation Successfull${NC}"

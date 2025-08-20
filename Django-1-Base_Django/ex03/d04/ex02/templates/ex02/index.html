@@ -1,19 +1,15 @@
 {% extends "base.html" %}
 
+{% block title %}Ex01 : Processus d’affichage d’une page statique{% endblock %}
 
-{% block title %}Ex02 : Django, framework web{% endblock %}
-
-{% block extra_link %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/style3.css' %}">
 {% endblock %}
 
-{% block extra_css %}
-{% endblock %}
 
 {% block content %}
 <div class="page-content">
-    {% comment %} <h1>Bienvenue sur la page Django</h1> {% endcomment %}
-    <div id="form-container">
+     <div id="form-container">
         <h2></h2>
         <form method="post">
             {% csrf_token %}
@@ -21,11 +17,11 @@
             <button type="submit">Submit</button>
         </form>
         {% if success %}
-            <h2>✅ Formulaire reçu !</h2>
+            <h2>✅ Comment received !</h2>
         {% endif %}
     </div>
     <div id="historic-container">
-        <h2>COMMENTAIRES</h2>
+        <h2>COMMENTS</h2>
         <div id="historic-content">
             {% for ligne in historic %}
                 <p>{{ ligne }}</p>
@@ -34,6 +30,6 @@
             {% endfor %}
         </div>
     </div>
-</div>
 
+</div>
 {% endblock %}

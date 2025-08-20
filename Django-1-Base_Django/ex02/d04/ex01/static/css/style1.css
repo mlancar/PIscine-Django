@@ -1,6 +1,5 @@
 html, body {
     background-color: #ebe5e5;
-    font-family: 'Courier New', Courier, monospace;
     color: rgb(2, 66, 150);
     margin: 0;
     padding: 0;
@@ -54,9 +53,34 @@ html, body {
     max-width: 55%;
 }
 
+
+.home-page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.link-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.5rem;
+    font-family: 'Courier New', Courier, monospace;
+    color: rgb(2, 66, 150);
+    padding: 1%;
+}
+
+.button {
+    background-color: rgb(2, 66, 150);
+    color: rgb(202, 202, 202);
+    padding: 6%;
+    text-decoration: none;
+    border-radius: 25px;
+    margin: 4%;
+}
+
 h1 {
     text-align: center;
-    border: solid;
     width: 100%;
 }
 
