@@ -128,6 +128,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'ex02', 'static'),
 ]
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+LOG_FILE_PATH = os.path.join(BASE_DIR, 'logs', 'data.log')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from .forms import MyForm
 import logging
-
+from django.conf import settings
 #j'utilse pas basic_config parce que j'avais des message de log sur server django
 #donc je configure mon fichier de log moi meme
 
+log_path = settings.LOG_FILE_PATH
+
 logger = logging.getLogger('form_logger') #pas dee conflit avec django
-handler = logging.FileHandler('data.log') 
+handler = logging.FileHandler(log_path)
 formatter = logging.Formatter('%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
 handler.setFormatter(formatter)
@@ -35,7 +37,7 @@ def form_page(request):
 
 def display_historic():
     try:
-        with open("data.log", "r") as f:
+        with open(log_path, "r") as f:
             return f.readlines()[::-1] #[::-1] inverse l'ordre d'affichage, du plus recenet au plus ancien
     except FileNotFoundError:
         return []
