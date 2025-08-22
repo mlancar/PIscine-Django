@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': 'formationdjango',
         'USER': 'djangouser',
         'PASSWORD': 'secret',
-        'HOST': 'localhost',
+        'HOST': 'postgresql',
         'PORT': '5432',
     }
 }
