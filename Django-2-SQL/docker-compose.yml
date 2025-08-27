@@ -32,7 +32,7 @@ services:
       - DB_NAME=formationdjango
       - DB_USER=djangouser
       - DB_PASSWORD=secret
-      - DB_HOST=postgresql
+      - DB_HOST=localhost
       - DB_PORT=5432
     
 volumes:

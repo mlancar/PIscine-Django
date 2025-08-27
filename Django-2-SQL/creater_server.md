@@ -26,7 +26,7 @@ add core to mysite/settings.py-> INSTALLED_APPS:
 ```
 INSTALLED_APPS = [
     ...
-    'd42.ex00',  # <-- ajoute ton app ici
+    'ex00',  # <-- ajoute ton app ici
 ]
 ```
 
@@ -47,7 +47,16 @@ from core.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
+    path("core/", include("core.urls")),
+]
+```
+```
+in mysite/urls.py:
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("home/", views.index, name="index"),
 ]
 ```
 
