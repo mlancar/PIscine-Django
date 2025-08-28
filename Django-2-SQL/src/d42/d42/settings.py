@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ex00',
     'ex02',
+    'ex03',
+    'ex04',
 ]
 
 MIDDLEWARE = [
@@ -128,6 +130,8 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'ex02', 'static'),
+    os.path.join(BASE_DIR, 'ex03', 'static'),
+    os.path.join(BASE_DIR, 'ex04', 'static'),
 
 ]
 

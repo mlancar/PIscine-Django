@@ -1,0 +1,40 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+    /* font-family: 'News Gothic', 'Arial', sans-serif; */
+    line-height: 1.5;
+    height: 100%;
+}
+
+h1 {
+  color:rgb(255, 204, 0);
+}
+
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 601px) and (max-width: 1100px) {
+  .page-content {
+    width: 960px;
+  }
+
+}
+
+@media (min-width: 1200px) {
+  .page-content {
+    width: 1920px;
+  }
+
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+}

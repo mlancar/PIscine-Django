@@ -16,7 +16,7 @@ pip install django
 django-admin startproject mysite .
 
 ```
-create app
+## CREATE APP
 ```
 python manage.py startapp core
 ```
@@ -29,16 +29,6 @@ INSTALLED_APPS = [
     'ex00',  # <-- ajoute ton app ici
 ]
 ```
-
-## Create a simple page
-
-in core.views.py: 
-```
-from django.http import HttpResponse
-
-def home(request):
-    return render(request, 'core/home.html')
-```
 in mysite/urls.py:
 ```
 from django.contrib import admin
@@ -50,13 +40,23 @@ urlpatterns = [
     path("core/", include("core.urls")),
 ]
 ```
+- Add each app created here
+
+## Create a simple page
+
+in core.views.py: 
 ```
-in mysite/urls.py:
+def home(request):
+    return render(request, 'core/home.html')
+```
+- create a url.py in your app  
+- path can be  "" or "/something"
+```
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("home/", views.index, name="index"),
+    path("home/", views.home),
 ]
 ```
 
@@ -66,6 +66,17 @@ python manage.py runserver
 ```
 
 The server listen to http://127.0.0.1:8000/
-On thsi URL you will see "Hello world!"
+
+## ADD TEMPLATE  
+
+- create folders "templates" and "app_name"
+- create index.html
+- in settings.py add:  
 
 
+
+
+## ADD STATIC/CSS  
+
+- create folders "static" and "css"
+- create "style.css"

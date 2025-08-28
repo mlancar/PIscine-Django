@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Ex04{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/style2.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-content">
+     <div id="form-container">
+        <h2></h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+        {% if success %}
+            <h2>Movie delete from database</h2>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
