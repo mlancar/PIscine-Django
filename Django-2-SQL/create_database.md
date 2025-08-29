@@ -52,3 +52,31 @@ Django a créé la table ex00_article dans PostgreSQL.
 
 Tu peux interagir avec elle via l’ORM.
 
+## CREATE DATABASE
+
+```
+conn = psycopg2.connect(
+    dbname=settings.DATABASES['default']['NAME'],
+    user=settings.DATABASES['default']['USER'],
+    password=settings.DATABASES['default']['PASSWORD'],
+    host=settings.DATABASES['default']['HOST'],
+    port=settings.DATABASES['default']['PORT']
+)
+cur = conn.cursor()
+```
+- execute commande if you need
+```
+cur.execute("SELECT * FROM ex04_movies")
+conn.commit()
+```
+- you can fetch data
+```
+data = cur.fetchall()
+```
+- close connection
+```
+cur.close()
+conn.close()
+```
+- put everything in a try except
+

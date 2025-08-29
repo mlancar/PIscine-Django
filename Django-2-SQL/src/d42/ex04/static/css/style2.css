@@ -6,18 +6,56 @@ html, body {
     /* font-family: 'News Gothic', 'Arial', sans-serif; */
     line-height: 1.5;
     height: 100%;
+    background-color: black;
+}
+
+.page-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+    flex: 1;
+    display: flex;
 }
 
 h1 {
   color:rgb(255, 204, 0);
 }
 
+select {
+  text-align: center;
+  font-size: 1.5rem;
+  background-color: black;
+  color: rgb(255, 204, 0);
+}
+
+button {
+  padding: 8px;
+  font-size: 1.5rem;
+  /* border-color: rgb(255, 204, 0); */
+  background-color: rgb(255, 204, 0);
+  color: rgb(0, 0, 0);
+  border-radius: 25px;
+}
 
 .page-content {
+  font-size: 2rem;
+    padding-top: 50px;
+    color: rgb(255, 204, 0);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
+}
+
+#form-container
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media (min-width: 601px) and (max-width: 1100px) {
@@ -35,6 +73,7 @@ h1 {
 }
 
 footer {
+    color: rgb(255, 204, 0);
     text-align: center;
     padding: 10px;
 }

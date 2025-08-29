@@ -5,6 +5,25 @@ from django.conf import settings
 from django.shortcuts import render
 from .forms import MyForm
 
+def connect_db():
+    try:
+        conn = psycopg2.connect(
+            dbname=settings.DATABASES['default']['NAME'],
+            user=settings.DATABASES['default']['USER'],
+            password=settings.DATABASES['default']['PASSWORD'],
+            host=settings.DATABASES['default']['HOST'],
+            port=settings.DATABASES['default']['PORT']
+        )
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM ex04_movies")
+        conn.commit()
+        movies = cur.fetchall()
+        cur.close()
+        conn.close()
+        return movies
+    except Error as e:
+        return HttpResponse(f"Error: {e}")
+
 def init(request):
     try:
         connection = psycopg2.connect(
@@ -59,7 +78,6 @@ def populate(request):
             ("The Force Awakens", 7, "", "J. J. Abrams", "Kathleen Kennedy, J. J. Abrams, Bryan Burk", "2015-12-11"),
         ]
 
-
         for movie in movies:
             cur.execute("SELECT * FROM ex04_movies WHERE title = %s;", (movie[0],))
             if cur.fetchone() is not None:
@@ -86,20 +104,9 @@ def populate(request):
 
 
 def display(request):
+    #FAIRE LE NO DATA AVAILABLE
     try:
-        conn = psycopg2.connect(
-            dbname=settings.DATABASES['default']['NAME'],
-            user=settings.DATABASES['default']['USER'],
-            password=settings.DATABASES['default']['PASSWORD'],
-            host=settings.DATABASES['default']['HOST'],
-            port=settings.DATABASES['default']['PORT']
-        )
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM ex04_movies")
-        movies = cur.fetchall()
-        cur.close()
-        conn.close()
-
+        movies = connect_db()
         movies_dic = []
         for movie in movies:
             movies_dic.append({
@@ -112,25 +119,50 @@ def display(request):
                 }
             )
         context = {'movies': movies_dic}
-        # context = [f"{movie[0]} {movie[1]}: {movie[2]}" for movie in movies]
         return render(request, 'ex02/index.html', context)
     except Exception as e:
         return HttpResponse(f"Error : {e}")
 
+def remove_from_db(selected):
+    try:
+        conn = psycopg2.connect(
+            dbname=settings.DATABASES['default']['NAME'],
+            user=settings.DATABASES['default']['USER'],
+            password=settings.DATABASES['default']['PASSWORD'],
+            host=settings.DATABASES['default']['HOST'],
+            port=settings.DATABASES['default']['PORT']
+        )
+        cur = conn.cursor()
+        cur.execute("DELETE  FROM ex04_movies WHERE title = %s;", (selected,))
+        conn.commit()
+        cur.close()
+        conn.close()
+        
+    except Error as e:
+        return HttpResponse(f"Error: {e}")
+
 def remove(request):
 
+    movies = connect_db()
+    choices = []
+    choices = [('', '---Select a movie---')]
+    for i, movie in enumerate(movies, start=1):
+        choices.append(
+            (movie[0], movie[0])
+        )
     form = MyForm(request.POST)
+    form.fields['title'].choices = choices
     if form.is_valid():
-        title = form.cleaned_data['title']
-
-        context = {
-            'form': form,
-            'success': True,
-            'title': title,
-        }
-        return form
+        selected = form.cleaned_data['title']
+        if selected == "":
+            success = False
+        else:
+            success = True
+            #quand je submit
+            remove_from_db(selected)
     else:
+        success = False
         form = MyForm()
-    return render(request, 'ex04/index.html', {
-        'form': form,
-        })
+        form.fields['title'].choices = choices
+    return render(request, 'ex04/index.html', {'form': form, "success": success})
+

@@ -32,3 +32,12 @@ docker-compose run django python manage.py dbshell
 ```
 TRUNCATE TABLE <table> RESTART IDENTITY;
 ```
+## EXECUTE SQL CMD IN DJANGO  
+```
+cur.execute("command")
+conn.commit()
+```
+- with an extern variable  
+```
+ cur.execute("CMD var = %s;", (var_extern,))
+ ```
