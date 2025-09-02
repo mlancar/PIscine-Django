@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'ex02',
     'ex03',
     'ex04',
+    'ex05',
+    'ex06',
 ]
 
 MIDDLEWARE = [
@@ -132,6 +134,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'ex02', 'static'),
     os.path.join(BASE_DIR, 'ex03', 'static'),
     os.path.join(BASE_DIR, 'ex04', 'static'),
+    os.path.join(BASE_DIR, 'ex05', 'static'),
+    os.path.join(BASE_DIR, 'ex06', 'static'),
 
 ]
 
