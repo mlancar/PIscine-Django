@@ -43,7 +43,8 @@ def populate(request):
                 context.append("OK")
 
             except ValidationError as e:
-                context.append(f"Error: {movie['title']} {e}")
+                print()
+                #pas ouf mais je sais pas comment faire autrement
     return HttpResponse("<br>".join(context))
 
 def display(request):

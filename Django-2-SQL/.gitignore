@@ -40,5 +40,6 @@ local_settings.py
 .coverage
 htmlcov/
 .pytest_cache/
+__pycache__
 .tox/
 .mypy_cache/

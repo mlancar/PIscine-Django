@@ -86,7 +86,8 @@ def display(request):
         movies = cur.fetchall()
         cur.close()
         conn.close()
-
+        if not movies:
+            raise ValueError("No data available")
         movies_dic = []
         for movie in movies:
             movies_dic.append({
@@ -99,7 +100,6 @@ def display(request):
                 }
             )
         context = {'movies': movies_dic}
-        # context = [f"{movie[0]} {movie[1]}: {movie[2]}" for movie in movies]
         return render(request, 'ex02/index.html', context)
     except Exception as e:
-        return HttpResponse(f"Error : {e}")
+        return HttpResponse(f"No data available")

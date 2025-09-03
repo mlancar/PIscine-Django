@@ -5,25 +5,6 @@ from django.conf import settings
 from django.shortcuts import render
 from .forms import MyForm
 
-def connect_db():
-    try:
-        conn = psycopg2.connect(
-            dbname=settings.DATABASES['default']['NAME'],
-            user=settings.DATABASES['default']['USER'],
-            password=settings.DATABASES['default']['PASSWORD'],
-            host=settings.DATABASES['default']['HOST'],
-            port=settings.DATABASES['default']['PORT']
-        )
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM ex06_movies")
-        conn.commit()
-        movies = cur.fetchall()
-        cur.close()
-        conn.close()
-        return movies
-    except Error as e:
-        return HttpResponse(f"Error: {e}")
-
 def init(request):
     try:
         connection = psycopg2.connect(
@@ -33,7 +14,7 @@ def init(request):
             host=settings.DATABASES['default']['HOST'],
             port=settings.DATABASES['default']['PORT']
         )
-        cur =connection.cursor()
+        cur = connection.cursor()
 
         cur.execute("""
             CREATE TABLE IF NOT EXISTS ex06_movies (
@@ -81,9 +62,8 @@ def populate(request):
             host=settings.DATABASES['default']['HOST'],
             port=settings.DATABASES['default']['PORT']
         )
-        cur =connection.cursor()
+        cur = connection.cursor()
         context = []
-        # cur.execute("TRUNCATE TABLE ex04_movies RESTART IDENTITY;")
         movies = [
             ("The Phantom Menace", 1, "", "George Lucas", "Rick McCallum", "1999-05-19"),
             ("Attacks of the Clones",2, "", "George Lucas", "Rick McCallum", "2002-05-16"),
@@ -99,7 +79,6 @@ def populate(request):
             if cur.fetchone() is not None:
                 context.append(f"Error: {movie[0]} already exists")
                 continue;
-            
             cur.execute("SELECT * FROM ex06_movies WHERE episode_nb = %s;", (movie[1],))
             if cur.fetchone() is not None:
                 context.append(f"Error: {movie[0]} {movie[1]} already exists")
@@ -114,17 +93,32 @@ def populate(request):
         connection.close()
     
     except Error as e:
-        # context.append(f"ici Error: {movies[0]} {e}")
-        print()
+        return HttpResponse(f"No data available")
     return HttpResponse("<br>".join(context))
 
 
 def display(request):
-    #FAIRE LE NO DATA AVAILABLE
+
     try:
-        movies = connect_db()
+        conn = psycopg2.connect(
+            dbname=settings.DATABASES['default']['NAME'],
+            user=settings.DATABASES['default']['USER'],
+            password=settings.DATABASES['default']['PASSWORD'],
+            host=settings.DATABASES['default']['HOST'],
+            port=settings.DATABASES['default']['PORT']
+        )
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM ex06_movies")
+        conn.commit()
+        movies = cur.fetchall()
+        cur.close()
+        conn.close()
+        if not movies:
+            raise ValueError("No data available")
         movies_dic = []
+        print("HELLLOOOO")
         for movie in movies:
+            print(f"movie = {movie}")
             movies_dic.append({
                 'title': movie[0],
                 'episode_nb': movie[1],
@@ -137,9 +131,10 @@ def display(request):
                 }
             )
         context = {'movies': movies_dic}
+        
         return render(request, 'ex06/display.html', context)
     except Exception as e:
-        return HttpResponse(f"Error : {e}")
+        return HttpResponse(f"No data available")
 
 def update(request):
     try:
@@ -175,6 +170,9 @@ def update(request):
                     SET opening_crawl = %s
                     WHERE title = %s;""",
                     (opening_crawl, title,))
+                cur.execute("""SELECT title, created, updated
+                            FROM ex06_movies
+                            WHERE title = 'The Phantom Menace';""")
                 conn.commit()
         else:
             success = False
@@ -184,7 +182,5 @@ def update(request):
         cur.close()
         conn.close()
     except Error as e:
-        return HttpResponse(f"Error: {e}")
+        return HttpResponse(f"No data available")
     return render(request, 'ex06/update.html', {'form': form, "success": success})
-
-#no data available c'est si ya rien dans opening crawl par exemple

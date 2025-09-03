@@ -5,25 +5,6 @@ from django.conf import settings
 from django.shortcuts import render
 from .forms import MyForm
 
-def connect_db():
-    try:
-        conn = psycopg2.connect(
-            dbname=settings.DATABASES['default']['NAME'],
-            user=settings.DATABASES['default']['USER'],
-            password=settings.DATABASES['default']['PASSWORD'],
-            host=settings.DATABASES['default']['HOST'],
-            port=settings.DATABASES['default']['PORT']
-        )
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM ex04_movies")
-        conn.commit()
-        movies = cur.fetchall()
-        cur.close()
-        conn.close()
-        return movies
-    except Error as e:
-        return HttpResponse(f"Error: {e}")
-
 def init(request):
     try:
         connection = psycopg2.connect(
@@ -50,8 +31,8 @@ def init(request):
         connection.close()
         
         return HttpResponse("OK")
-    except OperationalError as e:
-        return HttpResponse(f"Error connecting to the Database: {e}")
+    except Error as e:
+        return HttpResponse(f"No data available")
     
     except Error as e:
         return HttpResponse(f"Error SQL : {e}")
@@ -98,15 +79,27 @@ def populate(request):
         connection.close()
     
     except Error as e:
-        # context.append(f"ici Error: {movies[0]} {e}")
-        print()
+        return HttpResponse(f"No data available")
     return HttpResponse("<br>".join(context))
 
 
 def display(request):
-    #FAIRE LE NO DATA AVAILABLE
     try:
-        movies = connect_db()
+        conn = psycopg2.connect(
+            dbname=settings.DATABASES['default']['NAME'],
+            user=settings.DATABASES['default']['USER'],
+            password=settings.DATABASES['default']['PASSWORD'],
+            host=settings.DATABASES['default']['HOST'],
+            port=settings.DATABASES['default']['PORT']
+        )
+        cur = conn.cursor()
+        cur.execute("SELECT * FROM ex06_movies")
+        conn.commit()
+        movies = cur.fetchall()
+        cur.close()
+        conn.close()
+        if not movies:
+            raise ValueError("No data available")
         movies_dic = []
         for movie in movies:
             movies_dic.append({
@@ -120,10 +113,11 @@ def display(request):
             )
         context = {'movies': movies_dic}
         return render(request, 'ex02/index.html', context)
-    except Exception as e:
-        return HttpResponse(f"Error : {e}")
+    except Error as e:
+        return HttpResponse(f"No data available")
 
-def remove_from_db(selected):
+def remove(request):
+
     try:
         conn = psycopg2.connect(
             dbname=settings.DATABASES['default']['NAME'],
@@ -133,36 +127,32 @@ def remove_from_db(selected):
             port=settings.DATABASES['default']['PORT']
         )
         cur = conn.cursor()
-        cur.execute("DELETE  FROM ex04_movies WHERE title = %s;", (selected,))
+        cur.execute("SELECT * FROM ex04_movies")
         conn.commit()
+        movies = cur.fetchall()
+        choices = []
+        choices = [('', '---Select a movie---')]
+        for i, movie in enumerate(movies, start=1):
+            choices.append(
+                (movie[0], movie[0])
+            )
+        form = MyForm(request.POST)
+        form.fields['title'].choices = choices
+        if form.is_valid():
+            selected = form.cleaned_data['title']
+            if selected == "":
+                success = False
+            else:
+                success = True
+                cur.execute("DELETE  FROM ex04_movies WHERE title = %s;", (selected,))
+                conn.commit()
+        else:
+            success = False
+            form = MyForm()
+            form.fields['title'].choices = choices
         cur.close()
         conn.close()
-        
     except Error as e:
-        return HttpResponse(f"Error: {e}")
-
-def remove(request):
-
-    movies = connect_db()
-    choices = []
-    choices = [('', '---Select a movie---')]
-    for i, movie in enumerate(movies, start=1):
-        choices.append(
-            (movie[0], movie[0])
-        )
-    form = MyForm(request.POST)
-    form.fields['title'].choices = choices
-    if form.is_valid():
-        selected = form.cleaned_data['title']
-        if selected == "":
-            success = False
-        else:
-            success = True
-            #quand je submit
-            remove_from_db(selected)
-    else:
-        success = False
-        form = MyForm()
-        form.fields['title'].choices = choices
+        return HttpResponse(f"No data available")
     return render(request, 'ex04/index.html', {'form': form, "success": success})
 

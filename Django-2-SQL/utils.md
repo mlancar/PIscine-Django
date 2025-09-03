@@ -22,7 +22,20 @@ docker-compose up --buil
 ```
 ## DELETE VOLUME DATABASE  
 ```
-docker system prune -a
+docker system prune -a --volumes
+
+```
+## DELETE CONTAINERS
+```
+docker rm -f $(docker ps -aq)
+```
+## DELETE IMAGES
+```
+docker rmi -f $(docker images -q)
+```
+## DELETE VOLUMES
+```
+docker volume rm $(docker volume ls -q)
 ```
 ## ENTER DATABSE  
 ```

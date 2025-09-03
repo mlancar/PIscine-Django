@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'd42.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        'NAME': 'formationdjango',
-        'USER': 'djangouser',
-        'PASSWORD': 'secret',
-        'HOST': 'postgresql',
-        'PORT': '5432',
+        'NAME': os.environ.get('DB_NAME', 'formationdjango'),
+        'USER': os.environ.get('DB_USER', 'djangouser'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'secret'),
+        'HOST': os.environ.get('DB_HOST', 'postgresql'),
+        'PORT': os.environ.get('DB_PORT', 5432),
     }
 }
 
