@@ -59,48 +59,6 @@ def init(request):
     except Error as e:
         return HttpResponse(f"Error SQL : {e}")
 
-#FAUDRA DIVISER CETTE FONCTION LA C"EST PAS POSSIBLE LA
-
-def populate_people(connection, cur, context):
-
-    csv_path = os.path.join(os.path.dirname(__file__), 'ressources' , 'people.csv')
-    try:
-        with open(csv_path, "r") as file:
-            list_file = file.read()
-    except Error as e:
-        return HttpResponse(f"No data available")
-    people_list = []
-    for line in list_file.strip().split("\n"):
-        list_elem = [] #declarer dans la boucle 
-        for element in line.strip().split("\t"):
-            if element == "NULL": #sinon ca ecrit "NULL" directement
-                list_elem.append(None)
-            else:
-                list_elem.append(element)
-        people_list.append(list_elem)
-    try:
-        try:
-            cur.execute("SELECT * FROM ex08_people;")
-        except UndefinedTable as e:
-            transaction.rollback()
-            # context.append(f"Error: Database people does not exist")
-            # context.append
-            return HttpResponse(e)
-            #return dans la fonction comme ca onfait pas la suite
-        id = 1
-        for id, people in enumerate(people_list):
-            cur.execute("""
-                INSERT INTO ex08_people (id, name, climate, diameter, orbital_period, population, rotation_period, surface_water, terrain)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
-            """, (id, people[0], people[1], people[2], people[3], people[4], people[5], people[6], people[7]))
-        context.append("OK")
-        connection.commit()
-        return context
-    except Error as e:
-        context.append(e)
-        return context
-        # context.append(f"Error: People ID: {id} already exists")
-    return context
 
 def populate_planets(connection, cur, context):
 
@@ -128,7 +86,6 @@ def populate_planets(connection, cur, context):
         except :
             context.append(f"Error: Database planet does not exist")
 
-            #return dans la fonction comme ca on fait pas la suite
         for id, planet in enumerate(planets):
             cur.execute("""
                 INSERT INTO ex08_planets (id, name, climate, diameter, orbital_period, population, rotation_period, surface_water, terrain)
@@ -143,6 +100,48 @@ def populate_planets(connection, cur, context):
         # context.append(f"Error: Planet ID: {id} already exists")
 
 
+def populate_people(connection, cur, context):
+
+    csv_path = os.path.join(os.path.dirname(__file__), 'ressources' , 'people.csv')
+    try:
+        with open(csv_path, "r") as file:
+            list_file = file.read()
+    except Error as e:
+        return HttpResponse(f"No data available")
+    people_list = []
+    for line in list_file.strip().split("\n"):
+        list_elem = [] #declarer dans la boucle 
+        for element in line.strip().split("\t"):
+            if element == "NULL": #sinon ca ecrit "NULL" directement
+                list_elem.append(None)
+            else:
+                list_elem.append(element)
+        people_list.append(list_elem)
+    try:
+        try:
+            cur.execute("SELECT * FROM ex08_people;")
+        except UndefinedTable as e:
+            transaction.rollback()
+            # context.append(f"Error: Database people does not exist")
+            # context.append
+            return HttpResponse(e)
+        id = 1
+        for id, people in enumerate(people_list):
+            cur.execute("""
+                INSERT INTO ex08_people (id, name, birth_year, gender, eye_color, hair_color, height, mass, homeworld)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+            """, (id, people[0], people[1], people[2], people[3], people[4], people[5], people[6], people[7]))
+        context.append("OK")
+        connection.commit()
+        return context
+    except Error as e:
+        context.append(e)
+        return context
+        # context.append(f"Error: People ID: {id} already exists")
+    return context
+
+
+
 def populate(request):
 
     connection = psycopg2.connect(
@@ -153,16 +152,23 @@ def populate(request):
         port=settings.DATABASES['default']['PORT']
     )
     cur = connection.cursor()
-    # try:
-    #     cur.copy_from(file, "ex08_planets", null="NULL", sep="\n")
-    #     connection.commit()
-    # except Error as e:
-    #     return HttpResponse(e)
+
+    csv_path = os.path.join(os.path.dirname(__file__), 'ressources' , 'planets.csv')
+    try:
+        with open(csv_path, "r") as file:
+            list_file = file.read()
+    except Error as e:
+        return HttpResponse(f"No data available")
+    
+    try:
+        cur.copy_from(file, "ex08_planets", sep="\t", columns=("name", "climate", "diameter", "orbital_period", "population", "rotation_period", "surface_water", "terrain"))
+        connection.commit()
+    except Error as e:
+        return HttpResponse(e)
 
     context = []
-    
-    context = populate_planets(connection, cur, context)
-    context = populate_people(connection, cur, context)
+    # context = populate_planets(connection, cur, context)
+    # context = populate_people(connection, cur, context)
     
     cur.close()
     connection.close()
@@ -184,43 +190,23 @@ def display(request):
         cur.execute("SELECT * FROM ex08_planets")
         conn.commit()
         planets = cur.fetchall()
-        # if not planets:
-        #     raise ValueError("No data available")
-        planets_dic = []
-        # for planet in planets:
-        #     planets_dic.append({
-        #         'title': planet[0],
-        #         'episode_nb': planet[1],
-        #         'opening_crawl': planet[2],
-        #         'director': planet[3],
-        #         'producer': planet[4],
-        #         'release_date': planet[5],
-        #         'created': planet[6],
-        #         'updated': planet[7]
-        #         }
-        #     )
-        
-        # context = {'movies': planets_dic}
-
+        if not planets:
+            raise ValueError("No data available")
+        cur.execute("SELECT * FROM ex08_people")
+        conn.commit()
         people = cur.fetchall()
-        # if not people:
-        #     raise ValueError("No data available")
+        if not people:
+            raise Error("No data available")
         people_dic = []
-        for p in people:
-            print("HELLLOOOO")
-            print(f"TEST {p}")
+        for p, planet in zip(people, planets):
             climate = p[8]
             people_dic.append({
                 'name': p[1],
                 'homeworld': p[8],
-                'climate': planets[climate]
+                'climate': planet[2]
                 }
             )
         context = {'people' : people_dic}
-        print("TEST ")
-
-        # for p in context:
-            # print(f"CONTEXT = {p[0]}")
         cur.close()
         conn.close()
         return render(request, 'ex08/display.html', context)
