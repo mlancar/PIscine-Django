@@ -45,9 +45,9 @@ def init(request):
                 height INTEGER,
                 mass REAL,
                 homeworld VARCHAR(64),
-                FOREIGN KEY (homeworld) REFERENCES ex08_planets(name)
                 )    
                 """)
+                # FOREIGN KEY (homeworld) REFERENCES ex08_planets(name)
         connection.commit()
         cur.close()
         connection.close()
@@ -154,19 +154,26 @@ def populate(request):
     cur = connection.cursor()
 
     csv_path = os.path.join(os.path.dirname(__file__), 'ressources' , 'planets.csv')
+    context = []
     try:
         with open(csv_path, "r") as file:
-            list_file = file.read()
-    except Error as e:
-        return HttpResponse(f"No data available")
-    
-    try:
-        cur.copy_from(file, "ex08_planets", sep="\t", columns=("name", "climate", "diameter", "orbital_period", "population", "rotation_period", "surface_water", "terrain"))
+            cur.copy_from(file, "ex08_planets", sep="\t", null="NULL", columns=("name", "climate", "diameter", "orbital_period", "population", "rotation_period", "surface_water", "terrain"))
         connection.commit()
+        context.append("OK")
+    
     except Error as e:
         return HttpResponse(e)
+    
+    csv_path = os.path.join(os.path.dirname(__file__), 'ressources' , 'people.csv')
+    
+    try:
+        with open(csv_path, "r") as file:
+            cur.copy_from(file, "ex08_people", sep="\t", null="NULL", columns=("name", "birth_year", "gender", "eye_color", "hair_color", "height", "mass", "homeworld"))
+        connection.commit()
+        context.append("OK")
 
-    context = []
+    except Error as e:
+        return HttpResponse(e)
     # context = populate_planets(connection, cur, context)
     # context = populate_people(connection, cur, context)
     
@@ -206,7 +213,8 @@ def display(request):
                 'climate': planet[2]
                 }
             )
-        context = {'people' : people_dic}
+        sorted_people = sorted(people_dic, key=lambda x: x["name"])
+        context = {'people' : sorted_people}
         cur.close()
         conn.close()
         return render(request, 'ex08/display.html', context)
