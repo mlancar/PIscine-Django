@@ -12,22 +12,21 @@ import json
 
 def display(request):
     try:
-        people_dic = []
-
         people = People.objects.all()
         planets = Planets.objects.all()
 
         people_dic = []
         for p, planet in zip(people, planets):
-            # climate = p.climate
+            if p.homeworld is not None:
+                homeworld = p.homeworld.name
             people_dic.append({
                 'name': p.name,
-                'homeworld': p.homeworld,
-                'climate': planet.climate
+                'homeworld': homeworld,
+                'climate': planet.climate,
                 }
             )
         sorted_people = sorted(people_dic, key=lambda x: x["name"])
         context = {'people' : sorted_people}
         return render(request, 'ex09/display.html', context)
     except ProgrammingError as e:
-        return HttpResponse("No data available")
+        return HttpResponse("No data available, please use the following command line before use: docker-compose run django python manage.py loaddata ex09/fixtures/ex09_initial_data.json")
