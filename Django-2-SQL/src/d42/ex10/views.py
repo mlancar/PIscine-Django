@@ -29,20 +29,25 @@ def form(request):
                 print(max_date)
                 print(diameter)
                 print(char_gender)
-                people = People.objects.all()
-                planets = Planets.objects.all()
 
-                person_list = list(People.objects.filter(gender=char_gender))
-                movie_list  = list(Movies.objects.filter(release_date__gt=min_date, release_date__lt=max_date))
+                movie_list  =  Movies.objects.filter(
+                    release_date__gt=min_date,
+                    release_date__lt=max_date,
+                    characters__gender=char_gender,
+                    characters__homeworld__diameter=diameter
+                    )
+                context = []
+                for movie in movie_list:
+                    context.append({
+                        "title": movie.title,
+                        "characters": [c.name for c in movie.characters.all()],
+                        "gender": [c.gender for c in movie.characters.all()],
+                        "planet": [planet.name for planet in movie.characters.homeworld.all()],
+                        "diameter": [planet.diameter for planet in movie.characters.homeworld.all()]
 
-                search_dic = []
-
-                for person in person_list:
-                    Movies.objects.filter(characters=person)
-                   
-
-                if planet.diameter > diameter:
-                        search_dic.append(planet.diameter)
+                    })
+                return render(request, 'ex10/display.html', context)
+                # search_planets = Planets.objects.filter(diameter__gt=diameter)
 
         else:
             success = False
