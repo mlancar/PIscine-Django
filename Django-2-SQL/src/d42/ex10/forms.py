@@ -16,3 +16,8 @@ class MyForm(forms.Form):
         min_value=0
     )
 
+    gender = forms.ChoiceField(
+        choices=[("F", "F"), ("M", "M")],
+        widget=forms.Select(attrs={'type': 'form'}),
+        label="Character gender"
+    )
