@@ -36,9 +36,9 @@ def form(request):
                     characters__gender=char_gender,
                     characters__homeworld__diameter=diameter
                     )
-                context = []
+                movies_dict = []
                 for movie in movie_list:
-                    context.append({
+                    movies_dict.append({
                         "title": movie.title,
                         "characters": [c.name for c in movie.characters.all()],
                         "gender": [c.gender for c in movie.characters.all()],
@@ -46,6 +46,11 @@ def form(request):
                         "diameter": [planet.diameter for planet in movie.characters.homeworld.all()]
 
                     })
+                print("Nombre de films :", len(movie_list))
+
+                for movie in movies_dict:
+                    print(f"TITLE = {movie['title']}")
+                context = {'movies' : movies_dict}
                 return render(request, 'ex10/display.html', context)
                 # search_planets = Planets.objects.filter(diameter__gt=diameter)
 
