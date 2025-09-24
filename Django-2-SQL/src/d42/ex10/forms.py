@@ -17,7 +17,7 @@ class MyForm(forms.Form):
     )
 
     gender = forms.ChoiceField(
-        choices=[("F", "F"), ("M", "M")],
+        choices=[("female", "female"), ("male", "male")],
         widget=forms.Select(attrs={'type': 'form'}),
         label="Character gender"
     )

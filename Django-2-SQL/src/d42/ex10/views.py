@@ -4,6 +4,7 @@ from django.shortcuts import HttpResponse
 from django.shortcuts import render
 from django.db.utils import ProgrammingError
 from .models import People, Planets, Movies
+from django.db.models import Prefetch
 
 # Create your views here.
 
@@ -29,24 +30,30 @@ def form(request):
                 print(max_date)
                 print(diameter)
                 print(char_gender)
-
+                matching_characters = People.objects.filter(
+                    gender=char_gender,
+                    homeworld__diameter__gte=diameter
+                )
+                print("Matching characters:", matching_characters.count())
                 movie_list  =  Movies.objects.filter(
                     release_date__gt=min_date,
                     release_date__lt=max_date,
-                    characters__gender=char_gender,
-                    characters__homeworld__diameter=diameter
-                    )
+                    characters__in=matching_characters
+                    ).prefetch_related(
+                        Prefetch("characters", queryset=matching_characters)
+                    ).distinct()
                 movies_dict = []
-                for movie in movie_list:
-                    movies_dict.append({
-                        "title": movie.title,
-                        "characters": [c.name for c in movie.characters.all()],
-                        "gender": [c.gender for c in movie.characters.all()],
-                        "planet": [planet.name for planet in movie.characters.homeworld.all()],
-                        "diameter": [planet.diameter for planet in movie.characters.homeworld.all()]
-
-                    })
                 print("Nombre de films :", len(movie_list))
+                for movie in movie_list:
+                     for c in movie.characters.all():
+                        movies_dict.append({
+                            "title": movie.title,
+                            "characters": c.name,
+                            "gender": c.gender,
+                            "planet": c.homeworld.name,
+                            "diameter": c.homeworld.diameter
+
+                        })
 
                 for movie in movies_dict:
                     print(f"TITLE = {movie['title']}")

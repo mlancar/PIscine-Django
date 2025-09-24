@@ -18,6 +18,8 @@ html, body {
 main {
     flex: 1;
     display: flex;
+    color: rgb(255, 204, 0);
+    
 }
 
 h1 {
@@ -71,6 +73,8 @@ form {
   }
 
 }
+
+
 
 footer {
     color: rgb(255, 204, 0);
