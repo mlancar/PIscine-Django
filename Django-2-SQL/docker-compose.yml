@@ -23,9 +23,9 @@ services:
       context: .
       dockerfile: ./requirements/django/Dockerfile
     container_name: django_app
-    command: python /d42/d42/manage.py runserver 0.0.0.0:8000
+    command: python /d42/manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./src:/d42
+      - .:/d42
     ports:
       - "8000:8000"
     depends_on:

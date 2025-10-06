@@ -9,8 +9,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN apt-get update && apt-get install -y postgresql-client
 
 
-COPY src ./src .
+COPY . /d42/
 
-WORKDIR /d42/d42/
+WORKDIR /d42/
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
