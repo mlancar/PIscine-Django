@@ -44,7 +44,7 @@ def init(request):
                 hair_color VARCHAR(32),
                 height INTEGER,
                 mass REAL,
-                homeworld VARCHAR(64),
+                homeworld VARCHAR(64)
                 )    
                 """)
                 # FOREIGN KEY (homeworld) REFERENCES ex08_planets(name)
@@ -180,7 +180,7 @@ def populate(request):
     cur.close()
     connection.close()
     
-    return HttpResponse(context)
+    # return HttpResponse(context)
     return HttpResponse("<br>".join(context))
 
 def display(request):
@@ -205,14 +205,17 @@ def display(request):
         if not people:
             raise Error("No data available")
         people_dic = []
+        print()
         for p, planet in zip(people, planets):
             climate = p[8]
-            people_dic.append({
-                'name': p[1],
-                'homeworld': p[8],
-                'climate': planet[2]
-                }
-            )
+            if planet[2]in ("windy", "moderately windy"):
+                print("DLSKJDLAKJSHDKLJ")
+                people_dic.append({
+                    'name': p[1],
+                    'homeworld': p[8],
+                    'climate': planet[2]
+                    }
+                )
         sorted_people = sorted(people_dic, key=lambda x: x["name"])
         context = {'people' : sorted_people}
         cur.close()
