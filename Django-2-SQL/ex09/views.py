@@ -2,15 +2,20 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
 from .models import People, Planets
+from django.db.utils import ProgrammingError
 
 # Create your views here.
 
 def display(request):
     try:
-        if not People.objects.exists():
-            raise ValueError("No data available, please use the following command line before use: docker-compose run django python manage.py loaddata ex09/fixtures/ex09_initial_data.json")
-        if not Planets.objects.exists():
-            raise ValueError("No data available, please use the following command line before use: docker-compose run django python manage.py loaddata ex09/fixtures/ex09_initial_data.json")
+        try: 
+            if not People.objects.exists():
+                raise ValueError("No data available, please use the following command line before use: docker-compose run django python manage.py loaddata ex09/fixtures/ex09_initial_data.json")
+            if not Planets.objects.exists():
+                raise ValueError("No data available, please use the following command line before use: docker-compose run django python manage.py loaddata ex09/fixtures/ex09_initial_data.json")
+        except ProgrammingError as e:
+            return HttpResponse("No data available")
+
         people = People.objects.all()
         planets = Planets.objects.all()
         people_dic = []
@@ -27,5 +32,5 @@ def display(request):
         sorted_people = sorted(people_dic, key=lambda x: x["name"])
         context = {'people' : sorted_people}
         return render(request, 'ex09/display.html', context)
-    except ValueError as e:
+    except (ValueError, ProgrammingError) as e:
         return HttpResponse(e)

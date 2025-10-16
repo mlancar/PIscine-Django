@@ -99,7 +99,7 @@ def display(request):
         cur.close()
         conn.close()
         if not movies:
-            raise ValueError("No data available")
+            raise ValueError()
         movies_dic = []
         for movie in movies:
             movies_dic.append({
@@ -113,8 +113,8 @@ def display(request):
             )
         context = {'movies': movies_dic}
         return render(request, 'ex02/index.html', context)
-    except ValueError as e:
-        return HttpResponse(e)
+    except (Exception, ValueError) as e:
+        return HttpResponse("No data available")
 
 def remove(request):
 

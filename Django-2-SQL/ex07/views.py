@@ -44,7 +44,7 @@ def populate(request):
             except ValidationError as e:
                 print()
     except ProgrammingError as e:
-        return HttpResponse("No data available")
+        return HttpResponse(e)
  
     return HttpResponse("<br>".join(context))
 
@@ -68,8 +68,8 @@ def display(request):
             )
         context = {'movies': movies_dic}
         return render(request, 'ex06/display.html', context)
-    except ValueError as e:
-        return HttpResponse(e)
+    except (ValueError, ProgrammingError) as e:
+        return HttpResponse("No data available")
 
 def update(request):
     try:
@@ -97,5 +97,5 @@ def update(request):
             form = MyForm()
             form.fields['title'].choices = choices
         return render(request, 'ex06/update.html', {'form': form, "success": success})
-    except ProgrammingError as e:
+    except (ValueError, ProgrammingError) as e:
         return HttpResponse("No data available")

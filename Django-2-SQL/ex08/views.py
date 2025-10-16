@@ -93,8 +93,7 @@ def populate(request):
     
     cur.close()
     connection.close()
-    
-    # return HttpResponse(context)
+
     return HttpResponse("<br>".join(context))
 
 def display(request):
@@ -135,5 +134,4 @@ def display(request):
         conn.close()
         return render(request, 'ex08/display.html', context)
     except Error as e:
-        return HttpResponse(e)
         return HttpResponse(f"No data available")

@@ -93,7 +93,7 @@ def populate(request):
         connection.close()
     
     except Error as e:
-        return HttpResponse(f"No data available")
+        return HttpResponse(e)
     return HttpResponse("<br>".join(context))
 
 
@@ -114,7 +114,7 @@ def display(request):
         cur.close()
         conn.close()
         if not movies:
-            raise ValueError("No data available")
+            raise ValueError()
         movies_dic = []
         print("HELLLOOOO")
         for movie in movies:
@@ -133,7 +133,7 @@ def display(request):
         context = {'movies': movies_dic}
         
         return render(request, 'ex06/display.html', context)
-    except Exception as e:
+    except (Exception, ValueError) as e:
         return HttpResponse(f"No data available")
 
 def update(request):
