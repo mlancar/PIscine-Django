@@ -51,7 +51,8 @@ def populate(request):
 def display(request):
     try:
         movies_dic = []
-
+        if not Movies.objects.exists():
+            raise ValueError("No data available")
         movies = Movies.objects.all()
         for movie in movies:
             movies_dic.append({
@@ -67,9 +68,8 @@ def display(request):
             )
         context = {'movies': movies_dic}
         return render(request, 'ex06/display.html', context)
-    except ProgrammingError as e:
+    except ValueError as e:
         return HttpResponse(e)
-        return HttpResponse("No data available")
 
 def update(request):
     try:

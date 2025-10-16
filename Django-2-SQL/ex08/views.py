@@ -58,89 +58,6 @@ def init(request):
     except Error as e:
         return HttpResponse(f"Error SQL : {e}")
 
-
-def populate_planets(connection, cur, context):
-
-    csv_path = os.path.join(os.path.dirname(__file__), 'ressources' , 'planets.csv')
-    try:
-        with open(csv_path, "r") as file:
-            list_file = file.read()
-    except Error as e:
-        return HttpResponse(f"No data available")
-    planets= []
-
-    for line in list_file.strip().split("\n"):
-        list_elem = [] #declarer dans la boucle 
-        for element in line.strip().split("\t"):
-            if element == "NULL": #sinon ca ecrit "NULL" directement
-                list_elem.append(None)
-            else:
-                list_elem.append(element)
-        planets.append(list_elem)
-
-    try:
-        id = 1
-        try:
-            cur.execute("SELECT * FROM ex08_planets;")
-        except :
-            context.append(f"Error: Database planet does not exist")
-
-        for id, planet in enumerate(planets):
-            cur.execute("""
-                INSERT INTO ex08_planets (id, name, climate, diameter, orbital_period, population, rotation_period, surface_water, terrain)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
-            """, (id, planet[0], planet[1], planet[2], planet[3], planet[4], planet[5], planet[6], planet[7]))
-        connection.commit()
-        context.append("OK")
-        return context 
-    except Error as e:
-        context.append(e)
-        return context
-        # context.append(f"Error: Planet ID: {id} already exists")
-
-
-def populate_people(connection, cur, context):
-
-    csv_path = os.path.join(os.path.dirname(__file__), 'ressources' , 'people.csv')
-    try:
-        with open(csv_path, "r") as file:
-            list_file = file.read()
-    except Error as e:
-        return HttpResponse(f"No data available")
-    people_list = []
-    for line in list_file.strip().split("\n"):
-        list_elem = [] #declarer dans la boucle 
-        for element in line.strip().split("\t"):
-            if element == "NULL": #sinon ca ecrit "NULL" directement
-                list_elem.append(None)
-            else:
-                list_elem.append(element)
-        people_list.append(list_elem)
-    try:
-        try:
-            cur.execute("SELECT * FROM ex08_people;")
-        except UndefinedTable as e:
-            transaction.rollback()
-            # context.append(f"Error: Database people does not exist")
-            # context.append
-            return HttpResponse(e)
-        id = 1
-        for id, people in enumerate(people_list):
-            cur.execute("""
-                INSERT INTO ex08_people (id, name, birth_year, gender, eye_color, hair_color, height, mass, homeworld)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
-            """, (id, people[0], people[1], people[2], people[3], people[4], people[5], people[6], people[7]))
-        context.append("OK")
-        connection.commit()
-        return context
-    except Error as e:
-        context.append(e)
-        return context
-        # context.append(f"Error: People ID: {id} already exists")
-    return context
-
-
-
 def populate(request):
 
     connection = psycopg2.connect(
@@ -173,8 +90,6 @@ def populate(request):
 
     except Error as e:
         return HttpResponse(e)
-    # context = populate_planets(connection, cur, context)
-    # context = populate_people(connection, cur, context)
     
     cur.close()
     connection.close()

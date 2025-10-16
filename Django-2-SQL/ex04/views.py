@@ -79,7 +79,7 @@ def populate(request):
         connection.close()
     
     except Error as e:
-        return HttpResponse(f"No data available")
+        return HttpResponse(f"{e}")
     return HttpResponse("<br>".join(context))
 
 
@@ -93,7 +93,7 @@ def display(request):
             port=settings.DATABASES['default']['PORT']
         )
         cur = conn.cursor()
-        cur.execute("SELECT * FROM ex06_movies")
+        cur.execute("SELECT * FROM ex04_movies")
         conn.commit()
         movies = cur.fetchall()
         cur.close()
@@ -113,8 +113,8 @@ def display(request):
             )
         context = {'movies': movies_dic}
         return render(request, 'ex02/index.html', context)
-    except Error as e:
-        return HttpResponse(f"No data available")
+    except ValueError as e:
+        return HttpResponse(e)
 
 def remove(request):
 

@@ -50,6 +50,8 @@ def populate(request):
 
 def display(request):
     try:
+        if not Movies.objects.exists():
+            raise ValueError("No data available")
         movies_dic = []
         movies = Movies.objects.all()
         for movie in movies:
@@ -64,12 +66,13 @@ def display(request):
             )
         context = {'movies': movies_dic}
         return render(request, 'ex03/index.html', context)
-    except ProgrammingError as e:
-        return HttpResponse("No data available")
+    except ValueError as e:
+        return HttpResponse(e)
 
 def remove(request):
     try:
-
+        if not Movies.objects.exists():
+            raise ValueError("No data available")
         movies = Movies.objects.all()
         choices = []
         choices = [('', '---Select a movie---')]
@@ -92,5 +95,5 @@ def remove(request):
             form = MyForm()
             form.fields['title'].choices = choices
         return render(request, 'ex04/index.html', {'form': form, "success": success})
-    except ProgrammingError as e:
-        return HttpResponse("No data available")
+    except ValueError as e:
+        return HttpResponse(e)

@@ -56,16 +56,19 @@ def populate(request):
             ("Return of the Jedi", 6, "", "Richard Marquand", "Howard G. Kazanjian, George Lucas, Rick McCallum", "1983-05-25"),
             ("The Force Awakens", 7, "", "J. J. Abrams", "Kathleen Kennedy, J. J. Abrams, Bryan Burk", "2015-12-11"),
         ]
-        cur.executemany("""
-                INSERT INTO ex02_movies (title, episode_nb, opening_crawl, director, producer, release_date)
-                VALUES (%s, %s, %s, %s, %s, %s)
-            """, movies)
+        context = []
+        for movie in movies:
+            cur.execute("""
+                    INSERT INTO ex02_movies (title, episode_nb, opening_crawl, director, producer, release_date)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                """, movie)
+            context.append("OK")
 
         connection.commit()
         cur.close()
         connection.close()
 
-        return HttpResponse("OK")
+        return HttpResponse("<br>".join(context))
     except OperationalError as e:
         return HttpResponse(f"Error connecting to the Database: {e}")
     
@@ -102,4 +105,4 @@ def display(request):
         context = {'movies': movies_dic}
         return render(request, 'ex02/index.html', context)
     except Exception as e:
-        return HttpResponse(f"No data available")
+        return HttpResponse(e)
