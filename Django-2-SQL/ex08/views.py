@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 import psycopg2
-from psycopg2 import sql, OperationalError, Error
+from psycopg2 import Error
 from django.conf import settings
-from pathlib import Path
 import os
 from django.db import transaction
 from psycopg2.errors import UndefinedTable
@@ -207,9 +206,8 @@ def display(request):
         people_dic = []
         print()
         for p, planet in zip(people, planets):
-            climate = p[8]
-            if planet[2]in ("windy", "moderately windy"):
-                print("DLSKJDLAKJSHDKLJ")
+
+            if planet[2] is not None and ("windy" in planet[2] or "moderately" in planet[2]):
                 people_dic.append({
                     'name': p[1],
                     'homeworld': p[8],
