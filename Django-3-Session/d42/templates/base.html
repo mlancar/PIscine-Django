@@ -1,0 +1,37 @@
+{% load static %}
+{% load django_browser_reload %}
+{% load django_bootstrap5 %}
+
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}test{% endblock %}</title>
+        {% bootstrap_css %}
+        {% block style %}<link rel="stylesheet" href="{% static 'css/style.css' %}">{% endblock %}
+    </head>
+    <body class="">
+        <div class="text-white page-container w-auto d-flex flex-column">
+            <header class="w-100 d-flex">
+                <nav class=" w-100 h-auto p-2 d-flex flex-row justify-content-end">
+                    <div class="btn-wrapper">
+                        <button class="btn btn-overlay">LOGIN</button>
+                    </div>
+                    <div class="btn-wrapper">
+                        <button class="btn btn-overlay">REGISTER</button>
+                    </div>
+
+                </nav>
+            </header>
+            <main class="d-flex flex-fill">
+                {% block content %}{% endblock %}
+            </main>
+            <footer>
+                <p>© 2025 – My awesome Django project</p>
+            </footer>
+        </div>
+        {% bootstrap_javascript %}
+        {% django_browser_reload_script %}
+    </body>
+</html>
