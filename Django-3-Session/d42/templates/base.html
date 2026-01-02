@@ -14,12 +14,17 @@
     <body class="">
         <div class="text-white page-container w-auto d-flex flex-column">
             <header class="w-100 d-flex">
-                <nav class=" w-100 h-auto p-2 d-flex flex-row justify-content-end">
-                    <div class="btn-wrapper">
-                        <button class="btn btn-overlay">LOGIN</button>
+                <nav class=" w-100 h-auto p-2 d-flex flex-row justify-content-between">
+                    <div class="">
+                        <a class="btn ">HOME</a>
                     </div>
-                    <div class="btn-wrapper">
-                        <button class="btn btn-overlay">REGISTER</button>
+                    <div class="d-flex">
+                        <div class="btn-wrapper">
+                            <a asChild href="/login" class="btn btn-overlay">LOGIN</a>
+                        </div>
+                        <div class="btn-wrapper">
+                            <a asChild href="/register" class="btn btn-overlay">REGISTER</a>
+                        </div>
                     </div>
 
                 </nav>
