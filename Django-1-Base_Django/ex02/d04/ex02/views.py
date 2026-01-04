@@ -1,0 +1,67 @@
+from django.shortcuts import render
+from .forms import MyForm
+import logging
+from django.conf import settings
+#j'utilse pas basic_config parce que j'avais des message de log sur server django
+#donc je configure mon fichier de log moi meme
+
+log_path = settings.LOG_FILE_PATH
+
+logger = logging.getLogger('form_logger') #pas dee conflit avec django
+handler = logging.FileHandler(log_path)
+formatter = logging.Formatter('%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+
+def form_page(request):
+
+    form = MyForm(request.POST)
+    if form.is_valid():
+        login = form.cleaned_data['login']
+        comment = form.cleaned_data['comment']
+
+        logger.info(f"login: {login} | comment: {comment}")
+
+        context = {
+            'form': form,
+            'success': True,
+            'login': login,
+            'comment': comment
+        }
+        return form
+    else:
+        form = MyForm()
+    return form 
+
+def display_historic():
+    try:
+        with open(log_path, "r") as f:
+            return f.readlines()[::-1] #[::-1] inverse l'ordre d'affichage, du plus recenet au plus ancien
+    except FileNotFoundError:
+        return []
+
+def feedback_page(request): 
+    form = form_page(request)
+    historic = display_historic()
+    form = MyForm()
+
+    return render(request, 'ex02/index.html', {
+        'form': form,
+        'historic': historic
+        })
+
+# TEMPLATE DJANGO
+# {% for item in liste %}
+#     {{ item }}
+# {% empty %}
+#     Aucune donnée
+# {% endfor %}
+
+# EQUIVALENT PYTHON 
+# if liste:
+#     for item in liste:
+#         print(item)
+# else:
+#     print("Aucune donnée")

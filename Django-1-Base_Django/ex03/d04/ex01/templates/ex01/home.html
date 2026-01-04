@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Ex01 : Processus d’affichage d’une page statique{% endblock %}
+
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/style1.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="home-page-content">
+    <h1>WELCOME TO  </h1>
+        <div class="link-container">
+            <a class="button" href="/ex00/">MarkDown</a>
+            <a class="button" href="/ex01/django/">Django</a>
+            <a class="button" href="/ex01/display/">Display</a>
+            <a class="button" href="/ex01/templates/">Templates</a>
+            <a class="button" href="/ex02/">Feedback</a>
+            <a class="button" href="/ex03/">Colors</a>
+    </div>
+</div>
+{% endblock %}
