@@ -29,6 +29,10 @@ button:hover {
     transform: scale(1.03);
 }
 
+.btn {
+    
+}
+
 .btn-wrapper {
     
     position: relative;

@@ -3,7 +3,16 @@
 {% block content %}
 
     <div class="page-content">
-        <p>{{ username }}</p>
+        <p>Hello <span id="username">{{ username }}</span></p>
     </div>
+    {{ RANDOM_USER_NAMES|json_script:"usernames-data" }}
+    <script>
+            const usernames = JSON.parse(document.getElementById("usernames-data").textContent);
+            function updateUsername() {
+                const randomName = usernames[Math.floor(Math.random() * usernames.length)];
+                document.getElementById("username").innerText = randomName;
+            }
+            setInterval(updateUsername, 42000);
+        </script>
     
 {% endblock %}
