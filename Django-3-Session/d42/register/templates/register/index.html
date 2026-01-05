@@ -2,8 +2,20 @@
 
 {% block content %}
 
-    <div class="page-content">
-        <p>REGISTER</p>
+    <div class="container page-content d-flex justify-content-center align-items-center">
+        <div id="form-container">
+            <h2 class="text-center p-4">REGISTER</h2>
+            <div class="div-wrapper">
+                <form method="post" class="div-overlay btn-no-hover d-flex flex-column">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Submit</button>
+                    {% if success %}
+                        <p>REgistered successfully</p>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
     </div>
     
 {% endblock %}

@@ -4,7 +4,7 @@
 }
 
 html, body {
-    background-color: black;
+    background-color: #111216;
     width: 100%;
     height: 100%;
 }
@@ -19,7 +19,9 @@ html, body {
 }
 
 header {
-    background-color: rgb(17, 16, 16);
+    background-color: black;
+    background-image: linear-gradient(to bottom, #000000, #111216);
+
 }
 
 
@@ -29,15 +31,11 @@ button:hover {
     transform: scale(1.03);
 }
 
-.btn {
-    
-}
-
-.btn-wrapper {
-    
+.btn-wrapper, .div-wrapper {
     position: relative;
     display: flex;
     align-items: center;
+
     margin: 10px;
     padding: 3px;
 
@@ -51,7 +49,11 @@ button:hover {
     background-image: linear-gradient(90deg, var(--blue), var(--purple));
 }
 
-.btn-overlay {
+.btn-overlay, .div-overlay {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+
     position: relative;
     padding: 12px 26px;
     font-size: 16px;
@@ -60,9 +62,6 @@ button:hover {
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    justify-items: center;
     transition: background-color 0.3s ease, transform 0.2s ease;
     outline: none;
     box-shadow: none;
