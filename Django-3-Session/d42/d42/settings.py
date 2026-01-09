@@ -136,3 +136,5 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 RANDOM_USER_NAMES = ["Isaac", "Magdalene", "Cain", "Eve", "Judas", "Azazel", "Samson", "Lilith", "Eden", "Lazarus"]
+
+USERS_DB = {}

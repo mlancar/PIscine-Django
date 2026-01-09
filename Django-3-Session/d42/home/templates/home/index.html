@@ -3,7 +3,11 @@
 {% block content %}
 
     <div class="page-content">
-        <p>Hello <span id="username">{{ username }}</span></p>
+        {% if user %}
+            <p>Hello <span id="username">{{ user }}</span></p>
+        {% else %}
+            <p>Hello <span id="username">{{ username }}</span></p>
+        {% endif %}
     </div>
     {{ RANDOM_USER_NAMES|json_script:"usernames-data" }}
     <script>
