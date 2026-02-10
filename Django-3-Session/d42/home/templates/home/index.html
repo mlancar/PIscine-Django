@@ -5,8 +5,52 @@
     <div class="page-content">
         {% if user %}
             <p>Hello <span id="username">{{ user }}</span></p>
+            <div>
+                <h3>TIPS</h3>
+                <p> debu tips = {{tips }}</p>
+                {% for tip in tips %}
+                    <p>teST</p>
+                    <p>content = {{ tip.content }}</p>
+                    <p> {{ tip.author }}</p>
+                    <p> {{ tip.date }}</p>
+                {% endfor %}
+            </div>
+            <div id="form-container">
+                <h2 class="text-center p-4">TIP</h2>
+                <div class="div-wrapper">
+                    <form method="post" class="div-overlay btn-no-hover d-flex flex-column">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="mb-3">
+                                {{ field.label_tag }}
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger mt-1">
+                                        {% for error in field.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <button class="" type="submit">Submit</button>
+                        {% if success %}
+                            <p>Tip successfully created</p>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
         {% else %}
             <p>Hello <span id="username">{{ username }}</span></p>
+            
         {% endif %}
     </div>
     {{ RANDOM_USER_NAMES|json_script:"usernames-data" }}
