@@ -13,7 +13,11 @@
                             <p>content = {{ tip.content }}</p>
                             <p> {{ tip.author }}</p>
                             <p> {{ tip.date }}</p>
+                            <p> {{ tip.nb_downvotes }} </p>
+                            <p> {{ tip.nb_upvotes }} </p>
                             <a href="{% url 'delete_tip' tip.id %}">Supprimer</a>
+                            <a href="{% url 'up_vote' tip.id %}">Up Vote</a>
+                            <a href="{% url 'down_vote' tip.id %}">down Vote</a>
                         </div>
                     {% endfor %}
                 </div>

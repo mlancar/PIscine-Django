@@ -3,10 +3,11 @@ from django.conf import settings
 from django.http import JsonResponse
 from .forms import TipForm
 from .models import Tip
+from .models import User
 import random
 from django.db.utils import OperationalError
 from django.contrib import messages
-
+from django.shortcuts import HttpResponse
 
 # Create your views here.
 
@@ -35,22 +36,27 @@ def home(request):
             form = TipForm()
         try:
             tips = Tip.objects.all()
-            # tips_dic = []
+            tips_dic = []
 
-            # for tip in tips:
-            #     tips_dic.append({
-            #         'content': tip.content,
-            #         'author': tip.author,
-            #         'date': tip.date.isoformat()
-            #     })
-        except OperationalError:
+            for tip in tips:
+                tips_dic.append({
+                    'id': tip.id,
+                    'content': tip.content,
+                    'author': tip.author,
+                    'date': tip.date,
+                    'nb_upvotes': tip.up_vote.count(),
+                    'nb_downvotes': tip.down_vote.count(),
+                })
+        except OperationalError as e:
             tips = []
+            return HttpResponse(e)
+        
         return render(request, 'home/index.html', {
             "user": user,
             "username": random_username,
             "RANDOM_USER_NAMES": settings.RANDOM_USER_NAMES,
             "form": form,
-            "tips": tips,
+            "tips": tips_dic,
             })
 
 def update_username(request):
@@ -65,4 +71,40 @@ def logout(request):
 def delete_tip(request, tip_id):
     tip = get_object_or_404(Tip, id=tip_id)
     tip.delete()
+    return redirect("home")
+
+def down_vote(request, tip_id):
+    tip = get_object_or_404(Tip, id=tip_id)
+    username = request.session.get("user")
+    user = User.objects.get(username=username)
+
+    if tip.down_vote.filter(id=user.id).exists():
+        tip.down_vote.remove(user)
+        messages.success(request, "remove Down Voted!")
+    elif tip.up_vote.filter(id=user.id).exists():
+        tip.up_vote.remove(user)
+        messages.success(request, "remove Up Voted!")
+    else:
+        tip.down_vote.add(user)
+        messages.success(request, "Down Voted!")
+
+    return redirect("home")
+
+def up_vote(request, tip_id):
+    tip = get_object_or_404(Tip, id=tip_id)
+    username = request.session.get("user")
+    print("Session username:", username)
+
+    user = User.objects.get(username=username)
+
+    if tip.up_vote.filter(id=user.id).exists():
+        tip.up_vote.remove(user)
+        messages.success(request, "remove Up Voted!")
+    
+    elif tip.down_vote.filter(id=user.id).exists():
+        tip.down_vote.remove(user)
+        messages.success(request, "remove Down Voted!")
+    else:
+        tip.up_vote.add(user)
+        messages.success(request, "Up Voted!")
     return redirect("home")
