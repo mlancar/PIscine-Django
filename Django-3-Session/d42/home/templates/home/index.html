@@ -2,18 +2,21 @@
 
 {% block content %}
 
-    <div class="page-content">
+    <div class="page-content p-4 d-flexflex-column align-items-center justify-content-center">
         {% if user %}
             <p>Hello <span id="username">{{ user }}</span></p>
             <div>
                 <h3>TIPS</h3>
-                <p> debu tips = {{tips }}</p>
-                {% for tip in tips %}
-                    <p>teST</p>
-                    <p>content = {{ tip.content }}</p>
-                    <p> {{ tip.author }}</p>
-                    <p> {{ tip.date }}</p>
-                {% endfor %}
+                <div class="p-4 bg-dark">
+                    {% for tip in tips %}
+                        <div class="tip">
+                            <p>content = {{ tip.content }}</p>
+                            <p> {{ tip.author }}</p>
+                            <p> {{ tip.date }}</p>
+                            <a href="{% url 'delete_tip' tip.id %}">Supprimer</a>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
             <div id="form-container">
                 <h2 class="text-center p-4">TIP</h2>
@@ -50,7 +53,17 @@
             </div>
         {% else %}
             <p>Hello <span id="username">{{ username }}</span></p>
-            
+            <div>
+                <h3>TIPS</h3>
+                <div class="p-4 bg-dark">
+                    {% for tip in tips %}
+                        <p>content = {{ tip.content }}</p>
+                        <p> {{ tip.author }}</p>
+                        <p> {{ tip.date }}</p>
+                    {% endfor %}
+
+                </div>
+            </div>
         {% endif %}
     </div>
     {{ RANDOM_USER_NAMES|json_script:"usernames-data" }}

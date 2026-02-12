@@ -72,3 +72,9 @@ button:hover {
     transform: scale(1.03);
     /* box-shadow: 0 10px 25px var(--blue); */
 }
+
+.tip {
+    background-color: #161616;
+    border: 4px solid rgb(82, 77, 77);
+    margin: 4px;
+}

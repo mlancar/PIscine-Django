@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.http import JsonResponse
 from .forms import TipForm
@@ -26,7 +26,7 @@ def home(request):
             form = TipForm(request.POST)
             if form.is_valid():
                 tip = form.save(commit=False)
-                tip.author = request.session.get("username", "Anonymous")
+                tip.author = request.session.get("user", "Anonymous")
                 tip.save()
                 messages.success(request, "Tip created!")
                 return redirect("home")
@@ -35,16 +35,14 @@ def home(request):
             form = TipForm()
         try:
             tips = Tip.objects.all()
-            tips = [] 
-            tips_dic = []
-            
+            # tips_dic = []
 
-            for tip in tips:
-                tips_dic.append({
-                    'content': tip.content,
-                    'author': tip.author,
-                    'date': tip.date
-                })
+            # for tip in tips:
+            #     tips_dic.append({
+            #         'content': tip.content,
+            #         'author': tip.author,
+            #         'date': tip.date.isoformat()
+            #     })
         except OperationalError:
             tips = []
         return render(request, 'home/index.html', {
@@ -52,7 +50,7 @@ def home(request):
             "username": random_username,
             "RANDOM_USER_NAMES": settings.RANDOM_USER_NAMES,
             "form": form,
-            "tips": tips_dic,
+            "tips": tips,
             })
 
 def update_username(request):
@@ -62,4 +60,9 @@ def update_username(request):
 
 def logout(request):
     request.session.pop("user", None) 
+    return redirect("home")
+
+def delete_tip(request, tip_id):
+    tip = get_object_or_404(Tip, id=tip_id)
+    tip.delete()
     return redirect("home")
