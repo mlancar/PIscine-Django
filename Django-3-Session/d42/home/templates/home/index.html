@@ -3,14 +3,14 @@
 {% block content %}
 
     <div class="page-content p-4 d-flexflex-column align-items-center justify-content-center">
-        {% if user %}
+        {% if user.is_authenticated %}
             <p>Hello <span id="username">{{ user }}</span></p>
             <div>
                 <h3>TIPS</h3>
                 <div class="p-4 bg-dark">
                     {% for tip in tips %}
                         <div class="tip">
-                            <p>content = {{ tip.content }}</p>
+                            <p>{{ tip.content }}</p>
                             <p> {{ tip.author }}</p>
                             <p> {{ tip.date }}</p>
                             <p> {{ tip.nb_downvotes }} </p>
@@ -25,7 +25,7 @@
             <div id="form-container">
                 <h2 class="text-center p-4">TIP</h2>
                 <div class="div-wrapper">
-                    <form method="post" class="div-overlay btn-no-hover d-flex flex-column">
+                    <form method="post" action="{% url 'create_tip' %}" class="div-overlay btn-no-hover d-flex flex-column">
                         {% csrf_token %}
                         {% for field in form %}
                             <div class="mb-3">
@@ -61,7 +61,7 @@
                 <h3>TIPS</h3>
                 <div class="p-4 bg-dark">
                     {% for tip in tips %}
-                        <p>content = {{ tip.content }}</p>
+                        <p>{{ tip.content }}</p>
                         <p> {{ tip.author }}</p>
                         <p> {{ tip.date }}</p>
                     {% endfor %}

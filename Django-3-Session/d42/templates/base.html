@@ -18,24 +18,31 @@
                     <div class="">
                         <a asChild href="/"class="">HOME</a>
                     </div>
-                     {% if user %}
+
+                    {% if request.user.is_staff %}
                         <div class="btn-wrapper">
-                            <button asChild
-                                    onclick="if(confirm('Do you want to logout ?')) window.location.href='?logout=1';"
-                                    class="btn btn-overlay">
-                                    LOGOUT
-                            </button>
+                            <a asChild href="/admin" class="btn btn-overlay">ADMIN</a>
                         </div>
-                    {% else %}
-                    <div class="d-flex">
-                        <div class="btn-wrapper">
-                            <a asChild href="/login" class="btn btn-overlay">LOGIN</a>
-                        </div>
-                        <div class="btn-wrapper">
-                            <a asChild href="/register" class="btn btn-overlay">REGISTER</a>
-                        </div>
+                    {% endif %}
+
+                    {% if user.is_authenticated or user.is_staff %}
+                    <div class="btn-wrapper">
+                        <button asChild
+                            onclick="if(confirm('Do you want to logout ?')) window.location.href='?logout=1';"
+                            class="btn btn-overlay">
+                            LOGOUT
+                        </button>
                     </div>
-                {% endif %}
+                    {% else %}
+                        <div class="d-flex">
+                            <div class="btn-wrapper">
+                                <a asChild href="/login" class="btn btn-overlay">LOGIN</a>
+                            </div>
+                            <div class="btn-wrapper">
+                                <a asChild href="/register" class="btn btn-overlay">REGISTER</a>
+                            </div>
+                        </div>
+                    {% endif %}
                 </nav>
             </header>
             <main class="d-flex flex-fill justify-content-center ">
