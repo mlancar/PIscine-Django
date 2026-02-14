@@ -5,10 +5,9 @@ from .forms import TipForm
 from .models import Tip
 from .models import User
 import random
-from django.db.utils import OperationalError
 from django.contrib import messages
-from django.shortcuts import HttpResponse
-from django.contrib.auth import logout
+from django.contrib.auth import logout, get_user_model
+from django.contrib.auth.models import Permission
 
 # Create your views here.
 
@@ -58,9 +57,12 @@ def create_tip(request):
         form = TipForm(request.POST)
         if form.is_valid():
             tip = form.save(commit=False)
-            tip.author = request.session.get("user", "Anonymous")
+            tip.author = request.user
             tip.save()
             messages.success(request, "Tip created!")
+
+            perm = Permission.objects.get(codename="downvoter")
+            request.user.user_permissions.add(perm)  
             return redirect("home")
 
     else:
@@ -80,11 +82,12 @@ def delete_tip(request, tip_id):
     tip = get_object_or_404(Tip, id=tip_id)
     user = request.user
 
-    if not user.username:
+    if not user:
         messages.error(request, "Authorization denied")
         return redirect("home")
     
-    if user.is_staff or tip.author == user.username:
+    if user.is_staff or (tip.author == user):
+        user.balance_reputation(tip.up_vote.count(), tip.down_vote.count())
         tip.delete()
 
     else:
@@ -96,17 +99,23 @@ def down_vote(request, tip_id):
     tip = get_object_or_404(Tip, id=tip_id)
     user = request.user
 
+    print("ICI = ", user.has_perm("downvoter"))
     if tip.down_vote.filter(id=user.id).exists():
         tip.down_vote.remove(user)
+        user.downvote_increase_reputation()
         messages.success(request, "remove Down Voted!")
 
     elif tip.up_vote.filter(id=user.id).exists():
         tip.up_vote.remove(user)
+        user.upvote_decrease_reputation()
         messages.success(request, "remove Up Voted!")
 
-    else:
+    elif user.has_perm("downvoter"):
         tip.down_vote.add(user)
+        user.downvote_decrease_reputation()
         messages.success(request, "Down Voted!")
+    else:
+        messages.error(request, "Authorization Denied!")
 
     return redirect("home")
 
@@ -117,13 +126,16 @@ def up_vote(request, tip_id):
 
     if tip.up_vote.filter(id=user.id).exists():
         tip.up_vote.remove(user)
+        user.upvote_decrease_reputation()
         messages.success(request, "remove Up Voted!")
     
     elif tip.down_vote.filter(id=user.id).exists():
         tip.down_vote.remove(user)
+        user.downvote_increase_reputation()
         messages.success(request, "remove Down Voted!")
     else:
         tip.up_vote.add(user)
+        user.upvote_increase_reputation()
         messages.success(request, "Up Voted!")
     return redirect("home")
 

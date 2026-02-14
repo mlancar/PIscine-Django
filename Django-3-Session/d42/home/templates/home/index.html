@@ -2,82 +2,92 @@
 
 {% block content %}
 
-    <div class="page-content p-4 d-flexflex-column align-items-center justify-content-center">
+    <div class="page-content p-4 ">
         {% if user.is_authenticated %}
-            <p>Hello <span id="username">{{ user }}</span></p>
-            <div>
-                <h3>TIPS</h3>
-                <div class="p-4 bg-dark">
+        <p class="text-center">Hello <span id="username ">{{ user }} reputation: {{ user.reputation }}</span></p>
+        <div class="d-flex flex-row justify-content-center">
+            <div class="m-4 tips-container ">
+                <h3 class="text-center">TIPS</h3>
+                <div class="bg-dark div-wrapper d-flex flex-column">
                     {% for tip in tips %}
-                        <div class="tip">
-                            <p>{{ tip.content }}</p>
-                            <p> {{ tip.author }}</p>
-                            <p> {{ tip.date }}</p>
-                            <p> {{ tip.nb_downvotes }} </p>
-                            <p> {{ tip.nb_upvotes }} </p>
-                            <a href="{% url 'delete_tip' tip.id %}">Supprimer</a>
-                            <a href="{% url 'up_vote' tip.id %}">Up Vote</a>
-                            <a href="{% url 'down_vote' tip.id %}">down Vote</a>
+                    <div class="tip div-overlay m-1">
+                        <div>
+                            <p class="p-3">{{ tip.content }}</p>
                         </div>
+                        <p class="text-end pe-3"> -{{ tip.author }}</p>
+                        <p class="ps-3"> {{ tip.date }}</p>
+                        <div class="d-flex justify-content-evenly align-items-center ">
+                            <a href="{% url 'delete_tip' tip.id %}">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            <a href="{% url 'up_vote' tip.id %}" class="">
+                                <i class="bi bi-hand-thumbs-up h-25 w-25rrr"></i>{{ tip.nb_upvotes }}
+                            </a>
+                            <a href="{% url 'down_vote' tip.id %}">
+                                <i class="fbi bi-hand-thumbs-down"></i>{{ tip.nb_downvotes }}
+                            </a>
+                        </div>
+                        
+                    </div>
                     {% endfor %}
                 </div>
             </div>
-            <div id="form-container">
-                <h2 class="text-center p-4">TIP</h2>
+            <div id="form-container tips-container">
+                <h2 class="text-center p-4">CREATE TIPS</h2>
                 <div class="div-wrapper">
                     <form method="post" action="{% url 'create_tip' %}" class="div-overlay btn-no-hover d-flex flex-column">
                         {% csrf_token %}
                         {% for field in form %}
-                            <div class="mb-3">
-                                {{ field.label_tag }}
-                                {{ field }}
-                                {% if field.errors %}
-                                    <div class="text-danger mt-1">
-                                        {% for error in field.errors %}
-                                            {{ error }}
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-
-                        {% if form.non_field_errors %}
-                            <div class="alert alert-danger">
-                                {% for error in form.non_field_errors %}
-                                    {{ error }}
+                        <div class="mb-3">
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="text-danger mt-1">
+                                {% for error in field.errors %}
+                                {{ error }}
                                 {% endfor %}
                             </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                            {{ error }}
+                            {% endfor %}
+                        </div>
                         {% endif %}
-                        <button class="" type="submit">Submit</button>
+                        <button class="btn btn-overlay" type="submit">Submit</button>
                         {% if success %}
-                            <p>Tip successfully created</p>
+                        <p>Tip successfully created</p>
                         {% endif %}
                     </form>
                 </div>
             </div>
-        {% else %}
+            {% else %}
             <p>Hello <span id="username">{{ username }}</span></p>
             <div>
                 <h3>TIPS</h3>
                 <div class="p-4 bg-dark">
                     {% for tip in tips %}
-                        <p>{{ tip.content }}</p>
-                        <p> {{ tip.author }}</p>
-                        <p> {{ tip.date }}</p>
+                    <p>{{ tip.content }}</p>
+                    <p> {{ tip.author }}</p>
+                    <p> {{ tip.date }}</p>
                     {% endfor %}
-
+                    
                 </div>
             </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
     {{ RANDOM_USER_NAMES|json_script:"usernames-data" }}
     <script>
-            const usernames = JSON.parse(document.getElementById("usernames-data").textContent);
-            function updateUsername() {
-                const randomName = usernames[Math.floor(Math.random() * usernames.length)];
-                document.getElementById("username").innerText = randomName;
-            }
-            setInterval(updateUsername, 42000);
-        </script>
-    
+        const usernames = JSON.parse(document.getElementById("usernames-data").textContent);
+        function updateUsername() {
+            const randomName = usernames[Math.floor(Math.random() * usernames.length)];
+            document.getElementById("username").innerText = randomName;
+        }
+        setInterval(updateUsername, 42000);
+    </script>
+
 {% endblock %}

@@ -138,3 +138,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 RANDOM_USER_NAMES = ["Isaac", "Magdalene", "Cain", "Eve", "Judas", "Azazel", "Samson", "Lilith", "Eden", "Lazarus"]
 
 USERS_DB = {}
+
+AUTH_USER_MODEL = 'home.User'
