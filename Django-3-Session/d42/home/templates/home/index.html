@@ -2,38 +2,40 @@
 
 {% block content %}
 
-    <div class="page-content p-4 ">
-        {% if user.is_authenticated %}
-        <p class="text-center">Hello <span id="username ">{{ user }} reputation: {{ user.reputation }}</span></p>
-        <div class="d-flex flex-row justify-content-center">
-            <div class="m-4 tips-container ">
+    <div class="page-content p-4">
+        <div class="title mb-4">
+            <h2 class="text-center">WELCOME {{ user }} reputation: {{ user.reputation }}</h2>
+        </div>
+        <div class="d-flex flex-row justify-content-evenly ">
+            <div class="tips-container">
                 <h3 class="text-center">TIPS</h3>
-                <div class="bg-dark div-wrapper d-flex flex-column">
+                <div class="tip-container">
                     {% for tip in tips %}
-                    <div class="tip div-overlay m-1">
-                        <div>
-                            <p class="p-3">{{ tip.content }}</p>
+                    <div class="div-wrapper">
+                        <div class="tip div-overlay">
+                            <p class="">{{ tip.content }}</p>
+                            <p class="text-end pe-3"> -{{ tip.author }}</p>
+                            <p class="ps-3"> {{ tip.date }}</p>
+                            <div class="d-flex justify-content-evenly align-items-center m-1">
+                                <a asChild href="{% url 'delete_tip' tip.id %}" class="btn">
+                                    <i class="bi bi-trash text-white"></i>
+                                </a>
+                                <a href="{% url 'up_vote' tip.id %}" class="btn">
+                                    <i class="bi bi-hand-thumbs-up  m-1 text-primary"></i>{{ tip.nb_upvotes }}
+                                </a>
+                                <a href="{% url 'down_vote' tip.id %}" class="btn">
+                                    <i class="fbi bi-hand-thumbs-down m-1 text-danger"></i>{{ tip.nb_downvotes }}
+                                </a>
+                            </div>
+                            
                         </div>
-                        <p class="text-end pe-3"> -{{ tip.author }}</p>
-                        <p class="ps-3"> {{ tip.date }}</p>
-                        <div class="d-flex justify-content-evenly align-items-center ">
-                            <a href="{% url 'delete_tip' tip.id %}">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                            <a href="{% url 'up_vote' tip.id %}" class="">
-                                <i class="bi bi-hand-thumbs-up h-25 w-25rrr"></i>{{ tip.nb_upvotes }}
-                            </a>
-                            <a href="{% url 'down_vote' tip.id %}">
-                                <i class="fbi bi-hand-thumbs-down"></i>{{ tip.nb_downvotes }}
-                            </a>
-                        </div>
-                        
                     </div>
                     {% endfor %}
                 </div>
             </div>
-            <div id="form-container tips-container">
-                <h2 class="text-center p-4">CREATE TIPS</h2>
+            {% if user.is_authenticated %}
+            <div class="form-container tips-container">
+                <h2 class="text-center">CREATE TIPS</h2>
                 <div class="div-wrapper">
                     <form method="post" action="{% url 'create_tip' %}" class="div-overlay btn-no-hover d-flex flex-column">
                         {% csrf_token %}
@@ -57,24 +59,11 @@
                             {% endfor %}
                         </div>
                         {% endif %}
-                        <button class="btn btn-overlay" type="submit">Submit</button>
+                        <button class="btn" type="submit">Submit</button>
                         {% if success %}
                         <p>Tip successfully created</p>
                         {% endif %}
                     </form>
-                </div>
-            </div>
-            {% else %}
-            <p>Hello <span id="username">{{ username }}</span></p>
-            <div>
-                <h3>TIPS</h3>
-                <div class="p-4 bg-dark">
-                    {% for tip in tips %}
-                    <p>{{ tip.content }}</p>
-                    <p> {{ tip.author }}</p>
-                    <p> {{ tip.date }}</p>
-                    {% endfor %}
-                    
                 </div>
             </div>
             {% endif %}

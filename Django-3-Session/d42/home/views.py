@@ -62,21 +62,20 @@ def create_tip(request):
             messages.success(request, "Tip created!")
 
             perm = Permission.objects.get(codename="downvoter")
-            request.user.user_permissions.add(perm)  
+            request.user.user_permissions.add(perm)
+            print("FORMVALID")
             return redirect("home")
 
-    else:
-        form = TipForm()
-        return render(request, 'home/index.html', {'form': form})
+        else:
+            form = TipForm()
+            print("FORMINVALID = ", form.errors)
+            return redirect("home")
+    return render(request, 'home/index.html', {'form': form})
 
 def update_username(request):
     username = random.choice(settings.RANDOM_USER_NAMES)
     request.session["username"] = username
     return JsonResponse({"username": username})
-
-# def logout(request):
-#     request.session.pop("user", None)
-#     return redirect("home")
 
 def delete_tip(request, tip_id):
     tip = get_object_or_404(Tip, id=tip_id)
@@ -99,7 +98,6 @@ def down_vote(request, tip_id):
     tip = get_object_or_404(Tip, id=tip_id)
     user = request.user
 
-    print("ICI = ", user.has_perm("downvoter"))
     if tip.down_vote.filter(id=user.id).exists():
         tip.down_vote.remove(user)
         user.downvote_increase_reputation()

@@ -16,3 +16,7 @@ class TipForm(ModelForm):
                 'placeholder': 'Write your Tip...'
                 })
         }
+    
+    def clean_content(self):
+        content = self.cleaned_data['content']
+        return content.strip()
