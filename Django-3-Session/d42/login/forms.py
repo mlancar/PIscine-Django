@@ -12,11 +12,5 @@ class LoginForm(forms.Form):
 
         if not username or not password:
             return cleaned
-
-        if username not in settings.USERS_DB:
-            raise forms.ValidationError("User does not exists")
-
-        if settings.USERS_DB[username] != password:
-            raise forms.ValidationError("Invalid password")
-
+        
         return cleaned

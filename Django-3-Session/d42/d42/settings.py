@@ -140,3 +140,7 @@ RANDOM_USER_NAMES = ["Isaac", "Magdalene", "Cain", "Eve", "Judas", "Azazel", "Sa
 USERS_DB = {}
 
 AUTH_USER_MODEL = 'home.User'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]

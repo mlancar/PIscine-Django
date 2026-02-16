@@ -120,3 +120,17 @@ a {
 .ma-div::-webkit-scrollbar-thumb:hover {
     background: rgb(255, 255, 255);
 }
+
+.form-container {
+    width: 400px;
+    height: 600px;
+}
+
+.btn-submit {
+
+}
+
+.title {
+
+    
+}

@@ -24,14 +24,12 @@ class User(AbstractUser):
         self.save()
     
 
-    def balance_reputation(self, upvote, downvote):
-        print("reputation = ", self.reputation)
-        print("upvote = ", upvote)
-        print("downvote = ", downvote)
-        self.reputation -=  (upvote * 5)
-        self.reputation += (downvote * 2)
-        print("reputation = ", self.reputation)
-        self.save()
+    def balance_reputation(self, user, upvote, downvote):
+         
+         
+        user.reputation -=  (5)
+        user.reputation += (2)
+        user.save()
     
 
 
