@@ -17,7 +17,7 @@ def user_login(request):
             print("user = ",user)
             if user is None:
                 messages.error(request, "Invalid username or password")
-                # form.add_error("username", "User already exists")
+                form.add_error("username", "Invalid username or password")
             else:
                 login(request, user)
                 return redirect("home")

@@ -2,8 +2,23 @@ from django import forms
 from django.conf import settings
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(
+        label="Username",
+        max_length=20,
+        required=True,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Username"
+        })
+    )
+    password = forms.CharField(
+        label="Password",
+        required=True,
+        widget=forms.PasswordInput(attrs={
+            "class": "form-control",
+            "placeholder": "Password"
+        })
+    )
 
     def clean(self):
         cleaned = super().clean()

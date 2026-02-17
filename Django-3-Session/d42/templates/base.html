@@ -11,20 +11,30 @@
         {% bootstrap_css %}
         {% block style %}<link rel="stylesheet" href="{% static 'css/style.css' %}">{% endblock %}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     </head>
     <body class="">
         <div class="text-white page-container w-auto d-flex flex-column">
             <header class="w-100 d-flex">
                 <nav class="w-100 h-auto p-2 d-flex flex-row justify-content-between align-items-center">
-                    <div class="">
+                    <div class="fw-bold">
                         <a asChild href="/"class="">LIFE PRO TIPS</a>
+                    </div>
+                    <div class="title ">
+                        {% if user.is_authenticated %}
+                        <span class="">Hello {{ user }} ({{ user.reputation }})</span>!
+                        {% else %}
+                        <p>
+                            <span class="text-center">Hello  <span id="username"> {{ username }}</span>!</span>
+                        </p>
+                        {% endif %}
+                        
                     </div>
                     {% if request.user.is_staff %}
                         <div class="btn-wrapper">
                             <a asChild href="/admin" class="btn btn-overlay">ADMIN</a>
                         </div>
                     {% endif %}
-
                     {% if user.is_authenticated or user.is_staff %}
                     <div class="btn-wrapper">
                         <button asChild
@@ -62,13 +72,21 @@
                         </div>
                     {% endfor %}
                 </div>
-
                 {% block content %}{% endblock %}
             </main>
-            <footer>
+            <footer class="text-center">
                 <p>© 2025 – My awesome Django project</p>
             </footer>
         </div>
+         {{ RANDOM_USER_NAMES|json_script:"usernames-data" }}
+        <script>
+            const usernames = JSON.parse(document.getElementById("usernames-data").textContent);
+            function updateUsername() {
+                const randomName = usernames[Math.floor(Math.random() * usernames.length)];
+                document.getElementById("username").innerText = randomName;
+            }
+            setInterval(updateUsername, 42000);
+        </script>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
                 const toastElList = document.querySelectorAll('.toast');
@@ -77,6 +95,7 @@
                 });
             });
         </script>
+
         {% bootstrap_javascript %}
         {% django_browser_reload_script %}
     </body>

@@ -3,15 +3,7 @@
 {% block content %}
 
     <div class="page-content p-4">
-     
-        <div class="title mb-4">
-            {% if user.is_authenticated %}
-            <h2 class="text-center">WELCOME {{ user }} reputation: {{ user.reputation }}</h2>
-            {% else %}
-            <h2 class="text-center">WELCOME <span id="username">{{ username }}</span> </h2>
-            {% endif %}
-        </div>
-        <div class="d-flex flex-row justify-content-evenly ">
+        <div class="d-flex flex-row justify-content-evenly pt-4">
             <div class="tips-container">
                 <h3 class="text-center">TIPS</h3>
                 <div class="tip-container">

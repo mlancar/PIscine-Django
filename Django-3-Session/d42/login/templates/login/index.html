@@ -5,7 +5,7 @@
 <div class="container page-content d-flex justify-content-center align-items-center">
         <div class="form-container">
             <h2 class="text-center p-4">LOGIN</h2>
-            <div class="div-wrapper ">
+            <div class="div-wrapper">
                 <form method="post" class="div-overlay btn-no-hover d-flex flex-column">
                     {% csrf_token %}
                     {% for field in form %}
@@ -29,7 +29,7 @@
                             {% endfor %}
                         </div>
                     {% endif %}
-                    <button class="" type="submit">Submit</button>
+                    <button class="btn-submit" type="submit">Submit</button>
                     {% if success %}
                         <p>Registered successfully</p>
                     {% endif %}
