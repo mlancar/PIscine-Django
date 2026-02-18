@@ -1,0 +1,87 @@
+{% load static %}
+{% load django_browser_reload %}
+{% load django_bootstrap5 %}
+
+<!DOCTYPE html>
+
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Django{% endblock %}</title>
+        {% bootstrap_css %}
+        {% block style %}<link rel="stylesheet" href="{% static 'css/style.css' %}">{% endblock %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <body class="">
+        <div class="text-white page-container w-auto d-flex flex-column">
+            <header class="w-100 d-flex">
+                <nav class="w-100 h-auto p-2 d-flex flex-row justify-content-between align-items-center">
+                    <div class="fw-bold">
+                        <a asChild href="/"class="">HOME</a>
+                    </div>
+                    {% if request.user.is_staff %}
+                        <div class="btn-wrapper">
+                            <a asChild href="/admin" class="btn btn-overlay">ADMIN</a>
+                        </div>
+                    {% endif %}
+                    <div class="btn-nav-wrapper">
+                        <a asChild href="/publications" class="btn-nav-overlay">Publications</a>
+                    </div>
+                    {% if user.is_authenticated or user.is_staff %}
+                    <div class="btn-wrapper">
+                        <button asChild
+                            onclick="if(confirm('Do you want to logout ?')) window.location.href='?logout=1';"
+                            class="btn btn-overlay">
+                            LOGOUT
+                        </button>
+                    </div>
+                    {% else %}
+                        <div class="d-flex">
+                            <div class="btn-wrapper">
+                                <a asChild href="/login" class="btn btn-overlay">LOGIN</a>
+                            </div>
+                            <div class="btn-wrapper">
+                                <a asChild href="/register" class="btn btn-overlay">REGISTER</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                </nav>
+            </header>
+            <main class="d-flex flex-fill justify-content-center ">
+                <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                    {% for message in messages %}
+                        <div class="toast align-items-center text-bg-dark border-0"
+                            role="alert"
+                            data-bs-delay="3000"
+                            data-bs-autohide="true">
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    {{ message }}
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                                        data-bs-dismiss="toast"></button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% block content %}{% endblock %}
+            </main>
+            <footer class="text-center">
+                <p>© 2025 – My awesome Django project</p>
+            </footer>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const toastElList = document.querySelectorAll('.toast');
+                toastElList.forEach(toastEl => {
+                    new bootstrap.Toast(toastEl).show();
+                });
+            });
+        </script>
+
+        {% bootstrap_javascript %}
+        {% django_browser_reload_script %}
+    </body>
+</html>
