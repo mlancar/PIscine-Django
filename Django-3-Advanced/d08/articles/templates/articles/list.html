@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block extra_css %}
+ <link rel="stylesheet" href="{% static 'articles/css/articles.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -28,7 +31,7 @@
                         <!-- <td> {{ article.content }} </td> -->
                         <td> {{ article.created }} </td>
                         <td>
-                            <button class="btn">Read</button>
+                            <a asChild href="{% url 'article-detail' article.id %}" class="btn">Read</a>
                         </td>
                     </tr>
                 {% endfor %}

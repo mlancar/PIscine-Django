@@ -8,3 +8,4 @@ class ArticleDetailView(DetailView):
     model = Article
     template_name = "detail/detail.html"
     context_object_name = "article"
+    ordering = ['-created']

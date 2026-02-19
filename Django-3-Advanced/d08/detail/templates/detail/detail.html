@@ -1,39 +1,39 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block extra_css %}
+ <link rel="stylesheet" href="{% static 'detail/css/detail.css' %}">
 {% endblock %}
 
 {% block content %}
 
 <div class="page-content">
-    <h2 class="text-center m-4">ARTICLES</h2>
-    <div class="tables div-wrapper">
-        <table class="div-overlay ">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th class="">synopsis</th>
-                    <!-- <th>Content</th> -->
-                    <th>Created</th>
-                    <th></th>
+    <h2 class="text-center m-4">ARTICLE DETAIL</h2>
+    <div class="detail-container div-wrapper">
+        <div class="div-overlay">
+            <p>{{ article.title }}</p>
+
+        </div>
+
+                    <!-- <span>Auspanor</span>
+                    <span>synopsis</span>
+                    <span>Content</span>
+                    <span>Created</span>
+                    <span></span>
                 </tr>
-            </thead>
-            <tbody>
-                {% for article in articles %}
-                    <tr>
-                        <td>{{ article.title }}</td>
-                        <td> {{ article.author }} </td>
-                        <td> {{ article.synopsis }} </td>
-                        <!-- <td> {{ article.content }} </td> -->
-                        <td> {{ article.created }} </td>
-                        <td>
-                            <button class="btn">Read</button>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+                <tr>
+                    <td>{{ article.title }}</td>
+                    <td> {{ article.auspanor }} </td>
+                    <td> {{ article.synopsis }} </td>
+                    <td> {{ article.content }} </td>
+                    <td> {{ article.created }} </td>
+                    <td>
+                        <button class="btn">Read</button>
+                    </td>
+                </tr> -->
+
     </div>
 </div>
 
