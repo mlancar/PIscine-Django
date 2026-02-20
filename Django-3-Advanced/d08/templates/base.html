@@ -32,13 +32,23 @@
                     <div class="btn-nav-wrapper">
                         <a asChild href="/publications" class="btn-nav-overlay">Publications</a>
                     </div>
+                    <div class="btn-nav-wrapper">
+                        <a asChild href="/favourites" class="btn-nav-overlay">Favourites</a>
+                    </div>
+                    <div class="btn-nav-wrapper">
+                        <a asChild href="/publish" class="btn-nav-overlay">Publish</a>
+                    </div>
                     {% if user.is_authenticated or user.is_staff %}
                     <div class="btn-wrapper">
-                        <button asChild
-                            onclick="if(confirm('Do you want to logout ?')) window.location.href='?logout=1';"
-                            class="btn btn-overlay">
-                            LOGOUT
-                        </button>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button
+                                type="submit"
+                                onclick="return confirm('Do you want to logout ?');"
+                                class="btn btn-overlay">
+                                LOGOUT
+                            </button>
+                        </form>
                     </div>
                     {% else %}
                         <div class="d-flex">

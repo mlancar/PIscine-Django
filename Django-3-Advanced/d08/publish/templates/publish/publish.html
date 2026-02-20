@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+ <link rel="stylesheet" href="{% static 'publish/css/publish.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-content">
+    <h2 class="text-center m-4">ARTICLES</h2>
+    <div class="tables div-wrapper">
+        <div class="div-overlay">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn" type="submit">Submit</button>
+            </form>
+        </div>        
+    </div>
+</div>
+
+{% endblock %}

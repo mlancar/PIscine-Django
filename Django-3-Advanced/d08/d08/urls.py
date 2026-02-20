@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import redirect
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,9 +25,11 @@ urlpatterns = [
     path('articles/', include("articles.urls")),
     path('register/', include("register.urls")),
     path('login/', include("login.urls")),
+    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
     path('publications/', include("publications.urls")),
     path('detail/', include("detail.urls")),
-
+    path('favourites/', include("favourites.urls")),
+    path('publish/', include("publish.urls")),
 ]
 
 urlpatterns += [

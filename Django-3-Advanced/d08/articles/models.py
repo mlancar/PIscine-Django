@@ -24,13 +24,13 @@ class UserFavouriteArticle(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="user",
+        related_name="favourited_by_user",
         null=False
     )
     article = models.ForeignKey(
         Article,
         on_delete=models.CASCADE,
-        related_name="article",
+        related_name="favourite_article",
         null=False
     )
 
