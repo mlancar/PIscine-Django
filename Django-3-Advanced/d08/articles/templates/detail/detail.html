@@ -21,6 +21,10 @@
                 <span>-{{ article.author }}</span>
                 <span> {{ article.created }}</span>
             </div>
+            <form method="post" action="{% url 'articles:add-favourite' article.pk %}">
+                {% csrf_token %}
+                <button type="submit">Add to favourite</button>
+            </form>
         </div>
 
                     <!-- <span>Auspanor</span>
