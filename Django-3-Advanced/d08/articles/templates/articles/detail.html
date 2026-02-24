@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block extra_css %}
- <link rel="stylesheet" href="{% static 'detail/css/detail.css' %}">
+ <link rel="stylesheet" href="{% static 'articles/css/articles.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -23,17 +23,9 @@
             </div>
             <form method="post" action="{% url 'articles:add-favourite' article.pk %}">
                 {% csrf_token %}
-                <button type="submit">Add to favourite</button>
+                <button class="btn" type="submit">Add to favourite</button>
             </form>
         </div>
-
-                    <!-- <span>Auspanor</span>
-                    <span>synopsis</span>
-                    <span>Content</span>
-                    <span>Created</span>
-                    <span></span>
->
-
     </div>
 </div>
 

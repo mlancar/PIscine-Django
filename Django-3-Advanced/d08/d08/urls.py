@@ -21,15 +21,12 @@ from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', lambda request: redirect('articles-list'), name='home'),
+    path('', lambda request: redirect('articles:articles-list'), name='home'),
     path('articles/', include("articles.urls")),
     path('register/', include("register.urls")),
     path('login/', include("login.urls")),
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
-    path('publications/', include("publications.urls")),
-    path('detail/', include("detail.urls")),
-    path('favourites/', include("favourites.urls")),
-    path('publish/', include("publish.urls")),
+
 ]
 
 urlpatterns += [

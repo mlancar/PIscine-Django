@@ -1,4 +1,5 @@
 
+
 .tables{
     display: flex;
     justify-content: center;
@@ -19,12 +20,20 @@ table {
   .tables {
     width: 850px;
   }
+  .detail-container {
+    width: 850px;
+
+  }
 
 }
 
 @media (min-width: 1200px) {
   .tables {
     width: 1200px;
+  }
+  .detail-container {
+    width: 1200px;
+
   }
 }
 

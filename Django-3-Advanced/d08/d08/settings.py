@@ -44,11 +44,7 @@ INSTALLED_APPS = [
     'login',
     'register',
     'articles',
-    'publications',
-    'detail',
     'logout',
-    'favourites',
-    'publish',
 ]
 
 MIDDLEWARE = [

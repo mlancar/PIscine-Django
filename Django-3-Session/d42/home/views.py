@@ -29,7 +29,6 @@ def home(request):
     tips = Tip.objects.all()
     tips_dic = []
 
-
     for tip in tips:
         tips_dic.append({
             'id': tip.id,

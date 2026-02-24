@@ -31,7 +31,7 @@
                         <!-- <td> {{ article.content }} </td> -->
                         <td> {{ article.created }} </td>
                         <td>
-                            <a asChild href="{% url 'article-detail' article.id %}" class="btn">Read</a>
+                            <a asChild href="{% url 'articles:article-detail' article.id %}" class="btn">Read</a>
                         </td>
                     </tr>
                 {% endfor %}

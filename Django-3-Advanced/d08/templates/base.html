@@ -30,13 +30,13 @@
                         </div>
                     {% endif %}
                     <div class="btn-nav-wrapper">
-                        <a asChild href="/publications" class="btn-nav-overlay">Publications</a>
+                        <a asChild href="{% url 'articles:user-publications' %}" class="btn-nav-overlay">Publications</a>
                     </div>
                     <div class="btn-nav-wrapper">
-                        <a asChild href="/favourites" class="btn-nav-overlay">Favourites</a>
+                        <a asChild href="{% url 'articles:favourites-list' %}" class="btn-nav-overlay">Favourites</a>
                     </div>
                     <div class="btn-nav-wrapper">
-                        <a asChild href="/publish" class="btn-nav-overlay">Publish</a>
+                        <a asChild href="{% url 'articles:publish-articles' %}" class="btn-nav-overlay">Publish</a>
                     </div>
                     {% if user.is_authenticated or user.is_staff %}
                     <div class="btn-wrapper">
