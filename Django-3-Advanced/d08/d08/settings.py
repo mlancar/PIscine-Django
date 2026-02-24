@@ -142,3 +142,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+# Default Language
+LANGUAGE_CODE = 'fr'
+
+# Activer l'internationalisation
+USE_I18N = True
+
+# Déclarer les langues supportées
+LANGUAGES = [
+    ('fr', 'Français'),
+    ('en', 'English'),
+]
+
+# Où stocker les fichiers de traduction
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
