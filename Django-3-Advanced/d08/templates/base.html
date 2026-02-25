@@ -1,6 +1,7 @@
 {% load static %}
 {% load django_browser_reload %}
 {% load django_bootstrap5 %}
+{% load i18n %}
 
 <!DOCTYPE html>
 
@@ -22,27 +23,20 @@
             <header class="w-100 d-flex">
                 <nav class="w-100 h-auto p-2 d-flex flex-row justify-content-between align-items-center">
                     <div class="fw-bold">
-                        <a asChild href="/"class="">HOME</a>
+                        <a asChild href="/"class=""> {% trans "HOME" %}</a>
                     </div>
-                    <!-- {% if request.user.is_staff %}
-                        <div class="btn-wrapper">
-                            <a asChild href="/admin" class="btn btn-overlay">ADMIN</a>
-                        </div>
-                    {% endif %} -->
-                   
-                   
                     {% if user.is_authenticated or user.is_staff %}
                      <div class="btn-nav-wrapper">
-                        <a asChild href="{% url 'articles:user-publications' %}" class="btn-nav-overlay">Publications</a>
+                        <a asChild href="{% url 'articles:user-publications' %}" class="btn-nav-overlay">{% trans "Publications" %}</a>
                     </div>
                     <div class="btn-nav-wrapper">
-                        <a asChild href="{% url 'articles:favourites-list' %}" class="btn-nav-overlay">Favourites</a>
+                        <a asChild href="{% url 'articles:favourites-list' %}" class="btn-nav-overlay">{% trans "Favourites" %}</a>
                     </div>
                      <div class="btn-nav-wrapper">
-                        <a asChild href="{% url 'articles:publish-articles' %}" class="btn-nav-overlay">Publish</a>
+                        <a asChild href="{% url 'articles:publish-articles' %}" class="btn-nav-overlay">{% trans "Publish" %}</a>
                     </div>
                     <div class="div-wrapper">
-                        <span>Logged as {{ request.user.username}}</span>
+                        <span>{% trans "Logged as" %} {{ request.user.username}}</span>
                     </div>
                     <div class="btn-wrapper">
                         <form method="post" action="{% url 'logout' %}">
@@ -51,17 +45,17 @@
                                 type="submit"
                                 onclick="return confirm('Do you want to logout ?');"
                                 class="btn btn-overlay">
-                                LOGOUT
+                                {% trans "LOGOUT" %}
                             </button>
                         </form>
                     </div>
                     {% else %}
                         <div class="d-flex">
                             <div class="btn-wrapper">
-                                <a asChild href="/login" class="btn btn-overlay">LOGIN</a>
+                                <a asChild href="/login" class="btn btn-overlay">{% trans "LOGIN" %}</a>
                             </div>
                             <div class="btn-wrapper">
-                                <a asChild href="/register" class="btn btn-overlay">REGISTER</a>
+                                <a asChild href="/register" class="btn btn-overlay">{% trans "REGISTER" %}</a>
                             </div>
                         </div>
                     {% endif %}
@@ -87,7 +81,7 @@
                 {% block content %}{% endblock %}
             </main>
             <footer class="text-center">
-                <p>© 2025 – My awesome Django project</p>
+                <p>© 2025 – {% trans "My awesome Django project" %}</p>
             </footer>
         </div>
 

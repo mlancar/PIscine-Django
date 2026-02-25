@@ -1,0 +1,12 @@
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./requirements/django/Dockerfile
+    container_name: django_app
+    command: python /d08/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./d08:/d08
+    working_dir: /d08
+    ports:
+      - "8000:8000"

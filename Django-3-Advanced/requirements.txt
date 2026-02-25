@@ -1,2 +1,4 @@
-django-bootstrap5
+Django==5.2.3
+psycopg2-binary==2.9.10
 django-browser-reload
+django-bootstrap5

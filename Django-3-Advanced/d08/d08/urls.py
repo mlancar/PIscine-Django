@@ -15,11 +15,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
 from django.urls import path, include
 from django.shortcuts import redirect
 from django.contrib.auth.views import LogoutView
+from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
+    path('i18n/', include('django.conf.urls.i18n')),
+    path('', lambda request: redirect(f'/{settings.LANGUAGE_CODE}/')), #pas a ecire /fr devant chaques path
+]
+
+urlpatterns += i18n_patterns (
     path('admin/', admin.site.urls),
     path('', lambda request: redirect('articles:articles-list'), name='home'),
     path('articles/', include("articles.urls")),
@@ -27,7 +34,7 @@ urlpatterns = [
     path('login/', include("login.urls")),
     path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
 
-]
+)
 
 urlpatterns += [
     path("__reload__/", include("django_browser_reload.urls")),

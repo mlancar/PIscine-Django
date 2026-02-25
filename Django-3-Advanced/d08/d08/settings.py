@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -146,16 +147,16 @@ AUTHENTICATION_BACKENDS = [
 # Default Language
 LANGUAGE_CODE = 'fr'
 
-# Activer l'internationalisation
+# Activate
 USE_I18N = True
 
-# Déclarer les langues supportées
+# language
 LANGUAGES = [
     ('fr', 'Français'),
     ('en', 'English'),
 ]
 
-# Où stocker les fichiers de traduction
+# traduction files
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
