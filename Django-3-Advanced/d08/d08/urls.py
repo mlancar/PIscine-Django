@@ -29,8 +29,8 @@ urlpatterns = [
 urlpatterns += i18n_patterns (
     path('admin/', admin.site.urls),
     path('', lambda request: redirect('articles:articles-list'), name='home'),
-    path('articles/', include("articles.urls")),
-    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
+    path('articles/', include("articles.urls", namespace='articles')),
+    path("", include("users.urls")),
 
 )
 

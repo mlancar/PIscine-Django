@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import ArticleListView, FavouritesCreateView, ArticleDetailView, UserArticleListView, ArticleCreateView, FavouritesListView
 
 app_name = "articles"
@@ -9,5 +9,6 @@ urlpatterns = [
     path('<int:pk>/add-favourite/', FavouritesCreateView.as_view(), name='add-favourite'),
     path('publications/', UserArticleListView.as_view(), name='user-publications'),
     path('publish/', ArticleCreateView.as_view(), name='publish-articles'),
-    path('favourites/', FavouritesListView.as_view(), name='favourites-list'), 
+    path('favourites/', FavouritesListView.as_view(), name='favourites-list'),
+
 ]

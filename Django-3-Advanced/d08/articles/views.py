@@ -2,7 +2,9 @@ from .models import Article, UserFavouriteArticle
 from django.views.generic import ListView,  DetailView, CreateView
 from django.urls import reverse_lazy
 from .forms import ArticleForm
+from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 # Create your views here.
 
@@ -18,6 +20,7 @@ class UserArticleListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = "articles/publications.html"
     context_object_name = "articles"
+    login_url = "/login/"
 
     def get_queryset(self):
         user = self.request.user
@@ -27,7 +30,8 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
     form_class = ArticleForm
     template_name = "articles/publish.html"
-    success_url = reverse_lazy("articles-list")
+    success_url = reverse_lazy("articles:articles-list")
+    login_url = "/login/"
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -38,6 +42,7 @@ class FavouritesListView(LoginRequiredMixin, ListView):
     model = UserFavouriteArticle
     template_name = "articles/favourites.html"
     context_object_name = "favourites"
+    login_url = "/login/"
 
     def get_queryset(self):
         return UserFavouriteArticle.objects.filter(user=self.request.user)
@@ -49,16 +54,34 @@ class ArticleDetailView(DetailView):
     template_name = "articles/detail.html"
     context_object_name = "article"
     ordering = ['-created']
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context['already_fav'] = False
+        if user.is_authenticated:
+            context['already_fav'] = UserFavouriteArticle.objects.filter(user=user, article=self.object).exists()
+        return context
 
-class FavouritesCreateView(CreateView):
+class FavouritesCreateView(LoginRequiredMixin, CreateView):
     model = UserFavouriteArticle
     fields = []
-    # template_name = "detail/detail.html"
+    login_url = '/login/'
+    # template_name = "articles/detail.html"
+    # context_object_name = "article"
 
+    
+    
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        user = self.request.user
+        article = Article.objects.get(pk=self.kwargs["pk"])
+        # if UserFavouriteArticle.objects.filter(user=user, article=article).exists():
+        #     messages.warning(self.request, "This article is already in your favourites.")
+        #     return redirect('articles:article-detail', pk=article.pk)  # on empêche la création
+        
+        form.instance.user = self.request.user
         form.instance.article = Article.objects.get(pk=self.kwargs["pk"])
         return super().form_valid(form)
      
     def get_success_url(self):
-        return reverse_lazy("articles:detail", kwargs={"pk": self.kwargs["pk"]})
+        return reverse_lazy("articles:article-detail", kwargs={"pk": self.kwargs["pk"]})

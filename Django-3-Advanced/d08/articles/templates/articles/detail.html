@@ -22,10 +22,16 @@
                 <span>-{{ article.author }}</span>
                 <span> {{ article.created }}</span>
             </div>
-            <form method="post" action="{% url 'articles:add-favourite' article.pk %}">
-                {% csrf_token %}
-                <button class="btn" type="submit">{% trans "Add to favourite" %}</button>
-            </form>
+            {% if already_fav %}
+                <button class="btn btn-secondary" disabled>
+                    {% trans "Already in favourites" %}
+                </button>
+            {% else %}
+                <form method="post" action="{% url 'articles:add-favourite' article.pk %}">
+                    {% csrf_token %}
+                    <button class="btn" type="submit">{% trans "Add to favourite" %}</button>
+                </form>
+            {% endif %}
         </div>
     </div>
 </div>

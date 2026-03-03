@@ -16,7 +16,7 @@
         <div class="div-overlay d-flex flex-column">
             {% for favourite in favourites %}
             <div>
-                <a href="{% url 'article-detail' favourite.article.id %}" class="fw-bold">{{ favourite.article.title}}</a>
+                <a href="{% url 'articles:article-detail' favourite.article.id %}" class="fw-bold">{{ favourite.article.title}}</a>
             </div>
             {% endfor %}
 
