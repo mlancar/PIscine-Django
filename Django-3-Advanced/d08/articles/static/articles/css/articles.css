@@ -53,12 +53,21 @@ th {
 tr {
     /* height: 40px;
     width: 80px; */
-    padding: 1%;
+    /* padding: 1%; */
     display: flex;
     justify-content: space-between;
+    margin: 5px;
+    text-align: start;
 }
 
 td {
-    text-align: center;
+    text-align: start;
+    margin: 5px;
+    padding-left: 10px;
 
+}
+
+.language {
+  text-align: end;
+  border-radius: 90%;
 }

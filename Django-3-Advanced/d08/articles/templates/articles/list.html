@@ -10,11 +10,24 @@
 {% block content %}
 
 <div class="page-content">
+    <form action="{% url 'set_language' %}" method="post" class="language">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+
+        {% get_current_language as CURRENT_LANGUAGE %}
+
+        {% if CURRENT_LANGUAGE == "en" %}
+            {% comment %} mettre un drapeau de la langue {% endcomment %}
+            <button type="submit" name="language" value="fr">FR</button>
+        {% else %}
+            <button type="submit" name="language" value="en">EN</button>
+        {% endif %}
+    </form>
     <h2 class="text-center m-4">ARTICLES</h2>
     <div class="tables div-wrapper">
         <table class="div-overlay ">
             <thead>
-                <tr>
+                <tr class="d-flex justify-content-between">
                     <th>Title</th>
                     <th>Author</th>
                     <th class="">synopsis</th>

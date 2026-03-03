@@ -2,6 +2,7 @@ from .models import Article, UserFavouriteArticle
 from django.views.generic import ListView,  DetailView, CreateView
 from django.urls import reverse_lazy
 from .forms import ArticleForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -13,7 +14,7 @@ class ArticleListView(ListView):
     ordering = ['-created']
 
 
-class UserArticleListView(ListView):
+class UserArticleListView(LoginRequiredMixin, ListView):
     model = Article
     template_name = "articles/publications.html"
     context_object_name = "articles"
@@ -22,7 +23,7 @@ class UserArticleListView(ListView):
         user = self.request.user
         return Article.objects.filter(author=user).order_by('-created')
 
-class ArticleCreateView(CreateView):
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     model = Article
     form_class = ArticleForm
     template_name = "articles/publish.html"
@@ -32,15 +33,7 @@ class ArticleCreateView(CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
     
-
-class ArticleDetailView(DetailView):
-    
-    model = Article
-    template_name = "articles/detail.html"
-    context_object_name = "article"
-    ordering = ['-created']
-
-class FavouritesListView(ListView):
+class FavouritesListView(LoginRequiredMixin, ListView):
 
     model = UserFavouriteArticle
     template_name = "articles/favourites.html"
@@ -49,6 +42,14 @@ class FavouritesListView(ListView):
     def get_queryset(self):
         return UserFavouriteArticle.objects.filter(user=self.request.user)
     
+
+class ArticleDetailView(DetailView):
+    
+    model = Article
+    template_name = "articles/detail.html"
+    context_object_name = "article"
+    ordering = ['-created']
+
 class FavouritesCreateView(CreateView):
     model = UserFavouriteArticle
     fields = []

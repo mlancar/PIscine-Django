@@ -41,10 +41,8 @@ INSTALLED_APPS = [
     "django_browser_reload",
     "django_bootstrap5",
     'home',
-    'login',
-    'register',
     'articles',
-    'logout',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +158,7 @@ LANGUAGES = [
 LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
