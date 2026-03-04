@@ -30,11 +30,16 @@ header {
 
 }
 
-button:hover {
+.icons {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+}
+/* button:hover {
     background: linear-gradient(135deg, var(--blue), var(--purple));
     background-color: transparent;
     transform: scale(1.03);
-}
+} */
 
 .btn-wrapper, .div-wrapper {
     position: relative;

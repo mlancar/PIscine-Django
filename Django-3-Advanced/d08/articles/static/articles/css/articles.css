@@ -18,7 +18,7 @@ table {
 
 @media (min-width: 601px) and (max-width: 1100px) {
   .tables {
-    width: 850px;
+    width: 900px;
   }
   .detail-container {
     width: 850px;
@@ -43,16 +43,16 @@ thead {
 }
 
 th {
-    /* height: 50px;
-    width: 150px; */
+    /* height: 50px; */
+    /* width: 300px; */
     margin: 1%;
     display: flex;
     justify-content: space-between;
 }
 
 tr {
-    /* height: 40px;
-    width: 80px; */
+    /* height: 40px; */
+    /* width: 300px; */
     /* padding: 1%; */
     display: flex;
     justify-content: space-between;
@@ -61,6 +61,7 @@ tr {
 }
 
 td {
+    width: 200px;
     text-align: start;
     margin: 5px;
     padding-left: 10px;
