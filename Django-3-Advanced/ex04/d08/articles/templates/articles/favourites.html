@@ -10,18 +10,23 @@
 
 {% block content %}
 
-<div class="page-content">
-    <h2 class="text-center m-4">ARTICLES</h2>
-    <div class="tables div-wrapper">
-        <div class="div-overlay d-flex flex-column">
+<div class="pt-2 w-100 d-flex flex-column">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for favourite in favourites %}
-            <div>
-                <a href="{% url 'articles:article-detail' favourite.article.id %}" class="fw-bold">{{ favourite.article.title}}</a>
-            </div>
+            <tr >
+                <td class="w-100">
+                    <a href="{% url 'articles:article-detail' favourite.article.id %}" class="text-decoration-underline">{{ favourite.article.title}}</a>
+                </td>
+            </tr>
             {% endfor %}
-
-        </div>
-    </div>
+        </tbody>
+    </table>
 </div>
 
 {% endblock %}

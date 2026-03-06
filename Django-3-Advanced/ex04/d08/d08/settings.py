@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "django_browser_reload",
     "django_bootstrap5",
-    'home',
     'articles',
     'users',
 ]

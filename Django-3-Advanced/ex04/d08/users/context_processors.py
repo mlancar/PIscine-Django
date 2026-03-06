@@ -1,5 +1,5 @@
-from django.contrib.auth.forms import AuthenticationForm
+from .forms import CustomLoginForm
 
 def login_form(request):
 
-    return {"login_form": AuthenticationForm()}
+    return {"login_form": CustomLoginForm()}

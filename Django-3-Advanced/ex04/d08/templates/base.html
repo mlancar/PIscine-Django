@@ -18,107 +18,98 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
         <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     </head>
-    <body class="">
+    <body class="p-4">
         <div class="page-container w-auto d-flex flex-column">
             <header class="w-100 d-flex flex-column">
                 <div>
-                    <h1 class="">Articles</h1>
-                    <span class="text-dark">Share your writtings</span>
-                    <form action="{% url 'set_language' %}" method="post" class="language">
+                    <form action="{% url 'set_language' %}" method="post" class="language text-end">
                         {% csrf_token %}
-        
+                        
                         {% get_current_language as CURRENT_LANGUAGE %}
-
-                        {% if CURRENT_LANGUAGE == "en" %}
-                            {% comment %} mettre un drapeau de la langue {% endcomment %}
-                            <button asChild class ="icons" type="submit" name="language" value="fr">
-                                <img src={% static '/images/french.png' %} alt="French-icon">
-                            </button>
+                        
+                        {% if CURRENT_LANGUAGE == "fr" %}
+                        <a class ="text-primary" type="submit" name="language" value="en">
+                            {% trans "Switch to english" %}
+                        </a>
                         {% else %}
-                            <button asChild class="icons" type="submit" name="language" value="en">
-                                <img src={% static 'images/english.png' %} alt="English-icon">
-                            </button>
+                        <a class="text-primary" type="submit" name="language" value="fr">
+                            {% trans "Passer au français" %}
+                        </a>
                         {% endif %}
                         <input type="hidden" name="next" value="{{ request.get_full_path }}">
                     </form>
+                    <div class="d-flex align-items-center">
+                        <h1 class="">Articles</h1>
+                        <span class="text-secondary ps-4 fs-4">Share your writtings</span>
+                    </div>
                 </div>
-                <nav class="bg-dark h-auto m-4 p-2 d-flex flex-row justify-content-between align-items-center">
+                <nav class="nav-bar">
+                    <div class="d-flex h-100">
+                        <div class="fw-bold">
+                            <a href="{% url 'home' %}" >
+                                <img src={% static 'images/home.png' %} alt="home-icon" style="width: 40px;">
+                            </a>
+                        </div>    
+                        <a class="custom-btn"href="/articles" >{% trans "Articles" %}</a>
+                        {% if user.is_authenticated or user.is_staff %}
+                        <a class="custom-btn " href="{% url 'articles:user-publications' %}">{% trans "Publications" %}</a>
+                        <a class="custom-btn" href="{% url 'articles:favourites-list' %}">{% trans "Favourites" %}</a>
+                        <a href="{% url 'articles:publish-articles' %}" class="custom-btn">{% trans "Publish" %}</a>
+                    </div>
                     
-                    <div class="fw-bold">
-                        <a asChild href="{% url 'home' %}" >
-                            <img src={% static 'images/home.png' %} alt="home-icon" style="width: 40px;" class="">
-                        </a>
-                    </div>
-
-                    {% if user.is_authenticated or user.is_staff %}
-                     <div class="btn-nav-wrapper">
-                        <a asChild href="{% url 'articles:user-publications' %}" class="btn-nav-overlay">{% trans "Publications" %}</a>
-                    </div>
-                    <div class="btn-nav-wrapper">
-                        <a asChild href="{% url 'articles:favourites-list' %}" class="btn-nav-overlay">{% trans "Favourites" %}</a>
-                    </div>
-                     <div class="btn-nav-wrapper">
-                        <a asChild href="{% url 'articles:publish-articles' %}" class="btn-nav-overlay">{% trans "Publish" %}</a>
-                    </div>
-                    <div class="div-wrapper">
-                        <span>{% trans "Logged as" %} {{ request.user.username}}</span>
-                    </div>
-
-                    <div class="btn-wrapper">
-                        <form method="post" action="{% url 'logout' %}">
-                            {% csrf_token %}
-                            <button
-                                type="submit"
-                                onclick="return confirm('Do you want to logout ?');"
-                                class="btn btn-overlay">
-                                {% trans "LOGOUT" %}
-                            </button>
-                        </form>
-                    </div>
-
-                    {% else %}
-                     <div class="">
-                        <a asChild href="/articles" class="btn">{% trans "Articles" %}</a>
-                    </div>
-                    <div class="me-auto">
-                        <a asChild href="/register" class="btn">{% trans "Register" %}</a>
-                    </div>
-                        <div class=" text-white form-container">
-                            <form method="post"  action="{% url 'login' %}" class="d-flex ">
+                    <div>
+                        <div class="d-flex align-items-center">
+                            <span class="text-secondary">{% trans "Logged as" %} {{ request.user.username}}</span>
+                            <form method="post" action="{% url 'logout' %}">
                                 {% csrf_token %}
-                                {% for field in login_form %}
-                                    <div class="mb-3">
-                                        {{ field.label_tag }}
-                                        {{ field}}
-                                        {% if field.errors %}
-                                            <div class="text-dangerl mt-1">
-                                                {% for error in field.errors %}
-                                                    {{ error }}
-                                                {% endfor %}
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                {% endfor %}
-                                {% if form.non_field_errors %}
-                                    <div class="alert alert-danger">
-                                        {% for error in form.non_field_errors %}
-                                            {{ error }}
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-
-                                {% comment %} {% if next %}
-                                    <input type="hidden" name="next" value="{{ next }}">
-                                {% endif %} {% endcomment %}
-
-                                {% comment %} <button class="" type="submit">{% trans "Login" %}</button> {% endcomment %}
+                                <button
+                                    type="submit"
+                                    onclick="return confirm('Do you want to logout ?');"
+                                    class="btn text-secondary">
+                                    {% trans "Logout" %}
+                                </button>
                             </form>
                         </div>
+                        {% else %}
+                        <a class="me-auto custom-btn" href="/register">{% trans "Register" %}</a>
+                        
+                    </div>
+                    <div class="text-white form-container">
+                        <form method="post"  action="{% url 'login' %}" class="d-flex align-items-center">
+                            {% csrf_token %}
+                            {% for field in login_form %}
+                                <div class="m-1">
+                                    {{ field}}
+                                    {% if field.errors %}
+                                        <div class="text-dangerl mt-1">
+                                            {% for error in field.errors %}
+                                                {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                            {% if form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.non_field_errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% if next %}
+                                <input type="hidden" name="next" value="{{ next }}">
+                            {% endif %}
+
+                            <button class="me-3 submit-btn" type="submit">{% trans "Login" %}</button>
+                        </form>
+                    </div>
                     {% endif %}
+
 
                 </nav>
             </header>
-            <main class="d-flex flex-fill justify-content-center ">
+            <main class="d-flex w-100">
                 <div class="toast-container position-fixed bottom-0 end-0 p-3">
                     {% for message in messages %}
                         <div class="toast align-items-center text-bg-dark border-0"
@@ -137,9 +128,6 @@
                 </div>
                 {% block content %}{% endblock %}
             </main>
-            <footer class="text-center">
-                <p>© 2025 – {% trans "My awesome Django project" %}</p>
-            </footer>
         </div>
 
         <script>

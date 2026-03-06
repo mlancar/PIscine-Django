@@ -23,19 +23,19 @@
             <header class="w-100 d-flex">
                 <nav class="w-100 h-auto p-2 d-flex flex-row justify-content-between align-items-center">
                     <div class="fw-bold">
-                        <a asChild href="{% url 'home' %}" >
+                        <a href="{% url 'home' %}" >
                             <img src={% static 'images/home.png' %} alt="home-icon" style="width: 40px;" class="">
                         </a>
                     </div>
                     {% if user.is_authenticated or user.is_staff %}
                      <div class="btn-nav-wrapper">
-                        <a asChild href="{% url 'articles:user-publications' %}" class="btn-nav-overlay">{% trans "Publications" %}</a>
+                        <a href="{% url 'articles:user-publications' %}" class="btn-nav-overlay">{% trans "Publications" %}</a>
                     </div>
                     <div class="btn-nav-wrapper">
-                        <a asChild href="{% url 'articles:favourites-list' %}" class="btn-nav-overlay">{% trans "Favourites" %}</a>
+                        <a href="{% url 'articles:favourites-list' %}" class="btn-nav-overlay">{% trans "Favourites" %}</a>
                     </div>
                      <div class="btn-nav-wrapper">
-                        <a asChild href="{% url 'articles:publish-articles' %}" class="btn-nav-overlay">{% trans "Publish" %}</a>
+                        <a href="{% url 'articles:publish-articles' %}" class="btn-nav-overlay">{% trans "Publish" %}</a>
                     </div>
                     <div class="div-wrapper">
                         <span>{% trans "Logged as" %} {{ request.user.username}}</span>
@@ -47,11 +47,11 @@
 
                         {% if CURRENT_LANGUAGE == "en" %}
                             {% comment %} mettre un drapeau de la langue {% endcomment %}
-                            <button asChild class ="icons" type="submit" name="language" value="fr">
+                            <button class ="icons" type="submit" name="language" value="fr">
                                 <img src={% static '/images/french.png' %} alt="French-icon">
                             </button>
                         {% else %}
-                            <button asChild class="icons" type="submit" name="language" value="en">
+                            <button class="icons" type="submit" name="language" value="en">
                                 <img src={% static 'images/english.png' %} alt="English-icon">
                             </button>
                         {% endif %}
@@ -71,10 +71,10 @@
                     {% else %}
                         <div class="d-flex">
                             <div class="btn-wrapper">
-                                <a asChild href="/login" class="btn btn-overlay">{% trans "LOGIN" %}</a>
+                                <a href="/login" class="btn btn-overlay">{% trans "LOGIN" %}</a>
                             </div>
                             <div class="btn-wrapper">
-                                <a asChild href="/register" class="btn btn-overlay">{% trans "REGISTER" %}</a>
+                                <a href="/register" class="btn btn-overlay">{% trans "REGISTER" %}</a>
                             </div>
                         </div>
                     {% endif %}

@@ -32,7 +32,7 @@
                         <!-- <td> {{ article.content }} </td> -->
                         <td> {{ article.created }} </td>
                         <td class="text-end">
-                            <a asChild href="{% url 'articles:article-detail' article.id %}" class="btn">{% trans "Read" %}</a>
+                            <a href="{% url 'articles:article-detail' article.id %}" class="btn">{% trans "Read" %}</a>
                         </td>
                     </tr>
                 {% endfor %}

@@ -1,38 +1,22 @@
 from django import forms
 from django.conf import settings
-
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 
+class CustomLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-class CustomLoginForm(forms.Form):
-    username = forms.CharField(
-        label="Username",
-        max_length=20,
-        required=True,
-        widget=forms.TextInput(attrs={
+        self.fields["username"].widget.attrs.update({
             "class": "form-control",
             "placeholder": "username"
         })
-    )
-    password = forms.CharField(
-        label="Password",
-        required=True,
-        widget=forms.PasswordInput(attrs={
+
+        self.fields["password"].widget.attrs.update({
             "class": "form-control",
             "placeholder": "password"
         })
-    )
-
-    def clean(self):
-        cleaned = super().clean()
-        username = cleaned.get("username")
-        password = cleaned.get("password")
-
-        if not username or not password:
-            return cleaned
-        
-        return cleaned
 
 
 class RegisterForm(UserCreationForm):
