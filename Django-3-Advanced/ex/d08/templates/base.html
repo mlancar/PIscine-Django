@@ -37,7 +37,7 @@
                      <div class="btn-nav-wrapper">
                         <a href="{% url 'articles:publish-articles' %}" class="btn-nav-overlay">{% trans "Publish" %}</a>
                     </div>
-                    <div class="div-wrapper">
+                    <div class="logged">
                         <span>{% trans "Logged as" %} {{ request.user.username}}</span>
                     </div>
                     <form action="{% url 'set_language' %}" method="post" class="language">

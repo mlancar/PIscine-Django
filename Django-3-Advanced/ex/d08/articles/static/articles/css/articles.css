@@ -43,32 +43,48 @@ thead {
 }
 
 th {
-    /* height: 50px; */
-    /* width: 300px; */
-    margin: 1%;
+    width: 200px;
     display: flex;
     justify-content: space-between;
 }
 
 tr {
-    /* height: 40px; */
-    /* width: 300px; */
-    /* padding: 1%; */
     display: flex;
-    justify-content: space-between;
-    margin: 5px;
+    text-align: start;
+    /* justify-content: space-between; */
+    padding: 0.5rem;
     text-align: start;
 }
 
 td {
     width: 200px;
     text-align: start;
-    margin: 5px;
-    padding-left: 10px;
+    /* margin: 5px; */
+    /* padding-left: 10px; */
 
 }
 
 .language {
   text-align: end;
   border-radius: 90%;
+}
+
+.btn-favourites:hover {
+    background: linear-gradient(to right, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.btn-favourites-visible, .btn-favourites-focus, .btn-favourites-active {
+  border: none;
+
+}
+
+.btn:focus-visible, .btn-:focus, .btn:active {
+  border: none;
+}
+
+.text-cut {
+  overflow-wrap: break-word;
+  white-space: normal;
 }
