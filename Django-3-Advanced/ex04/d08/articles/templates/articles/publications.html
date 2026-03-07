@@ -14,10 +14,9 @@
     <table class="">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th class="w-100">Synopsis</th>
-                <th>Created</th>
+                <th>{% trans "Title" %}</th>
+                <th class="w-100">{% trans "Synopsis" %}</th>
+                <th>{% trans "Created" %}</th>
                 <th></th>
             </tr>
         </thead>
@@ -25,7 +24,6 @@
             {% for article in articles %}
                 <tr>
                     <td>{{ article.title }}</td>
-                    <td> {{ article.author }} </td>
                     <td class="w-100"> {{ article.synopsis }} </td>
                     <td> {{ article.created }} </td>
                     <td class="text-end">

@@ -3,6 +3,8 @@ from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
+from django.utils.translation import gettext_lazy as _
+
 
 class CustomLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -10,12 +12,12 @@ class CustomLoginForm(AuthenticationForm):
 
         self.fields["username"].widget.attrs.update({
             "class": "form-control",
-            "placeholder": "username"
+            "placeholder": _("username")
         })
 
         self.fields["password"].widget.attrs.update({
             "class": "form-control",
-            "placeholder": "password"
+            "placeholder": _("password")
         })
 
 

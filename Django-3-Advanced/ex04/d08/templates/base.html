@@ -28,19 +28,19 @@
                         {% get_current_language as CURRENT_LANGUAGE %}
                         
                         {% if CURRENT_LANGUAGE == "fr" %}
-                        <a class ="text-primary" type="submit" name="language" value="en">
+                        <button class ="text-primary border-0 bg-transparent" type="submit" name="language" value="en">
                             {% trans "Switch to english" %}
-                        </a>
+                        </button>
                         {% else %}
-                        <a class="text-primary" type="submit" name="language" value="fr">
+                        <button class="text-primary border-0 bg-transparent" type="submit" name="language" value="fr">
                             {% trans "Passer au français" %}
-                        </a>
+                        </button>
                         {% endif %}
                         <input type="hidden" name="next" value="{{ request.get_full_path }}">
                     </form>
                     <div class="d-flex align-items-center">
                         <h1 class="">Articles</h1>
-                        <span class="text-secondary ps-4 fs-4">Share your writtings</span>
+                        <span class="text-secondary ps-4 fs-4"> {% trans "Share your writtings" %} </span>
                     </div>
                 </div>
                 <nav class="nav-bar">

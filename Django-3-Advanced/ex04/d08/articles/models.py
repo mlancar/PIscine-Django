@@ -19,6 +19,9 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
+    def time_since_creation(self):
+        return timesince(self.created_at)
+
 class UserFavouriteArticle(models.Model):
 
     user = models.ForeignKey(

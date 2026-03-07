@@ -13,10 +13,11 @@
     <table>
         <thead class="border-bottom border-muted">
             <tr class="p-2 d-flex">
-                <th>Title</th>
-                <th>Author</th>
-                <th class="w-100">Synopsis</th>
-                <th>Created</th>
+                <th>{% trans "Title" %}</th>
+                <th class="w-100">{% trans "Synopsis" %}</th>
+                <th>{% trans "Writer" %}</th>
+                <th>{% trans "Created" %}</th>
+                <th>{% trans "When" %}</th>
                 <th></th>
             </tr>
         </thead>
@@ -24,9 +25,10 @@
             {% for article in articles %}
                 <tr class="p-2 d-flex border-bottom border-muted">
                     <td>{{ article.title }}</td>
-                    <td> {{ article.author }} </td>
                     <td class="w-100"> {{ article.synopsis|truncatechars:200 }} </td>
+                    <td> {{ article.author }} </td>
                     <td> {{ article.created }} </td>
+                    {% comment %} <td> {{ article.time_since_creation()}}</td> {% endcomment %}
                     <td class="text-end">
                         <a href="{% url 'articles:article-detail' article.id %}" class="btn bg-info text-white">{% trans "Read" %}</a>
                     </td>
