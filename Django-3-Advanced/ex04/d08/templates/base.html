@@ -45,9 +45,9 @@
                 </div>
                 <nav class="nav-bar">
                     <div class="d-flex h-100">
-                        <div class="fw-bold">
+                        <div class="fw-bold p-3">
                             <a href="{% url 'home' %}" >
-                                <img src={% static 'images/home.png' %} alt="home-icon" style="width: 40px;">
+                                <img src={% static 'images/home.png' %} alt="home-icon" class="" style="width: 20px;">
                             </a>
                         </div>    
                         <a class="custom-btn"href="/articles" >{% trans "Articles" %}</a>
@@ -80,23 +80,8 @@
                             {% for field in login_form %}
                                 <div class="m-1">
                                     {{ field}}
-                                    {% if field.errors %}
-                                        <div class="text-dangerl mt-1">
-                                            {% for error in field.errors %}
-                                                {{ error }}
-                                            {% endfor %}
-                                        </div>
-                                    {% endif %}
                                 </div>
                             {% endfor %}
-                            {% if form.non_field_errors %}
-                                <div class="alert alert-danger">
-                                    {% for error in form.non_field_errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-
                             {% if next %}
                                 <input type="hidden" name="next" value="{{ next }}">
                             {% endif %}
@@ -105,16 +90,14 @@
                         </form>
                     </div>
                     {% endif %}
-
-
                 </nav>
             </header>
             <main class="d-flex w-100">
                 <div class="toast-container position-fixed bottom-0 end-0 p-3">
                     {% for message in messages %}
-                        <div class="toast align-items-center text-bg-dark border-0"
+                        <div class="toast align-items-center text-bg-danger border-0"
                             role="alert"
-                            data-bs-delay="3000"
+                            data-bs-delay="10000"
                             data-bs-autohide="true">
                             <div class="d-flex">
                                 <div class="toast-body">

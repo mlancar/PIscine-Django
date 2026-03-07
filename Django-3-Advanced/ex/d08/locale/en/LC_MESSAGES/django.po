@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 16:56+0100\n"
+"POT-Creation-Date: 2026-03-07 19:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -98,22 +98,34 @@ msgstr ""
 msgid "Publish"
 msgstr ""
 
-#: templates/base.html:41
+#: templates/base.html:42
 msgid "Logged as"
 msgstr ""
 
-#: templates/base.html:68
+#: templates/base.html:52
 msgid "LOGOUT"
 msgstr ""
 
-#: templates/base.html:75 users/templates/login/index.html:8
-msgid "LOGIN"
-msgstr ""
-
-#: templates/base.html:78 users/templates/register/index.html:8
+#: templates/base.html:58 users/templates/register/index.html:8
 msgid "REGISTER"
 msgstr ""
 
-#: templates/base.html:104
+#: templates/base.html:88
+msgid "Login"
+msgstr ""
+
+#: templates/base.html:133
 msgid "My awesome Django project"
+msgstr ""
+
+#: users/forms.py:16 users/forms.py:31
+msgid "username"
+msgstr ""
+
+#: users/forms.py:21 users/forms.py:36
+msgid "password"
+msgstr ""
+
+#: users/templates/login/index.html:8
+msgid "LOGIN"
 msgstr ""

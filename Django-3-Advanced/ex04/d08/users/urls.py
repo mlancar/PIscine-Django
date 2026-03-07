@@ -1,14 +1,14 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import path
-from .views import RegisterView
+from .views import RegisterView, CustomLoginView
 from django.contrib.auth import views as auth_views
 from .forms import CustomLoginForm
 
 urlpatterns = [
-    path("login/", auth_views.LoginView.as_view(
+    path("login/", CustomLoginView.as_view(
         redirect_authenticated_user=True,
         authentication_form=CustomLoginForm,
-        template_name="login/index.html"
+        template_name="register/index.html"
         ),
         name="login"
     ),

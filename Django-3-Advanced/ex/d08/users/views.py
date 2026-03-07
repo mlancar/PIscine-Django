@@ -5,8 +5,18 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib.auth.mixins import AccessMixin
 from django.shortcuts import redirect
+from django.contrib.auth.views import LoginView
+from django.contrib import messages
 
 # Create your views here.
+
+class CustomLoginView(LoginView):
+
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, error)
+        return super().form_invalid(form)
 
 class RegisterView(AccessMixin, FormView):
     
@@ -23,3 +33,9 @@ class RegisterView(AccessMixin, FormView):
         user = form.save()
         login(self.request, user)
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, {error})
+        return super().form_invalid(form)

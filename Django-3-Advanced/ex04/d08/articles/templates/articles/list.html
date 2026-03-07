@@ -23,12 +23,12 @@
         </thead>
         <tbody>
             {% for article in articles %}
-                <tr class="p-2 d-flex border-bottom border-muted">
+                <tr class="text-cut p-2 d-flex border-bottom border-muted">
                     <td>{{ article.title }}</td>
-                    <td class="w-100"> {{ article.synopsis|truncatechars:200 }} </td>
+                    <td class="w-100"> {{ article.synopsis|truncatechars:20 }} </td>
                     <td> {{ article.author }} </td>
                     <td> {{ article.created }} </td>
-                    {% comment %} <td> {{ article.time_since_creation()}}</td> {% endcomment %}
+                    <td> {{ article.time_since_creation }}</td>
                     <td class="text-end">
                         <a href="{% url 'articles:article-detail' article.id %}" class="btn bg-info text-white">{% trans "Read" %}</a>
                     </td>

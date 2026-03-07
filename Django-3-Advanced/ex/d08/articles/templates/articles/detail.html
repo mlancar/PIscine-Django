@@ -13,8 +13,8 @@
     <h2 class="text-center m-4"> {% trans "ARTICLE'S DETAILS" %} </h2>
     <div class="detail-container div-wrapper">
         <div class="div-overlay d-flex flex-column">
-            <h2 class="fw-bold text-center">{{ article.title }}</h2>
-            <p class="fst-italic"> {{ article.synopsis}} </p>
+            <h2 class="fw-bold text-center text-cut">{{ article.title }}</h2>
+            <p class="fst-italic text-cut"> {{ article.synopsis|truncatechars:20 }} </p>
             <div>
                 <p class="text-cut">{{ article.content }}</p>
             </div>

@@ -48,3 +48,8 @@ td {
 thead {
   border-bottom: 1px solid #dee2ec;
 }
+
+.text-cut {
+  overflow-wrap: break-word;
+  white-space: normal;
+}

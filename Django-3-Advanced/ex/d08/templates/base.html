@@ -37,9 +37,42 @@
                      <div class="btn-nav-wrapper">
                         <a href="{% url 'articles:publish-articles' %}" class="btn-nav-overlay">{% trans "Publish" %}</a>
                     </div>
+                    
                     <div class="logged">
                         <span>{% trans "Logged as" %} {{ request.user.username}}</span>
                     </div>
+
+                    <div class="btn-wrapper">
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button
+                                type="submit"
+                                onclick="return confirm('Do you want to logout ?');"
+                                class="btn btn-overlay">
+                                {% trans "LOGOUT" %}
+                            </button>
+                        </form>
+                    </div>
+                    {% else %}
+                    <div class="btn-wrapper me-auto">
+                        <a href="/register" class="btn btn-overlay">{% trans "REGISTER" %}</a>
+                    </div>
+                    <div class="text-white login-container div-wrapper">
+                        <form method="post"  action="{% url 'login' %}" class="d-flex align-items-center">
+                            {% csrf_token %}
+                            {% for field in login_form %}
+                                <div class="m-1">
+                                    {{ field}}
+                                </div>
+                            {% endfor %}
+                            {% if next %}
+                                <input type="hidden" name="next" value="{{ request.patht }}">
+                            {% endif %}
+                            <button class="btn " type="submit">{% trans "Login" %}</button>
+                        </form>
+                    </div>
+                    
+                    {% endif %}
                     <form action="{% url 'set_language' %}" method="post" class="language">
                         {% csrf_token %}
         
@@ -56,35 +89,14 @@
                         {% endif %}
                         <input type="hidden" name="next" value="{{ request.get_full_path }}">
                     </form>
-                    <div class="btn-wrapper">
-                        <form method="post" action="{% url 'logout' %}">
-                            {% csrf_token %}
-                            <button
-                                type="submit"
-                                onclick="return confirm('Do you want to logout ?');"
-                                class="btn btn-overlay">
-                                {% trans "LOGOUT" %}
-                            </button>
-                        </form>
-                    </div>
-                    {% else %}
-                        <div class="d-flex">
-                            <div class="btn-wrapper">
-                                <a href="/login" class="btn btn-overlay">{% trans "LOGIN" %}</a>
-                            </div>
-                            <div class="btn-wrapper">
-                                <a href="/register" class="btn btn-overlay">{% trans "REGISTER" %}</a>
-                            </div>
-                        </div>
-                    {% endif %}
                 </nav>
             </header>
             <main class="d-flex flex-fill justify-content-center ">
                 <div class="toast-container position-fixed bottom-0 end-0 p-3">
                     {% for message in messages %}
-                        <div class="toast align-items-center text-bg-dark border-0"
+                        <div class="toast align-items-center text-bg-danger border-0"
                             role="alert"
-                            data-bs-delay="3000"
+                            data-bs-delay="10000"
                             data-bs-autohide="true">
                             <div class="d-flex">
                                 <div class="toast-body">

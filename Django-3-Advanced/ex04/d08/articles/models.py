@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.utils.timesince import timesince
 
 # Create your models here.
 
@@ -20,7 +21,7 @@ class Article(models.Model):
         return self.title
 
     def time_since_creation(self):
-        return timesince(self.created_at)
+        return timesince(self.created)
 
 class UserFavouriteArticle(models.Model):
 
