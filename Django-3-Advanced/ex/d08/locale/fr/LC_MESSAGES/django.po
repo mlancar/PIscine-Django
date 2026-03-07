@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-25 16:25+0000\n"
+"POT-Creation-Date: 2026-03-07 16:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,52 +17,103 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#: articles/templates/articles/detail.html:27
-msgid "Add to favourite"
+
+#: articles/forms.py:10 articles/templates/articles/list.html:18
+#: articles/templates/articles/publications.html:19
+msgid "Title"
+msgstr "Titre"
+
+#: articles/forms.py:11 articles/templates/articles/list.html:20
+#: articles/templates/articles/publications.html:20
+msgid "Synopsis"
+msgstr "Synopsis"
+
+#: articles/forms.py:12
+msgid "Content"
 msgstr ""
+
+#: articles/forms.py:17
+msgid "Write Title..."
+msgstr "Écrit le titre"
+
+#: articles/forms.py:21
+msgid "Write synopsis..."
+msgstr "Écrit le synopsis"
+
+#: articles/forms.py:26
+msgid "Write content..."
+msgstr "Écrit le contenu"
+
+#: articles/templates/articles/detail.html:13
+msgid "ARTICLE'S DETAILS"
+msgstr "DÉTAILS DE L'ARTICLE"
+
+#: articles/templates/articles/detail.html:27
+msgid "Already in favourites"
+msgstr "Déjà en favoris"
+
+#: articles/templates/articles/detail.html:33
+msgid "Add to favourite"
+msgstr "Ajouter en favori"
+
+#: articles/templates/articles/favourites.html:14
+msgid "FAVOURITES ARTICLES"
+msgstr "ARTICES FAVORIS"
+
+#: articles/templates/articles/list.html:19
+msgid "Author"
+msgstr "Auteur"
+
+#: articles/templates/articles/list.html:21
+#: articles/templates/articles/publications.html:21
+msgid "Created"
+msgstr "Créé"
+
+#: articles/templates/articles/list.html:33
+msgid "Read"
+msgstr "Lire"
+
+#: articles/templates/articles/publications.html:14
+msgid "MY PUBLICATIONS"
+msgstr "MES PUBLICATIONS"
+
+#: articles/templates/articles/publish.html:14
+msgid "SHARE YOUR WRITINGS"
+msgstr "PARTAGE TES ÉCRITS"
 
 #: articles/templates/articles/publish.html:20
-#: login/templates/login/index.html:33
-#: register/templates/register/index.html:34
+#: users/templates/login/index.html:37 users/templates/register/index.html:34
 msgid "Submit"
-msgstr ""
+msgstr "Envoyé"
 
-#: login/templates/login/index.html:8 templates/base.html:55
-msgid "LOGIN"
-msgstr "CONNEXION"
-
-#: login/templates/login/index.html:35
-msgid "Registered successfully"
-msgstr "Inscription réussie"
-
-#: register/templates/register/index.html:8 templates/base.html:58
-msgid "REGISTER"
-msgstr "Inscription"
-
-#: templates/base.html:26
-msgid "HOME"
-msgstr "ACCUEIL"
-
-#: templates/base.html:30
+#: templates/base.html:32
 msgid "Publications"
 msgstr "Publications"
 
-#: templates/base.html:33
+#: templates/base.html:35
 msgid "Favourites"
 msgstr "Favoris"
 
-#: templates/base.html:36
+#: templates/base.html:38
 msgid "Publish"
 msgstr "Publier"
 
-#: templates/base.html:39
+#: templates/base.html:41
 msgid "Logged as"
 msgstr "Connecté en tant que"
 
-#: templates/base.html:48
+#: templates/base.html:68
 msgid "LOGOUT"
 msgstr "Déconnexion"
 
-#: templates/base.html:84
+#: templates/base.html:75 users/templates/login/index.html:8
+msgid "LOGIN"
+msgstr "Connexion"
+
+#: templates/base.html:78 users/templates/register/index.html:8
+msgid "REGISTER"
+msgstr "Inscription"
+
+#: templates/base.html:104
 msgid "My awesome Django project"
 msgstr "Mon super projet Django"
