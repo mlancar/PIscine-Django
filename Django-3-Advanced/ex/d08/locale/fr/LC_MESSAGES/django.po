@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-07 19:55+0100\n"
+"POT-Creation-Date: 2026-03-09 15:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr "Synopsis"
 
 #: articles/forms.py:12
 msgid "Content"
-msgstr ""
+msgstr "Contenu"
 
 #: articles/forms.py:17
 msgid "Write Title..."
@@ -82,7 +82,7 @@ msgid "SHARE YOUR WRITINGS"
 msgstr "PARTAGE TES ÉCRITS"
 
 #: articles/templates/articles/publish.html:20
-#: users/templates/login/index.html:37 users/templates/register/index.html:34
+#: users/templates/register/index.html:20
 msgid "Submit"
 msgstr "Envoyé"
 
@@ -110,22 +110,27 @@ msgstr "Déconnexion"
 msgid "REGISTER"
 msgstr "Inscription"
 
-#: templates/base.html:88
+#: templates/base.html:71
 msgid "Login"
-msgstr ""
+msgstr "Connexion"
 
-#: templates/base.html:133
+#: templates/base.html:114
 msgid "My awesome Django project"
 msgstr "Mon super projet Django"
 
-#: users/forms.py:16 users/forms.py:31
+#: users/forms.py:16 users/forms.py:36
 msgid "username"
-msgstr ""
+msgstr "nom d'utilisateur"
 
-#: users/forms.py:21 users/forms.py:36
+#: users/forms.py:21 users/forms.py:41
 msgid "password"
-msgstr ""
+msgstr "mot de passe"
 
-#: users/templates/login/index.html:8
-msgid "LOGIN"
-msgstr "Connexion"
+#: users/forms.py:46
+#, fuzzy
+#| msgid "password"
+msgid "confirm password"
+msgstr "mot de passe"
+
+#~ msgid "LOGIN"
+#~ msgstr "Connexion"

@@ -144,7 +144,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Default Language
-LANGUAGE_CODE = 'fr'
+LANGUAGE_CODE = 'en'
 
 # Activate
 USE_I18N = True

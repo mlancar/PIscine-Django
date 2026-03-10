@@ -36,6 +36,3 @@ class UserFavouriteArticle(models.Model):
 
     def __str__(self):
         return self.article.title
-    
-    # down_vote = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='downvoted_tips', blank=True)
-    # up_vote = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='upvoted_tips', blank=True)

@@ -24,17 +24,17 @@ class Test(TestCase):
         self.assertEqual(response.status_code, 302)
         
 
-    def test_logged_user_can_access(self):
+    def test_login_user_can_access(self):
         self.client.login(username="marine", password="password123")
         response = self.client.get(reverse("articles:add-favourite", args=[1]))
         self.assertNotEqual(response.status_code, 302)
     
-    def test_user_cannot_access_register(self):
+    def test_login_user_cannot_access_register(self):
         self.client.login(username="marine", password="password123")
         response = self.client.get(reverse("register"))
         self.assertEqual(response.status_code, 302)
     
-    def test_user_cannot_access_login(self):
+    def test_login_user_cannot_access_login(self):
         self.client.login(username="marine", password="password123")
         response = self.client.get(reverse("login"))
         self.assertEqual(response.status_code, 302)
