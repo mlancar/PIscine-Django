@@ -3,4 +3,4 @@ from django.contrib.auth.forms import AuthenticationForm
 
 class CustomLoginView(LoginView):
     form_class = AuthenticationForm
-    template_name = "login.html"
+    template_name = "account/account.html"

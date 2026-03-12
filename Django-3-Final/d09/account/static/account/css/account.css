@@ -1,0 +1,19 @@
+
+.btn-submit {
+    border-radius: var(--bs-border-radius);
+}
+
+.form-container {
+    width: 500px;
+    /* height: 600px; */
+}
+
+.logged {
+    background: linear-gradient(to right, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-container {
+    display: inline-block;
+}
