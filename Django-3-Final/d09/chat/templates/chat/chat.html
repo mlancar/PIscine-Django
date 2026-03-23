@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% load static %}
+
+{% block extra_css %}
+ <link rel="stylesheet" href="{% static 'account/css/account.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="page-content">
+    <div>
+        {% for room in rooms %}
+            <a href="{% url 'chatroom' room_id=room.id %}">{{ room.name }}</a>
+            <!-- <a href="{% url 'chatroom' room_id=room.id %}">{{ room.name }}</a>
+            <a href="{% url 'chatroom' room_id=room.id %}">{{ room.name }}</a> -->
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "django_browser_reload",
     "django_bootstrap5",
     "account",
+    "chat",
+    "channels",
 ]
 
 MIDDLEWARE = [
@@ -134,3 +136,5 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = "/account/"
+
+ASGI_APPLICATION = "project.asgi.application"

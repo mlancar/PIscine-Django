@@ -1,6 +1,7 @@
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
+from django.contrib.auth import logout
 
 class CustomLoginView(LoginView):
     form_class = AuthenticationForm
