@@ -27,6 +27,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
     async def chat_message(self, event):
         message = event['message']
+        username = event['userbane']
+        message_html = f"<div hx-swap-oob='beforeend:#messages'><p><b>{username}</b>: {message}</p></div>"
         await self.send(text_data=json.dumps({
-            'message': message
+            'message': message_html,
+            'username': username
         }))

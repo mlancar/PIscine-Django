@@ -19,6 +19,7 @@ async function handleAccount() {
 
     const response = await fetch("/account/", {
         method: "POST",
+        credentials: "same-origin",
         headers: {
             "X-CSRFToken": csrftoken
         },

@@ -13,3 +13,11 @@ def chat_page(request):
 def chat_room(request, room_id):
     room = get_object_or_404(Chatroom, id=room_id)
     return render(request, "chat/chatroom.html", {"room": room})
+
+def room_join(request):
+    if request.method == "POST":
+        room_id = request.POST["room_id"]
+        room = Chatroom.objects.get(id=room_id)
+        return redirect(reverse('chat', kwargs={'id': room.id}))
+    else:
+        return render(request, 'chat/join.html')

@@ -2,7 +2,10 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
 from django.contrib.auth import logout
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
+@method_decorator(csrf_exempt, name='dispatch')
 class CustomLoginView(LoginView):
     form_class = AuthenticationForm
     template_name = "account/account.html"
