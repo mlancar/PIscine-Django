@@ -22,12 +22,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': message,
+                'username': self.scope["user"].username
             }
         )
     async def chat_message(self, event):
         message = event['message']
-        username = event['userbane']
+        username = event['username']
         message_html = f"<div hx-swap-oob='beforeend:#messages'><p><b>{username}</b>: {message}</p></div>"
         await self.send(text_data=json.dumps({
             'message': message_html,

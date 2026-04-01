@@ -11,7 +11,8 @@ def chat_page(request):
     return render(request, "chat/chat.html", {"rooms": rooms})
 
 def chat_room(request, room_id):
-    room = get_object_or_404(Chatroom, id=room_id)
+    room = Chatroom.objects.get(id=room_id)
+    # print("room = ", room)
     return render(request, "chat/chatroom.html", {"room": room})
 
 def room_join(request):
