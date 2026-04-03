@@ -1,20 +1,32 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import gettext_lazy as _
 
+class RegisterForm(UserCreationForm):
+    
+    class Meta(UserCreationForm.Meta):
+        
+        model = User
+        fields = ("username",  )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-class RegisterView(AccessMixin, FormView):
+        for field in self.fields.values():
+            field.help_text = None
     
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect("home")
-        return super().dispatch(request, *args, **kwargs)
-    
-    form_class = RegisterForm
-    template_name = "register/index.html"
-    success_url = reverse_lazy("home")
-    
-    def form_valid(self, form):
-        user = form.save()
-        login(self.request, user)
-        return super().form_valid(form)
+        self.fields["username"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": _("username")
+        })
+
+        self.fields["password1"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": _("password")
+        })
+        
+        self.fields["password2"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": _("confirm password")
+        })

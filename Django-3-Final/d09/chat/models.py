@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey('Chatroom', on_delete=models.CASCADE, null=True)
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
     def __str__(self):

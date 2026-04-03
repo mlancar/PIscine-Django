@@ -10,15 +10,22 @@
 {% block content %}
 
 <div class="page-content">
-    <div id="chat-log" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc;"></div>
+    <h3> {{ room }} </h3>
+    <div id="chat-log" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc;">
+        {% for msg in last_messages %}
+            <div class="message">
+                <small>[{{ msg.timestamp|date:"H:i" }}]</small>
+                <strong>{{ msg.sender.username }}:</strong> {{ msg.content }}
+            </div>
+        {% endfor %}
+    </div>
     <form hx-ws="send:submit">
         <input id="chat-message-input" type="text" size="30" />
         <input id="chat-message-submit" type="button" value="Send" />
     </form>
     
     <script>
-        const roomId = {{ room.id }};
-        // console.log(room);
+        const roomId = "{{ room.id }}";
         const chatSocket = new WebSocket(
             'ws://' + window.location.host + '/ws/chat/' + roomId + '/'
         );
@@ -37,7 +44,7 @@
         };
         document.querySelector('#chat-message-input').focus();
         document.querySelector('#chat-message-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // Enter key
+            if (e.key === "Enter") {  // Enter key
                 document.querySelector('#chat-message-submit').click();
             }
         };

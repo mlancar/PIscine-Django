@@ -53,7 +53,7 @@ async function updatePage() {
 
     const data = await response.json();
 
-    const container = document.getElementById("form-container");
+    const container = document.getElementById("login-container");
     container.innerHTML = "";
 
     if (data.logged_in) {
@@ -82,7 +82,7 @@ async function updatePage() {
 }
 
 function attachLoginHandler() {
-    const loginForm = document.getElementById("login-form");
+    const loginForm = document.getElementById("login-container");
     if (loginForm) {
         loginForm.addEventListener("submit", async function(e) {
             e.preventDefault();
