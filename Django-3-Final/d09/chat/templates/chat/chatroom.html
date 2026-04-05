@@ -10,19 +10,29 @@
 {% block content %}
 
 <div class="page-content">
-    <h3> {{ room }} </h3>
-    <div id="chat-log" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc;">
-        {% for msg in last_messages %}
-            <div class="message">
-                <small>[{{ msg.timestamp|date:"H:i" }}]</small>
-                <strong>{{ msg.sender.username }}:</strong> {{ msg.content }}
+    <h3 class="text-center p-4"> {{ room }} </h3>
+    <div class="d-flex">
+        <div>
+            <span>CONNECTED USERS</span>
+            <ul id="user-list">
+            </ul>
+        </div>
+        <div>
+            <div id="chat-log" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc;">
+                {% for msg in last_messages %}
+                    <div class="message">
+                        <small>[{{ msg.timestamp|date:"H:i" }}]</small>
+                        <strong>{{ msg.sender.username }}:</strong> {{ msg.content }}
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+            <form hx-ws="send:submit">
+                <input id="chat-message-input" type="text" size="30" />
+                <input id="chat-message-submit" type="button" value="Send" />
+            </form>
+
+        </div>
     </div>
-    <form hx-ws="send:submit">
-        <input id="chat-message-input" type="text" size="30" />
-        <input id="chat-message-submit" type="button" value="Send" />
-    </form>
     
     <script>
         const roomId = "{{ room.id }}";
@@ -31,15 +41,26 @@
         );
         
         const chatLog = document.querySelector('#chat-log');
+        
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
             const newMessage = document.createElement('div');
+            
+            if (data.type == 'user_list') {
+                const userListElement = document.querySelector('#user-list');
+                userListElement.innerHTML = '';
+                
+                data.users.forEach(username => {
+                    const li = document.createElement('li');
+                    li.innerText = username;
+                    userListElement.appendChild(li);
+                    
+                });
+            }
+            // else if data == chat message
             newMessage.innerHTML = `${data.message}`;
-            
-            // 4. On l'ajoute à la fin de la liste des messages
+
             chatLog.appendChild(newMessage);
-            
-            // Optionnel : on scrolle automatiquement vers le bas
             chatLog.scrollTop = chatLog.scrollHeight;
         };
         document.querySelector('#chat-message-input').focus();

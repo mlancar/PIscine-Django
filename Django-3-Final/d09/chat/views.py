@@ -15,9 +15,7 @@ def chat_room(request, room_id):
     room = get_object_or_404(Chatroom, id=room_id)
 
     last_messages = Message.objects.filter(room=room).order_by('-timestamp')[:3]
-    print(f"DEBUG: Room={room.id}, Messages trouvés={last_messages.count()}")
     last_messages = reversed(last_messages)
-
 
     return render(request, "chat/chatroom.html", {
         "room": room,
