@@ -10,6 +10,7 @@ from .forms import RegisterForm
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
+from django.middleware.csrf import rotate_token
 
 class AccountAuthView(TemplateView):
     template_name = "account/account.html"
@@ -23,16 +24,13 @@ class AccountAuthView(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        # Déterminer quel formulaire a été soumis
         if 'login_submit' in request.POST:
             login_form = AuthenticationForm(data=request.POST)
             if login_form.is_valid():
                 user = login_form.get_user()
                 login(request, user)
-                return redirect('account')
             else:
                 return self.render_to_response(self.get_context_data(login_form=login_form))
-
         elif 'register_submit' in request.POST:
             register_form = RegisterForm(request.POST)
             if register_form.is_valid():
@@ -52,5 +50,6 @@ def user_status(request):
 def logout_view(request):
     if request.method == "POST":
         logout(request)
+        rotate_token(request)
         return JsonResponse({"success": True})
     return JsonResponse({"success": False, "error": "POST required"}, status=400)

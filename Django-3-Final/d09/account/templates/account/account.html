@@ -13,11 +13,12 @@
     <h2 class="text-center m-4"></h2>
     <div class="tables div-wrapper">
         <div id="login-container" class="div-overlay">
-            <form method="post">
+            <form id="login-form" method="post">
                 {% csrf_token %}
-                <button type="submit" name="login_submit" class="btn">Login</button>
+                <button type="submit" name="login_submit" value="1"class="btn">Login</button>
                 {{ login_form.as_p }}
             </form>
+            <div id="logout-container"></div>
         </div>
     </div>
     <div class="div-wrapper">
@@ -26,7 +27,7 @@
             <form method="post">
                 {% csrf_token %}
                 {{ register_form.as_p }}
-                <button type="submit" name="register_submit" class="btn">Register</button>
+                <button type="submit" name="register_submit" class="btn" value="1">Register</button>
             </form>
         </div>
     </div>
