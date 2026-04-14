@@ -24,25 +24,37 @@ class ChatConsumer(AsyncWebsocketConsumer):
             users_online.add(self.user.username)
             cache.set('online_users', users_online)
 
-            await self.send(text_data=json.dumps({
-                'type': 'user_list',
-                'users': list(users_online)
-            }))
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'user_list',
+                    'users': list(users_online)
+                }
+            )
 
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'chat_message',
-                    'message': f'{self.user.username} has joined the chat',
+                    'message': f'{self.user.username} has joined the chat {self.room_id}',
                     'username': self.user.username
                 }
             )
+    
     async def disconnect(self, close_code):
 
         if self.user.is_authenticated:
             users_online = cache.get('online_users', set())
             users_online.discard(self.user.username)
             cache.set('online_users', users_online)
+
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'user_list',
+                    'users': list(users_online)
+                }
+            )
 
             await self.channel_layer.group_send(
                 self.room_group_name,
@@ -57,6 +69,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
+
+    async def user_list(self, event):
+        await self.send(text_data=json.dumps({
+            'type': 'user_list',
+            'users': event['users']
+        }))
+
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']

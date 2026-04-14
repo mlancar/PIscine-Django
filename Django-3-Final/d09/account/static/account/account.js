@@ -83,26 +83,23 @@ async function updatePage() {
 
     const response = await fetch("/account/user-status/");
     const data = await response.json();
-    const loginContainer = document.getElementById("login-container");
-    const userInfo = document.getElementById("user-info");
-
-    console.log(data.logged_in)
+    const loginForm = document.getElementById("login-form");
+    const logoutContainer = document.getElementById("logout-container")
+    
     if (data.logged_in) {
-        loginContainer.style.display = "block";
+        loginForm.style.display = "none";
         
         const p = document.createElement("p");
         p.textContent = `Logged as ${data.username}`;
     
-        const btn = document.createElement("button");
-        btn.textContent = "Logout";
+        const btn = document.getElementById("logout-btn")
         btn.addEventListener("click", logoutUser);
-    
-        loginContainer.appendChild(p);
-        loginContainer.appendChild(btn);
-
+        
+        logoutContainer.appendChild(p);
     }
     else {
-        loginContainer.style.display = "block";
+        loginForm.style.display = "block";
+        logoutContainer.style.display = "none";
 
     }
 }
@@ -141,6 +138,18 @@ async function logoutUser() {
     }
     await updatePage();
     await refreshCsrfToken();
+}
+
+
+async function displayUser(users) {
+    const userListElement = document.querySelector('#user-list');
+    userListElement.innerHTML = '';
+    
+    users.forEach(username => {
+        const li = document.createElement('li');
+        li.innerText = username;
+        userListElement.appendChild(li);
+    });
 }
 
 updatePage();
