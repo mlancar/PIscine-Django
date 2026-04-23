@@ -13,59 +13,67 @@ function getCookie(name) {
     return cookieValue;
 }
 
-async function handleAccount(formElement) {
-    
-    const csrftoken = getCookie('csrftoken') || "";
+$.ajaxSetup({
+    xhrFields: {
+        withCredentials: true
+    },
+    beforeSend: function(xhr, settings) {
+        if (!(/^GET|HEAD|OPTIONS|TRACE$/.test(settings.type))) {
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+        }
+    }
+});
 
+function handleAccount(formElement) {
+    
     const formData = new FormData(formElement);
-    const response = await fetch("/account/", {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-            "X-CSRFToken": csrftoken
+    $.ajax({
+        url: "/account/",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+
+        success: function(data) {
+            if (data.success) {
+                console.log("ICI")
+                updatePage();
+                location.reload();
+            }
+            else {
+                const errorDiv = $("#form-errors");
+                errorDiv.html("");
+
+                if (data.errors) {
+                    for (let field in data.errors) {
+                        data.errors[field].forEach(err => {
+                            const message = err.message || err;
+                            errorDiv.append(`<p style="color:red">${message}</p>`);
+                        });
+                    }
+                } 
+                else {
+                    errorDiv.append(`<p style="color:red">Login failed</p>`);
+                }
+            }
         },
-        body: formData
+
+        error: function(xhr) {
+            if (xhr.status === 403) {
+                refreshCsrfToken();
+                showError("Session expirée, réessaie.");
+            }
+            else {
+                showError(`Erreur serveur (${xhr.status})`);
+            }
+        }
     });
-
-    const contentType = response.headers.get("content-type") || "";
-    
-    if (!contentType.includes("application/json")) {
-        const text = await response.text();
-        console.error("Réponse non-JSON :", response.status, text);
-
-        if (response.status === 403) {
-            await refreshCsrfToken();
-            showError("Session expirée, réessaie.");
-        }
-        else {
-            showError(`Erreur serveur (${response.status})`);
-        }
-        return;
-    }
-
-    const data = await response.json();
-
-    if (data.success) {
-        await updatePage();
-    }
-    else {
-        const errorDiv = document.getElementById("form-errors");
-        errorDiv.innerHTML = "";
-
-        for (let field in data.errors) {
-            data.errors[field].forEach(err => {
-                const p = document.createElement("p");
-                p.textContent = err.message;
-                p.style.color = "red";
-                errorDiv.appendChild(p);
-            });
-        }
-    }
 }
 
 function showError(message) {
     const errorDiv = document.getElementById("form-errors");
-    if (!errorDiv) return;
+    if (!errorDiv)
+        return;
     errorDiv.innerHTML = `<p style="color:red">${message}</p>`;
 }
 
@@ -79,77 +87,58 @@ function attachLoginHandler() {
     }
 }
 
-async function updatePage() {
+function updatePage() {
+    $.get("/account/user-status/", function(data) {
+        const loginForm = $("#login-form");
+        const logoutContainer = $("#logout-container");
+        logoutContainer.empty();
 
-    const response = await fetch("/account/user-status/");
-    const data = await response.json();
-    const loginForm = document.getElementById("login-form");
-    const logoutContainer = document.getElementById("logout-container")
-    
-    if (data.logged_in) {
-        loginForm.style.display = "none";
-        
-        const p = document.createElement("p");
-        p.textContent = `Logged as ${data.username}`;
-    
-        const btn = document.getElementById("logout-btn")
-        btn.addEventListener("click", logoutUser);
-        
-        logoutContainer.appendChild(p);
-    }
-    else {
-        loginForm.style.display = "block";
-        logoutContainer.style.display = "none";
+        if (data.logged_in) {
+            console.log("PAR ICI")
 
-    }
-}
+            loginForm.hide();
 
-async function refreshCsrfToken() {
-    try {
-        const response = await fetch("/account/", {
-            method: "GET",
-            credentials: "same-origin",
-        });
+            logoutContainer.html(`
+                <p>Logged as ${data.username}</p>
+                <button id="logout-btn">Logout</button>
+            `);
 
-    } catch (e) {
-        console.error("Cannot refresh CSRF token", e);
-    }
-}
+            $("#logout-btn").on("click", logoutUser);
 
-async function logoutUser() {
-    const csrftoken = getCookie('csrftoken');
-
-    const response = await fetch("/account/logout/", {
-        method: "POST",
-        headers: {
-            "X-CSRFToken": csrftoken
+        }
+        else {
+            console.log("PAR LA")
+            loginForm.show();
+            logoutContainer.hide();
         }
     });
-    const data = await response.json();
-
-    if (data.success) {
-        await fetch("/account/", {
-            method: "GET",
-            credentials: "same-origin",
-        });
-    }
-    else {
-        alert("Logout Failed");
-    }
-    await updatePage();
-    await refreshCsrfToken();
 }
 
-
-async function displayUser(users) {
-    const userListElement = document.querySelector('#user-list');
-    userListElement.innerHTML = '';
-    
-    users.forEach(username => {
-        const li = document.createElement('li');
-        li.innerText = username;
-        userListElement.appendChild(li);
+function logoutUser() {
+    $.post("/account/logout/", function(data) {
+        if (data.success) {
+            refreshCsrfToken();
+            updatePage();
+            location.reload();
+        }
+        else {
+            alert("Logout Failed");
+        }
     });
 }
 
-updatePage();
+function refreshCsrfToken() {
+    $.get("/account/");
+}
+
+function attachLoginHandler() {
+    $("#login-form").on("submit", function(e) {
+        e.preventDefault();
+        handleAccount(this);
+    });
+}
+
+$(document).ready(function() {
+    attachLoginHandler();
+    updatePage();
+});

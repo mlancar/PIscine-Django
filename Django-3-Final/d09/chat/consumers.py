@@ -7,10 +7,13 @@ from django.core.cache import cache
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_id = self.scope['url_route']['kwargs']['room_id']
-        self.room_name = 'chat_room'
-        self.room_group_name = 'chat_%s' % self.room_name
-        self.user = self.scope['user']
 
+        # room_name = self.scope['url_route']['kwargs']['room_id']
+        # chatroom = await database_sync_to_async(Chatroom.objects.get)(name=room_name)
+        # self.room_name = f'chat_{room_id}'
+
+        self.room_group_name = 'chat_%s' % self.room_id
+        self.user = self.scope['user']
 
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -20,9 +23,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         if self.user.is_authenticated:
             
-            users_online = cache.get('online_users', set())
+            cache_key = f'online_users_{self.room_group_name}'
+            users_online = cache.get(cache_key, set())
             users_online.add(self.user.username)
-            cache.set('online_users', users_online)
+            cache.set(cache_key, users_online)
 
             await self.channel_layer.group_send(
                 self.room_group_name,
@@ -32,6 +36,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 }
             )
 
+            # print("PAR ICI: ", self.room_name)
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
@@ -44,9 +49,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
 
         if self.user.is_authenticated:
-            users_online = cache.get('online_users', set())
+            cache_key = f'online_users_{self.room_group_name}'
+
+            users_online = cache.get(cache_key, set())
             users_online.discard(self.user.username)
-            cache.set('online_users', users_online)
+            cache.set(cache_key, users_online)
 
             await self.channel_layer.group_send(
                 self.room_group_name,

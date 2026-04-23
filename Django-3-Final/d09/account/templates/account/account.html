@@ -18,6 +18,7 @@
                 <button type="submit" name="login_submit" value="1"class="btn">Login</button>
                 {{ login_form.as_p }}
             </form>
+            <div id="form-errors"></div>
             <div id="logout-container">
                 <button id="logout-btn"type="submit" name="logout" class="btn">LOGOUT</button>
             </div>
@@ -35,5 +36,8 @@
     </div>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'account/account.js' %}"></script>
+
 
 {% endblock %}
