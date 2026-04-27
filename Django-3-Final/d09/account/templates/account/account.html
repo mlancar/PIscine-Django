@@ -12,11 +12,12 @@
 <div class="page-content">
     <h2 class="text-center m-4"></h2>
     <div class="tables div-wrapper">
-        <div id="login-container" class="div-overlay">
+        <div id="login-container" class="div-overlay d-flex flex-column">
+            <h3>LOGIN</h3>
             <form id="login-form" method="post">
                 {% csrf_token %}
-                <button type="submit" name="login_submit" value="1"class="btn">Login</button>
                 {{ login_form.as_p }}
+                <button type="submit" name="login_submit" value="1"class="btn">Login</button>
             </form>
             <div id="form-errors"></div>
             <div id="logout-container">
