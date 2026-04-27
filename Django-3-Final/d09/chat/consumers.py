@@ -8,10 +8,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_id = self.scope['url_route']['kwargs']['room_id']
 
-        # room_name = self.scope['url_route']['kwargs']['room_id']
-        # chatroom = await database_sync_to_async(Chatroom.objects.get)(name=room_name)
-        # self.room_name = f'chat_{room_id}'
-
         self.room_group_name = 'chat_%s' % self.room_id
         self.user = self.scope['user']
 
@@ -36,12 +32,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 }
             )
 
-            # print("PAR ICI: ", self.room_name)
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'chat_message',
-                    'message': f'{self.user.username} has joined the chat {self.room_id}',
+                    'message': f'{self.user.username} has joined the chat',
                     'username': self.user.username
                 }
             )

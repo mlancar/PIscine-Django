@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.shortcuts import render, redirect
 from django.middleware.csrf import rotate_token
+from django.middleware.csrf import get_token
 
 class AccountAuthView(TemplateView):
     template_name = "account/account.html"
@@ -21,11 +22,15 @@ class AccountAuthView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         if 'username' in request.POST and 'password' in request.POST:
-            login_form = AuthenticationForm(data=request.POST)
+            login_form = AuthenticationForm(request, data=request.POST)
             if login_form.is_valid():
                 user = login_form.get_user()
                 login(request, user)
-                return JsonResponse({"success": True})
+                return JsonResponse({
+                    "success": True,
+                    "username": user.username,
+                    "new_csrf": get_token(request) 
+                })
            
         elif 'register_submit' in request.POST:
             register_form = RegisterForm(request.POST)
@@ -46,6 +51,10 @@ def user_status(request):
 def logout_view(request):
     if request.method == "POST":
         logout(request)
-        rotate_token(request)
+        new_token = get_token(request) 
+        response = JsonResponse({'success': True})
+        response.set_cookie('csrftoken', new_token)
+        # rotate_token(request)
+        return response
         return JsonResponse({"success": True})
     return JsonResponse({"success": False, "error": "POST required"}, status=400)

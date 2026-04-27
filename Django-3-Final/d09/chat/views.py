@@ -17,8 +17,6 @@ def chat_room(request, room_id):
     last_messages = Message.objects.filter(room=room).order_by('-timestamp')[:3]
     last_messages = reversed(last_messages)
 
-    print("lAST MESSAGE = ", last_messages)
-
     return render(request, "chat/chatroom.html", {
         "room": room,
         'last_messages': last_messages

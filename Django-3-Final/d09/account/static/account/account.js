@@ -26,7 +26,10 @@ $.ajaxSetup({
 
 function handleAccount(formElement) {
     
+    const freshToken = getCookie('csrftoken');
     const formData = new FormData(formElement);
+    formData.set('csrfmiddlewaretoken', freshToken);
+
     $.ajax({
         url: "/account/",
         type: "POST",
@@ -34,11 +37,15 @@ function handleAccount(formElement) {
         processData: false,
         contentType: false,
 
+        headers: {
+            "X-CSRFToken": freshToken
+        },
+
         success: function(data) {
             if (data.success) {
                 console.log("ICI")
                 updatePage();
-                location.reload();
+                // location.reload();
             }
             else {
                 const errorDiv = $("#form-errors");
@@ -59,13 +66,15 @@ function handleAccount(formElement) {
         },
 
         error: function(xhr) {
-            if (xhr.status === 403) {
-                refreshCsrfToken();
-                showError("Session expirée, réessaie.");
-            }
-            else {
-                showError(`Erreur serveur (${xhr.status})`);
-            }
+            console.error("Détails erreur:", xhr.responseText);
+            alert("Erreur 403 : Problème de jeton CSRF.");
+        //     if (xhr.status === 403) {
+        //         refreshCsrfToken();
+        //         showError("Session expirée, réessaie.");
+        //     }
+        //     else {
+        //         showError(`Erreur serveur (${xhr.status})`);
+        //     }
         }
     });
 }
@@ -89,14 +98,17 @@ function attachLoginHandler() {
 
 function updatePage() {
     $.get("/account/user-status/", function(data) {
+        console.log("LOGOUT RESPONSE:", data);
+
         const loginForm = $("#login-form");
         const logoutContainer = $("#logout-container");
         logoutContainer.empty();
 
-        if (data.logged_in) {
+        if (data.logged_in || data.is_authenticated) {
             console.log("PAR ICI")
 
             loginForm.hide();
+            
 
             logoutContainer.html(`
                 <p>Logged as ${data.username}</p>
@@ -104,10 +116,10 @@ function updatePage() {
             `);
 
             $("#logout-btn").on("click", logoutUser);
+            logoutContainer.show();
 
         }
         else {
-            console.log("PAR LA")
             loginForm.show();
             logoutContainer.hide();
         }
@@ -115,14 +127,14 @@ function updatePage() {
 }
 
 function logoutUser() {
-    $.post("/account/logout/", function(data) {
-        if (data.success) {
-            refreshCsrfToken();
-            updatePage();
-            location.reload();
-        }
-        else {
-            alert("Logout Failed");
+    $.ajax({
+        url: "/account/logout/",
+        type: "POST",
+        headers: { "X-CSRFToken": getCookie('csrftoken') },
+        success: function(data) {
+            if (data.success) {
+                updatePage();
+            }
         }
     });
 }
