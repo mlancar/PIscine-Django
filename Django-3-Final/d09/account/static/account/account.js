@@ -98,17 +98,18 @@ function attachLoginHandler() {
 
 function updatePage() {
     $.get("/account/user-status/", function(data) {
-        console.log("LOGOUT RESPONSE:", data);
 
         const loginForm = $("#login-form");
         const logoutContainer = $("#logout-container");
+        const registerContainer = $(".register-container")
+
         logoutContainer.empty();
 
         if (data.logged_in || data.is_authenticated) {
-            console.log("PAR ICI")
+            console.log("PAR ICI laaaaa")
 
             loginForm.hide();
-            
+            registerContainer.hide();
 
             logoutContainer.html(`
                 <p>Logged as ${data.username}</p>
@@ -121,6 +122,7 @@ function updatePage() {
         }
         else {
             loginForm.show();
+            registerContainer.show();
             logoutContainer.hide();
         }
     });

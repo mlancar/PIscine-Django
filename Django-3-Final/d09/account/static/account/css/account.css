@@ -1,3 +1,7 @@
+.page-content {
+    width: 500px;
+
+}
 
 .btn-submit {
     border-radius: var(--bs-border-radius);
@@ -16,9 +20,14 @@
 
 .login-container {
     display: inline-block;
+    width: 500px;
 }
 
-.register-container {
+.register-form {
     display: flex;
     flex-direction: column;
 }
+
+/* .logout-container {
+    width: 400px;
+} */

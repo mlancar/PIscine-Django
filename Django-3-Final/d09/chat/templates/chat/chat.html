@@ -13,8 +13,6 @@
     <div>
         {% for room in rooms %}
             <a href="{% url 'chatroom' room_id=room.id %}">{{ room.name }}</a>
-            <!-- <a href="{% url 'chatroom' room_id=room.id %}">{{ room.name }}</a>
-            <a href="{% url 'chatroom' room_id=room.id %}">{{ room.name }}</a> -->
         {% endfor %}
     </div>
 </div>
