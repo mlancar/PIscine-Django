@@ -4,19 +4,19 @@
 {% load static %}
 
 {% block extra_css %}
- <link rel="stylesheet" href="{% static 'account/css/account.css' %}">
+ <link rel="stylesheet" href="{% static 'chat/css/chat.css' %}">
 {% endblock %}
 
 {% block content %}
 
-<div class="page-content">
-    <div>
+<div class="page-content d-flex justify-items-center flex-column">
+    <h3>CHATROOMS</h3>
+    <div class="p-2">
         {% for room in rooms %}
-            <a href="{% url 'chatroom' room_id=room.id %}">{{ room.name }}</a>
+            <a href="{% url 'chatroom' room_id=room.id %}" class="">{{ room.name }} <br/></a>
         {% endfor %}
     </div>
 </div>
 <script src="{% static 'chat/chat.js' %}"></script>
-
 
 {% endblock %}

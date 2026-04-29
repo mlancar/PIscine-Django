@@ -4,21 +4,20 @@
 {% load static %}
 
 {% block extra_css %}
- <link rel="stylesheet" href="{% static 'account/css/account.css' %}">
+ <link rel="stylesheet" href="{% static 'chat/css/chat.css' %}">
 {% endblock %}
 
 {% block content %}
 
-<div class="page-content">
+<div class="page-content p-4">
     <h3 class="text-center p-4"> {{ room }} </h3>
     <div class="d-flex">
-        <div>
+        <div class="pe-4">
             <span>CONNECTED USERS</span>
-            <ul id="user-list">
-            </ul>
+            <ul id="user-list"></ul>
         </div>
-        <div>
-            <div id="chat-log" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc;">
+        <div class="message-comntainer">
+            <div id="chat-log">
                 {% for msg in last_messages %}
                     <div class="message">
                         <small>[{{ msg.timestamp|date:"H:i" }}]</small>
@@ -33,6 +32,7 @@
 
         </div>
     </div>
+    
     <script>
         const roomId = "{{ room.id }}";
         const chatSocket = new WebSocket(
