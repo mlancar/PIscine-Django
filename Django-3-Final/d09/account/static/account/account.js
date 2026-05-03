@@ -43,9 +43,7 @@ function handleAccount(formElement) {
 
         success: function(data) {
             if (data.success) {
-                console.log("ICI")
                 updatePage();
-                // location.reload();
             }
             else {
                 const errorDiv = $("#form-errors");
@@ -59,32 +57,25 @@ function handleAccount(formElement) {
                         });
                     }
                 } 
-                else {
-                    errorDiv.append(`<p style="color:red">Login failed</p>`);
-                }
+                // else {
+                //     errorDiv.append(`<p style="color:red">Login failed</p>`);
+                // }
             }
         },
 
         error: function(xhr) {
-            console.error("Détails erreur:", xhr.responseText);
-            alert("Erreur 403 : Problème de jeton CSRF.");
-        //     if (xhr.status === 403) {
-        //         refreshCsrfToken();
-        //         showError("Session expirée, réessaie.");
-        //     }
-        //     else {
-        //         showError(`Erreur serveur (${xhr.status})`);
-        //     }
+            console.error("Error:", xhr.responseText);
+            alert("Error 403 : Bad CSRF Token");
         }
     });
 }
 
-function showError(message) {
-    const errorDiv = document.getElementById("form-errors");
-    if (!errorDiv)
-        return;
-    errorDiv.innerHTML = `<p style="color:red">${message}</p>`;
-}
+// function showError(message) {
+//     const errorDiv = document.getElementById("form-errors");
+//     if (!errorDiv)
+//         return;
+//     errorDiv.innerHTML = `<p style="color:red">${message}</p>`;
+// }
 
 function attachLoginHandler() {
     const loginForm = document.getElementById("login-form");
@@ -106,8 +97,6 @@ function updatePage() {
         logoutContainer.empty();
 
         if (data.logged_in || data.is_authenticated) {
-            console.log("PAR ICI laaaaa")
-
             loginForm.hide();
             registerContainer.hide();
 
@@ -118,7 +107,6 @@ function updatePage() {
 
             $("#logout-btn").on("click", logoutUser);
             logoutContainer.show();
-
         }
         else {
             loginForm.show();
@@ -148,6 +136,9 @@ function refreshCsrfToken() {
 function attachLoginHandler() {
     $("#login-form").on("submit", function(e) {
         e.preventDefault();
+        const errorDiv = $("#form-errors");
+        errorDiv.html("");
+    //clean inout username password
         handleAccount(this);
     });
 }

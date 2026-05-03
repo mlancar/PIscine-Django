@@ -31,6 +31,11 @@ class AccountAuthView(TemplateView):
                     "username": user.username,
                     "new_csrf": get_token(request) 
                 })
+            else:
+                return JsonResponse({
+                    "success": False,
+                    "errors": login_form.errors
+                })
            
         elif 'register_submit' in request.POST:
             register_form = RegisterForm(request.POST)
