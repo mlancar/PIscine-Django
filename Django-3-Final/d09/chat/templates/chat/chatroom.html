@@ -9,80 +9,115 @@
 
 {% block content %}
 
-<div class="page-content p-4">
+<div class="page-content p-4 ">
     <h3 class="text-center p-4"> {{ room }} </h3>
     <div class="d-flex">
         <div class="pe-4">
             <span>CONNECTED USERS</span>
             <ul id="user-list"></ul>
         </div>
-        <div class="message-comntainer">
-            <div id="chat-log">
-                {% for msg in last_messages %}
-                    <div class="message">
-                        <small>[{{ msg.timestamp|date:"H:i" }}]</small>
-                        <strong>{{ msg.sender.username }}:</strong> {{ msg.content }}
+        <div class="div-wrapper">
+            <div class="div-overlay d-flex flex-column">
+                <div class="d-flex">
+                    <div class="message-comntainer">
+                        <div id="chat-log">
+                            {% for msg in last_messages %}
+                            <div class="message">
+                                <small>[{{ msg.timestamp|date:"H:i" }}]</small>
+                                <strong>{{ msg.sender.username }}:</strong> {{ msg.content }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <form hx-ws="send:submit">
+                            <input id="chat-message-input" type="text" size="30" />
+                            <input id="chat-message-submit" type="button" value="Send" />
+                        </form>
+                        
                     </div>
-                {% endfor %}
+                </div>
             </div>
-            <form hx-ws="send:submit">
-                <input id="chat-message-input" type="text" size="30" />
-                <input id="chat-message-submit" type="button" value="Send" />
-            </form>
-
         </div>
     </div>
     
     <script>
-        const roomId = "{{ room.id }}";
-        const chatSocket = new WebSocket(
-            'ws://' + window.location.host + '/ws/chat/' + roomId + '/'
-        );
-        
+         const roomId = "{{ room.id }}";
         const chatLog = document.querySelector('#chat-log');
-        
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            const newMessage = document.createElement('div');
-            
-            if (data.type == 'user_list') {
-                const userListElement = document.querySelector('#user-list');
-                userListElement.innerHTML = '';
-                
-                data.users.forEach(username => {
-                    const li = document.createElement('li');
-                    li.innerText = username;
-                    userListElement.appendChild(li);
-                    
-                });
-                return;
-            }
-            newMessage.innerHTML = `${data.message}`;
 
-            chatLog.appendChild(newMessage);
-            chatLog.scrollTop = chatLog.scrollHeight;
-        };
+        let chatSocket;
+        let reconnectAttempts = 0;
+        const MAX_RECONNECT = 5;
+
+        function connectWebSocket() {
+            chatSocket = new WebSocket(
+                'ws://' + window.location.host + '/ws/chat/' + roomId + '/'
+            );
+
+            chatSocket.onopen = function(e) {
+                console.log("Connecté au chat !");
+                reconnectAttempts = 0;
+            };
+
+            chatSocket.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+
+                if (data.type == 'user_list') {
+                    const userListElement = document.querySelector('#user-list');
+                    userListElement.innerHTML = '';
+                    data.users.forEach(username => {
+                        const li = document.createElement('li');
+                        li.innerText = username;
+                        userListElement.appendChild(li);
+                    });
+                    return;
+                }
+
+                const newMessage = document.createElement('div');
+                newMessage.innerHTML = `${data.message}`;
+                chatLog.appendChild(newMessage);
+                chatLog.scrollTop = chatLog.scrollHeight;
+            };
+
+            chatSocket.onclose = function(e) {
+                if (reconnectAttempts < MAX_RECONNECT) {
+                    reconnectAttempts++;
+                    const delay = Math.min(500 * 2 ** reconnectAttempts, 10000);
+                    console.log(`Reconnexion dans ${delay}ms (tentative ${reconnectAttempts})`);
+                    setTimeout(connectWebSocket, delay);
+                } else {
+                    console.warn("Reconnexion échouée après", MAX_RECONNECT, "tentatives.");
+                }
+            };
+
+            chatSocket.onerror = function(e) {
+                console.error("Erreur WebSocket", e);
+                chatSocket.close();
+            };
+        }
+
+        connectWebSocket();
 
         document.querySelector('#chat-message-input').focus();
 
         function sendMessage() {
             const messageInputDom = document.querySelector('#chat-message-input');
             const message = messageInputDom.value.trim();
-
             if (message === "") return;
 
-            chatSocket.send(JSON.stringify({
-                message: message
-            }));
-
-            messageInputDom.value = '';
+            if (chatSocket.readyState === WebSocket.OPEN) {
+                chatSocket.send(JSON.stringify({ message: message }));
+                messageInputDom.value = '';
+            } else {
+                console.warn("Socket pas encore connecté.");
+            }
         }
+
         document.querySelector('#chat-message-input').addEventListener("keydown", function(e) {
             if (e.key === "Enter") {
                 e.preventDefault();
                 sendMessage();
             }
         });
+
         document.querySelector('#chat-message-submit').addEventListener("click", function(e) {
             e.preventDefault();
             sendMessage();

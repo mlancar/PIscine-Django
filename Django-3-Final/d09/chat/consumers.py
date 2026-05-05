@@ -17,6 +17,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
         if self.user.is_authenticated:
+
+            disconnect_key = f'disconnect_{self.room_group_name}_{self.user.username}'
+            cache.delete(disconnect_key)
             
             cache_key = f'online_users_{self.room_group_name}'
             users_online = cache.get(cache_key, set())
@@ -43,6 +46,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, close_code):
 
         if self.user.is_authenticated:
+            disconnect_key = f'disconnect_{self.room_group_name}_{self.user.username}'
+            cache.set(disconnect_key, True, timeout=3)
+
+            await asyncio.sleep(3)
+            
             cache_key = f'online_users_{self.room_group_name}'
 
             users_online = cache.get(cache_key, set())
