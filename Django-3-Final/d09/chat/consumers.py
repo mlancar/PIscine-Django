@@ -3,6 +3,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from .models import Message, Chatroom
 from django.core.cache import cache
+import asyncio
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -50,29 +51,29 @@ class ChatConsumer(AsyncWebsocketConsumer):
             cache.set(disconnect_key, True, timeout=3)
 
             await asyncio.sleep(3)
-            
-            cache_key = f'online_users_{self.room_group_name}'
+            if cache.get(disconnect_key):
+                cache_key = f'online_users_{self.room_group_name}'
 
-            users_online = cache.get(cache_key, set())
-            users_online.discard(self.user.username)
-            cache.set(cache_key, users_online)
+                users_online = cache.get(cache_key, set())
+                users_online.discard(self.user.username)
+                cache.set(cache_key, users_online)
 
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'user_list',
-                    'users': list(users_online)
-                }
-            )
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        'type': 'user_list',
+                        'users': list(users_online)
+                    }
+                )
 
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'chat_message',
-                    'message': f'{self.user.username} has left the chat',
-                    'username': self.user.username
-                }
-            )
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        'type': 'chat_message',
+                        'message': f'{self.user.username} has left the chat',
+                        'username': self.user.username
+                    }
+                )
 
         await self.channel_layer.group_discard(
             self.room_group_name,
