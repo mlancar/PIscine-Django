@@ -11,6 +11,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.room_id = self.scope['url_route']['kwargs']['room_id']
         self.room_group_name = 'chat_%s' % self.room_id
 
+        print(f"CONNECT: {self.user.username}")
+
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
@@ -20,7 +22,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if self.user.is_authenticated:
 
             disconnect_key = f'disconnect_{self.room_group_name}_{self.user.username}'
-            cache.delete(disconnect_key)
+            print(f"CONNECT: supprime disconnect_key pour {self.user.username}, existait: {cache.get(disconnect_key)}")
+            cache.set(disconnect_key, self.channel_name, timeout=10) 
+            # cache.delete(disconnect_key)
             
             cache_key = f'online_users_{self.room_group_name}'
             users_online = cache.get(cache_key, set())
@@ -45,25 +49,34 @@ class ChatConsumer(AsyncWebsocketConsumer):
             )
     
     async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
 
-        if self.user.is_authenticated:
-            disconnect_key = f'disconnect_{self.room_group_name}_{self.user.username}'
-            cache.set(disconnect_key, True, timeout=3)
 
-            await asyncio.sleep(3)
-            if cache.get(disconnect_key):
+    async def user_list(self, event):
+        await self.send(text_data=json.dumps({
+            'type': 'user_list',
+            'users': event['users']
+        }))
+
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+
+        if text_data_json.get('type') == 'ping':
+            return
+        
+        if text_data_json.get('type') == 'leave':
+            if self.user.is_authenticated:
                 cache_key = f'online_users_{self.room_group_name}'
-
                 users_online = cache.get(cache_key, set())
                 users_online.discard(self.user.username)
                 cache.set(cache_key, users_online)
 
                 await self.channel_layer.group_send(
                     self.room_group_name,
-                    {
-                        'type': 'user_list',
-                        'users': list(users_online)
-                    }
+                    {'type': 'user_list', 'users': list(users_online)}
                 )
 
                 await self.channel_layer.group_send(
@@ -74,20 +87,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
                         'username': self.user.username
                     }
                 )
+            await self.close()
+            return
 
-        await self.channel_layer.group_discard(
-            self.room_group_name,
-            self.channel_name
-        )
-
-    async def user_list(self, event):
-        await self.send(text_data=json.dumps({
-            'type': 'user_list',
-            'users': event['users']
-        }))
-
-    async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
         message = text_data_json['message']
         user = self.scope['user']
 
@@ -101,6 +103,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'username': user.username
             }
         )
+        
     @database_sync_to_async
     def save_message(self, user, content):
         room = Chatroom.objects.get(id=self.room_id)

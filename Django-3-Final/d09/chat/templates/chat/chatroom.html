@@ -42,12 +42,29 @@
     </div>
     
     <script>
-         const roomId = "{{ room.id }}";
+        const roomId = "{{ room.id }}";
         const chatLog = document.querySelector('#chat-log');
 
         let chatSocket;
         let reconnectAttempts = 0;
         const MAX_RECONNECT = 5;
+
+        function leaveChat() {
+            if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+                chatSocket.send(JSON.stringify({ type: 'leave' }));
+            }
+        }
+
+        document.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            leaveChat();
+        });
+        });
+        {% comment %} document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'hidden') {
+                pageLeft = true;
+            }
+        }); {% endcomment %}
 
         function connectWebSocket() {
             chatSocket = new WebSocket(
@@ -57,6 +74,7 @@
             chatSocket.onopen = function(e) {
                 console.log("Connecté au chat !");
                 reconnectAttempts = 0;
+                {% comment %} pageLeft = false; {% endcomment %}
             };
 
             chatSocket.onmessage = function(e) {
@@ -80,6 +98,10 @@
             };
 
             chatSocket.onclose = function(e) {
+                console.log('onclose, pageLeft:', pageLeft);
+
+                if (pageLeft)
+                    return
                 if (reconnectAttempts < MAX_RECONNECT) {
                     reconnectAttempts++;
                     const delay = Math.min(500 * 2 ** reconnectAttempts, 10000);
