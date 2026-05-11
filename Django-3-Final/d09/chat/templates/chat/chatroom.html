@@ -40,11 +40,10 @@
             </div>
         </div>
     </div>
-    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         const roomId = "{{ room.id }}";
-        const chatLog = document.querySelector('#chat-log');
-
+        const chatLog = $("#chat-log");
         let chatSocket;
         let reconnectAttempts = 0;
         const MAX_RECONNECT = 5;
@@ -54,17 +53,9 @@
                 chatSocket.send(JSON.stringify({ type: 'leave' }));
             }
         }
-
-        document.querySelectorAll('a').forEach(function(link) {
-        link.addEventListener('click', function() {
-            leaveChat();
-        });
-        });
-        {% comment %} document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState === 'hidden') {
-                pageLeft = true;
-            }
-        }); {% endcomment %}
+        $('a').on('click', function () {
+                leaveChat();
+            });
 
         function connectWebSocket() {
             chatSocket = new WebSocket(
@@ -72,80 +63,73 @@
             );
 
             chatSocket.onopen = function(e) {
-                console.log("Connecté au chat !");
                 reconnectAttempts = 0;
-                {% comment %} pageLeft = false; {% endcomment %}
             };
 
             chatSocket.onmessage = function(e) {
                 const data = JSON.parse(e.data);
 
                 if (data.type == 'user_list') {
-                    const userListElement = document.querySelector('#user-list');
-                    userListElement.innerHTML = '';
+                    const userListElement = $('#user-list');
+                    userListElement.empty();
                     data.users.forEach(username => {
                         const li = document.createElement('li');
                         li.innerText = username;
-                        userListElement.appendChild(li);
+                        userListElement.append(li);
                     });
                     return;
                 }
 
                 const newMessage = document.createElement('div');
                 newMessage.innerHTML = `${data.message}`;
-                chatLog.appendChild(newMessage);
-                chatLog.scrollTop = chatLog.scrollHeight;
+                chatLog.append(newMessage);
+                chatLog.scrollTop(chatLog[0].scrollHeight);
             };
 
             chatSocket.onclose = function(e) {
-                console.log('onclose, pageLeft:', pageLeft);
-
-                if (pageLeft)
-                    return
                 if (reconnectAttempts < MAX_RECONNECT) {
                     reconnectAttempts++;
                     const delay = Math.min(500 * 2 ** reconnectAttempts, 10000);
-                    console.log(`Reconnexion dans ${delay}ms (tentative ${reconnectAttempts})`);
                     setTimeout(connectWebSocket, delay);
-                } else {
-                    console.warn("Reconnexion échouée après", MAX_RECONNECT, "tentatives.");
                 }
             };
 
             chatSocket.onerror = function(e) {
-                console.error("Erreur WebSocket", e);
                 chatSocket.close();
             };
         }
 
         connectWebSocket();
 
-        document.querySelector('#chat-message-input').focus();
+        $("#chat-message-input").focus();
 
         function sendMessage() {
-            const messageInputDom = document.querySelector('#chat-message-input');
-            const message = messageInputDom.value.trim();
+            const messageInputDom = $("#chat-message-input");
+            const message = messageInputDom.val().trim();
             if (message === "") return;
 
             if (chatSocket.readyState === WebSocket.OPEN) {
                 chatSocket.send(JSON.stringify({ message: message }));
-                messageInputDom.value = '';
-            } else {
-                console.warn("Socket pas encore connecté.");
+                messageInputDom.val('');
+
+            }
+            else {
+                console.warn("Socket not connected");
             }
         }
 
-        document.querySelector('#chat-message-input').addEventListener("keydown", function(e) {
+        $("#chat-message-input").on("keydown", function(e) {
             if (e.key === "Enter") {
                 e.preventDefault();
                 sendMessage();
             }
         });
 
-        document.querySelector('#chat-message-submit').addEventListener("click", function(e) {
+        $("#chat-message-submit").on('click', function (e) {
             e.preventDefault();
             sendMessage();
         });
+
     </script>
 </div>
 

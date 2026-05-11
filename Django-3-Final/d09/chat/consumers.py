@@ -56,10 +56,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 
     async def user_list(self, event):
-        await self.send(text_data=json.dumps({
-            'type': 'user_list',
-            'users': event['users']
-        }))
+        try:
+            await self.send(text_data=json.dumps({
+                'type': 'user_list',
+                'users': event['users']
+            }))
+        except Exception:
+            pass
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
@@ -114,10 +117,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
     
     async def chat_message(self, event):
-        message = event['message']
-        username = event['username']
-        message_html = f"<div hx-swap-oob='beforeend:#messages'><p><b>{username}</b>: {message}</p></div>"
-        await self.send(text_data=json.dumps({
-            'message': message_html,
-            'username': username
-        }))
+        try:
+            message = event['message']
+            username = event['username']
+            message_html = f"<div hx-swap-oob='beforeend:#messages'><p><b>{username}</b>: {message}</p></div>"
+            await self.send(text_data=json.dumps({
+                'message': message_html,
+                'username': username
+            }))
+        except Exception:
+            pass
