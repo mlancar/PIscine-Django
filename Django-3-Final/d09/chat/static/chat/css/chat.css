@@ -8,14 +8,15 @@
 }
 
 .message-container {
-    width: 500px;
-    
+    width: 600px;
+    height: 500px; 
 }
 
 #chat-log {
     width: 600px;
-    height: 500px;
+    max-height: 500px;
     overflow-y: scroll;
+    margin-top: auto;
 }
 
 ::-webkit-scrollbar {

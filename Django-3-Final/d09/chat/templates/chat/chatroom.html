@@ -20,22 +20,20 @@
         </div>
         <div class="div-wrapper">
             <div class="div-overlay d-flex flex-column">
-                <div class="d-flex">
-                    <div class="message-comntainer">
-                        <div id="chat-log">
-                            {% for msg in last_messages %}
-                            <div class="message">
-                                <small>[{{ msg.timestamp|date:"H:i" }}]</small>
-                                <strong>{{ msg.sender.username }}:</strong> {{ msg.content }}
-                            </div>
-                            {% endfor %}
+                <div class="message-container d-flex flex-column">
+                    <div id="chat-log">
+                        {% for msg in last_messages %}
+                        <div class="message">
+                            <small>[{{ msg.timestamp|date:"H:i" }}]</small>
+                            <strong>{{ msg.sender.username }}:</strong> {{ msg.content }}
                         </div>
-                        <form hx-ws="send:submit">
-                            <input id="chat-message-input" type="text" size="50" />
-                            <input id="chat-message-submit" type="button" value="Send" />
-                        </form>
-                        
+                        {% endfor %}
                     </div>
+                    <form hx-ws="send:submit">
+                        <input id="chat-message-input" type="text" size="50" />
+                        <input id="chat-message-submit" type="button" value="Send" />
+                    </form>
+                        
                 </div>
             </div>
         </div>
