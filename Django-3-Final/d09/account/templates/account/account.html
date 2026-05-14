@@ -12,7 +12,7 @@
 <div class="page-content">
     <div class="tables div-wrapper">
         <div id="login-container" class="div-overlay d-flex flex-column">
-            <h3>LOGIN</h3>
+            <h3 class="login-title">LOGIN</h3>
             <form id="login-form" method="post">
                 {% csrf_token %}
                 {{ login_form.as_p }}
@@ -20,7 +20,7 @@
             </form>
             <div id="form-errors"></div>
             <div id="logout-container">
-                <button id="logout-btn"type="submit" name="logout" class="btn">LOGOUT</button>
+                <button id="logout-btn" class="btn" type="submit" name="logout" >LOGOUT</button>
             </div>
         </div>
     </div>

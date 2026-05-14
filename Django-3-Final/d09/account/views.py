@@ -59,7 +59,6 @@ def logout_view(request):
         new_token = get_token(request) 
         response = JsonResponse({'success': True})
         response.set_cookie('csrftoken', new_token)
-        # rotate_token(request)
         return response
-        return JsonResponse({"success": True})
+        # return JsonResponse({"success": True})
     return JsonResponse({"success": False, "error": "POST required"}, status=400)

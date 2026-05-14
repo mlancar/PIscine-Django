@@ -70,13 +70,6 @@ function handleAccount(formElement) {
     });
 }
 
-// function showError(message) {
-//     const errorDiv = document.getElementById("form-errors");
-//     if (!errorDiv)
-//         return;
-//     errorDiv.innerHTML = `<p style="color:red">${message}</p>`;
-// }
-
 function attachLoginHandler() {
     const loginForm = document.getElementById("login-form");
     if (loginForm) {
@@ -91,6 +84,7 @@ function updatePage() {
     $.get("/account/user-status/", function(data) {
 
         const loginForm = $("#login-form");
+        const loginTitle = $(".login-title")
         const logoutContainer = $("#logout-container");
         const registerContainer = $(".register-container")
 
@@ -98,11 +92,12 @@ function updatePage() {
 
         if (data.logged_in || data.is_authenticated) {
             loginForm.hide();
+            loginTitle.hide();
             registerContainer.hide();
 
             logoutContainer.html(`
                 <p>Logged as ${data.username}</p>
-                <button id="logout-btn">Logout</button>
+                <button id="logout-btn" class="btn" >Logout</button>
             `);
 
             $("#logout-btn").on("click", logoutUser);
@@ -110,6 +105,7 @@ function updatePage() {
         }
         else {
             loginForm.show();
+            loginTitle.show();
             registerContainer.show();
             logoutContainer.hide();
         }
@@ -138,7 +134,6 @@ function attachLoginHandler() {
         e.preventDefault();
         const errorDiv = $("#form-errors");
         errorDiv.html("");
-    //clean inout username password
         handleAccount(this);
     });
 }

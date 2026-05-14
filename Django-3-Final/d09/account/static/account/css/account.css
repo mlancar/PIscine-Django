@@ -28,6 +28,18 @@
     flex-direction: column;
 }
 
-/* .logout-container {
-    width: 400px;
-} */
+#logout-btn {
+    background: linear-gradient(to right, var(--blue), var(--purple));
+}
+
+#logout-btn:hover {
+    transform: scale(1.08);
+
+
+}
+
+#logout-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
